@@ -6,8 +6,7 @@
   "repository": "https://github.com/dannytpeck/calendar-builder",
   "scripts": {
     "start": "webpack",
-		"build": "webpack -d --progress --colors",
-    "build-production": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
+    "build": "webpack -p --config webpack.production.config.js --progress --colors",
     "test": ""
   },
   "author": "Danny Peck, Josh Braun",
