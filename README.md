@@ -2,7 +2,7 @@
 
 Builds a program calendar for the program year and allows sharing with the client
 
-###Getting Started###
+### Getting Started
 
 Follow these steps to get started:
 
