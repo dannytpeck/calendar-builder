@@ -1,0 +1,50 @@
+h2 {
+  font-weight: normal;
+}
+
+.container {
+  color: #555;
+}
+
+.app {
+  text-align: center;
+}
+
+.header {
+  margin-top: 20px;
+}
+
+.header h2 {
+  margin: 30px auto;
+}
+
+.select-client {
+  text-align: left;
+}
+
+.get-started {
+  opacity: 0.5;
+  margin: 125px auto 0;
+  width: 300px;
+  color: #000;
+}
+
+#selectClient {
+  width: 20%;
+}
+
+/* Images */
+
+.home-button {
+  float: left;
+  width: 30px;
+}
+
+.logo {
+  width: 200px;
+  margin-left: -30px;
+}
+
+.folder {
+  width: 130px;
+}
