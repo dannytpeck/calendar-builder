@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchClients } from '../actions/index';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.props.fetchClients();
+  }
+
   render() {
     return (
       <div className="app">
@@ -14,7 +27,7 @@ class App extends Component {
         </div>
 
         <div className="select-client">
-          <div className="form-group">
+          <div className="form-group" onClick={this.handleClick}>
             <label htmlFor="selectClient">Select Client</label>
             <select className="form-control" id="selectClient">
               <option>Client</option>
@@ -33,4 +46,8 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchClients }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(App);
