@@ -1,8 +1,10 @@
-[
-  {
-    "name": "Limeadedemorb"
-  },
-  {
-    "name": "LKE"
-  }
-]
+{
+  "clients": [
+    {
+      "name": "Limeadedemorb"
+    },
+    {
+      "name": "LKE"
+    }
+  ]
+}
