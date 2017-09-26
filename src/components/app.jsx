@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchClients } from '../actions/index';
+import ClientList from './client_list';
 
 class App extends Component {
   constructor(props) {
@@ -35,6 +36,8 @@ class App extends Component {
             </select>
           </div>
         </div>
+
+        <ClientList />
 
         <div className="get-started">
           <img className="folder" src="/images/icon_open_folder.svg" />
