@@ -2,18 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class ClientList extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   renderClient(client) {
     const name = client.name;
     return (
-      <li key={name}>{name}</li>
+      <a className="dropdown-item" href="#" key={name}>{name}</a>
     );
   }
 
   render() {
     return (
-      <ul>
+      <div className={'client-list dropdown-menu ' + (this.props.open ? 'show' : '')} aria-labelledby="dropdownMenuButton">
         {this.props.clients.map(this.renderClient)}
-      </ul>
+      </div>
     );
   }
 }

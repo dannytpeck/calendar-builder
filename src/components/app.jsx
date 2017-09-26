@@ -8,11 +8,21 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      open: false
+    };
+
+    this.props.fetchClients();
+
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
-  handleClick() {
-    this.props.fetchClients();
+  handleKeyUp(e) {
+    if (e.target.value) {
+      this.setState({ open: true });
+    } else {
+      this.setState({ open: false });
+    }
   }
 
   render() {
@@ -27,17 +37,15 @@ class App extends Component {
           <h2>Calendar Builder</h2>
         </div>
 
-        <div className="select-client">
-          <div className="form-group" onClick={this.handleClick}>
-            <label htmlFor="selectClient">Select Client</label>
-            <select className="form-control" id="selectClient">
-              <option>Client</option>
-              <option>Client2</option>
-            </select>
-          </div>
-        </div>
+        <div className="dropdown">
 
-        <ClientList />
+          <div className="client-search input-group">
+            <input onKeyUp={this.handleKeyUp} type="text" className="form-control" placeholder="Client" />
+            <span className="oi oi-magnifying-glass"></span>
+          </div>
+
+          <ClientList open={this.state.open} />
+        </div>
 
         <div className="get-started">
           <img className="folder" src="/images/icon_open_folder.svg" />
