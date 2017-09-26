@@ -6,20 +6,13 @@ h2 {
   color: #555;
 }
 
-.app {
-  text-align: center;
-}
-
 .header {
   margin-top: 20px;
+  text-align: center;
 }
 
 .header h2 {
   margin: 30px auto;
-}
-
-.select-client {
-  text-align: left;
 }
 
 .get-started {
@@ -27,13 +20,25 @@ h2 {
   margin: 125px auto 0;
   width: 300px;
   color: #000;
+  text-align: center;
 }
 
-#selectClient {
-  width: 20%;
+.client-search {
+  width: 30%;
+}
+
+.client-list {
+  width: 30%;
 }
 
 /* Images */
+
+.oi-magnifying-glass {
+  position: absolute;
+  z-index: 10;
+  right: 5px;
+  top: 10px;
+}
 
 .home-button {
   float: left;
