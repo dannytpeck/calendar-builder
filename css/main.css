@@ -1,4 +1,4 @@
-h2 {
+h1, h2, h3, h4, h5 {
   font-weight: normal;
 }
 
@@ -9,10 +9,6 @@ h2 {
 .header {
   margin-top: 20px;
   text-align: center;
-}
-
-.header h2 {
-  margin: 30px auto;
 }
 
 .get-started {
@@ -31,6 +27,43 @@ h2 {
   width: 30%;
 }
 
+.add-calendar-button h5 {
+  display: inline;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.select-template {
+  max-width: 240px;
+}
+
+.program-dates input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 2%;
+  margin-right: 4%;
+}
+
+.point-structure span {
+ display: inline-block;
+ width: 180px;
+}
+
+.point-structure input {
+  max-width: 120px;
+  display: inline-block;
+  margin-right: 1%;
+}
+
+.cancel-button {
+  text-decoration: underline;
+  color: #0069d9;
+}
+
+.next-button {
+  margin-left: 43%;
+}
+
 /* Images */
 
 .oi-magnifying-glass {
@@ -42,14 +75,23 @@ h2 {
 
 .home-button {
   float: left;
-  width: 30px;
+  width: 24px;
 }
 
 .logo {
-  width: 200px;
+  width: 175px;
   margin-left: -30px;
 }
 
 .folder {
   width: 130px;
+}
+
+.edit-icon,
+.delete-icon {
+  width: 24px;
+}
+
+.add-icon {
+  width: 32px;
 }
