@@ -5,6 +5,7 @@ import { fetchClients } from '../actions/index';
 
 import ShowCalendars from './show_calendars';
 import AddCalendar from './add_calendar';
+import EditCalendar from './edit_calendar';
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class App extends Component {
 
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleCancelClick = this.handleCancelClick.bind(this);
+    this.handleNextClick = this.handleNextClick.bind(this);
   }
 
   componentDidMount() {
@@ -27,13 +29,22 @@ class App extends Component {
 
   handleAddClick() {
     this.setState({
-      view: <AddCalendar handleCancelClick={this.handleCancelClick} />
+      view: <AddCalendar
+        handleCancelClick={this.handleCancelClick}
+        handleNextClick={this.handleNextClick}
+      />
     });
   }
 
   handleCancelClick() {
     this.setState({
       view: <ShowCalendars handleAddClick={this.handleAddClick} />
+    });
+  }
+
+  handleNextClick() {
+    this.setState({
+      view: <EditCalendar handleCancelClick={this.handleCancelClick} />
     });
   }
 

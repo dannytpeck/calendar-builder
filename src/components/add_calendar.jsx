@@ -38,8 +38,11 @@ class AddCalendar extends Component {
           </p>
         </div>
 
-        <span onClick={this.props.handleCancelClick} className="cancel-button">Cancel</span>
-        <button className="btn btn-primary next-button">Next</button>
+        <div className="buttons my-5">
+          <span className="cancel-button" onClick={this.props.handleCancelClick}>Cancel</span>
+          <button className="btn btn-primary next-button" onClick={this.props.handleNextClick}>Next</button>
+        </div>
+
       </div>
     );
   }
