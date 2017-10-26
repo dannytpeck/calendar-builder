@@ -60,8 +60,52 @@ h1, h2, h3, h4, h5 {
   color: #0069d9;
 }
 
-.next-button {
+.next-button, .done-button {
   margin-left: 43%;
+}
+
+.calendar-name {
+  display: inline-block;
+}
+
+.point-total {
+  float: right;
+}
+
+.buttons {
+  clear: both;
+  margin-top: 10%;
+  margin-bottom: 20px;
+}
+
+.clear {
+  clear: both;
+}
+
+.left-15 {
+  margin-left: 15%;
+}
+
+.calendar-accordion th {
+  text-align: center;
+}
+
+.card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.mb-0 span:first-child {
+  display: inline-block;
+  min-width: 80px;
+}
+
+.table {
+  margin-bottom: 0;
 }
 
 /* Images */
@@ -71,6 +115,10 @@ h1, h2, h3, h4, h5 {
   z-index: 10;
   right: 5px;
   top: 10px;
+}
+
+.oi-caret-bottom {
+  float: right;
 }
 
 .home-button {
@@ -94,4 +142,15 @@ h1, h2, h3, h4, h5 {
 
 .add-icon {
   width: 32px;
+}
+
+.calendar-link {
+  width: 32px;
+  float: right;
+}
+
+.table-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
 }
