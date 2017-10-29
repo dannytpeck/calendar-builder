@@ -77,15 +77,6 @@ h1, h2, h3, h4, h5 {
   margin-top: 10%;
   margin-bottom: 20px;
 }
-
-.clear {
-  clear: both;
-}
-
-.left-15 {
-  margin-left: 15%;
-}
-
 .calendar-accordion th {
   text-align: center;
 }
@@ -121,6 +112,24 @@ h1, h2, h3, h4, h5 {
   border: 1px solid black;
   color: inherit;
   max-width: inherit;
+}
+
+.preview {
+  position: absolute;
+  right: 15px;
+}
+
+/* Helpers */
+.clear {
+  clear: both;
+}
+
+.left-15 {
+  margin-left: 15%;
+}
+
+.right {
+  float: right;
 }
 
 /* Images */
@@ -168,4 +177,13 @@ h1, h2, h3, h4, h5 {
   width: 24px;
   height: 24px;
   margin-right: 12px;
+}
+
+.add-targeting-button, .add-resource-button {
+  width: 24px;
+}
+
+.delete-resource-icon {
+  width: 24px;
+  padding-top: 50%;
 }
