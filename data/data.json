@@ -1,10 +1,32 @@
 {
   "clients": [
     {
-      "name": "Limeadedemorb"
+      "name": "Limeadedemorb",
+      "calendars": [
+        {
+          "name": "Calendar_2018",
+          "year": 2018,
+          "updated": "July 10, 2017",
+          "status": "In Progress"
+        },
+        {
+          "name": "Calendar_2017",
+          "year": 2017,
+          "updated": "October 5, 2016",
+          "status": "Done"
+        }
+      ]
     },
     {
-      "name": "LKE"
+      "name": "LKE",
+      "calendars": [
+        {
+          "name": "Calendar_2018",
+          "year": 2018,
+          "updated": "October 1, 2017",
+          "status": "In Progress"
+        }
+      ]
     }
   ]
 }
