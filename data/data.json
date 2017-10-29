@@ -7,13 +7,319 @@
           "name": "Calendar_2018",
           "year": 2018,
           "updated": "July 10, 2017",
-          "status": "In Progress"
+          "status": "In Progress",
+          "yearlong": {
+            "startDate": "01/08/2018",
+            "endDate": "12/17/2018",
+            "points": 800,
+            "challenges": [
+              {
+                "name": "Complete a Health Screening",
+                "required": "Yes",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 150,
+                "totalPoints": 150
+              }
+            ]
+          },
+          "phase1": {
+            "startDate": "01/08/2018",
+            "endDate": "04/08/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Mindful Eating",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase1b": {
+            "startDate": "01/29/2018",
+            "endDate": "04/08/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 1B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase2": {
+            "startDate": "04/09/2018",
+            "endDate": "07/01/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Phase 2 Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase2b": {
+            "startDate": "04/30/2018",
+            "endDate": "07/01/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 2B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase3": {
+            "startDate": "07/02/2018",
+            "endDate": "09/23/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Phase 3 Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase3b": {
+            "startDate": "07/23/2018",
+            "endDate": "09/23/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 3B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase4": {
+            "startDate": "09/24/2018",
+            "endDate": "12/17/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Phase 4 Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase4b": {
+            "startDate": "10/15/2018",
+            "endDate": "12/17/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 4B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          }
         },
         {
           "name": "Calendar_2017",
           "year": 2017,
           "updated": "October 5, 2016",
-          "status": "Done"
+          "status": "Done",
+          "yearlong": {
+            "startDate": "01/08/2018",
+            "endDate": "12/17/2018",
+            "points": 800,
+            "challenges": [
+              {
+                "name": "Complete a Health Screening",
+                "required": "Yes",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 150,
+                "totalPoints": 150
+              }
+            ]
+          },
+          "phase1": {
+            "startDate": "01/08/2018",
+            "endDate": "04/08/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Mindful Eating",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase1b": {
+            "startDate": "01/29/2018",
+            "endDate": "04/08/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 1B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase2": {
+            "startDate": "04/09/2018",
+            "endDate": "07/01/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Phase 2 Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase2b": {
+            "startDate": "04/30/2018",
+            "endDate": "07/01/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 2B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase3": {
+            "startDate": "07/02/2018",
+            "endDate": "09/23/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Phase 3 Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase3b": {
+            "startDate": "07/23/2018",
+            "endDate": "09/23/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 3B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase4": {
+            "startDate": "09/24/2018",
+            "endDate": "12/17/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Phase 4 Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase4b": {
+            "startDate": "10/15/2018",
+            "endDate": "12/17/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 4B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          }
         }
       ]
     },
@@ -24,7 +330,160 @@
           "name": "Calendar_2018",
           "year": 2018,
           "updated": "October 1, 2017",
-          "status": "In Progress"
+          "status": "In Progress",
+          "yearlong": {
+            "startDate": "01/08/2018",
+            "endDate": "12/17/2018",
+            "points": 800,
+            "challenges": [
+              {
+                "name": "Complete a Health Screening",
+                "required": "Yes",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 150,
+                "totalPoints": 150
+              }
+            ]
+          },
+          "phase1": {
+            "startDate": "01/08/2018",
+            "endDate": "04/08/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Mindful Eating",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase1b": {
+            "startDate": "01/29/2018",
+            "endDate": "04/08/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 1B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase2": {
+            "startDate": "04/09/2018",
+            "endDate": "07/01/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Phase 2 Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase2b": {
+            "startDate": "04/30/2018",
+            "endDate": "07/01/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 2B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase3": {
+            "startDate": "07/02/2018",
+            "endDate": "09/23/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Phase 3 Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase3b": {
+            "startDate": "07/23/2018",
+            "endDate": "09/23/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 3B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase4": {
+            "startDate": "09/24/2018",
+            "endDate": "12/17/2018",
+            "points": 750,
+            "challenges": [
+              {
+                "name": "Phase 4 Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          },
+          "phase4b": {
+            "startDate": "10/15/2018",
+            "endDate": "12/17/2018",
+            "points": 300,
+            "challenges": [
+              {
+                "name": "Phase 4B Challenge",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 5,
+                "totalPoints": 60
+              }
+            ]
+          }
         }
       ]
     }
