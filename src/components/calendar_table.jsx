@@ -1,8 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class CalendarTable extends Component {
   constructor(props) {
     super(props);
+
+    this.renderRow = this.renderRow.bind(this);
+  }
+
+  renderRow(calendar) {
+    return (
+      <tr key={calendar.name}>
+        <td>{calendar.name}</td>
+        <td>{calendar.year}</td>
+        <td>{calendar.updated}</td>
+        <td>{calendar.status}</td>
+        <td>
+          <img onClick={this.props.handleEditClick} className="edit-icon" src="images/icon_edit.svg" />
+        </td>
+        <td>
+          <img className="delete-icon" src="images/icon_delete.svg" />
+        </td>
+      </tr>
+    );
   }
 
   render() {
@@ -19,34 +39,17 @@ class CalendarTable extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Calendar_2018</td>
-            <td>2018</td>
-            <td>July 10, 2017</td>
-            <td>In Progress</td>
-            <td>
-              <img onClick={this.props.handleEditClick} className="edit-icon" src="images/icon_edit.svg" />
-            </td>
-            <td>
-              <img className="delete-icon" src="images/icon_delete.svg" />
-            </td>
-          </tr>
-          <tr>
-            <td>Calendar_2017</td>
-            <td>2017</td>
-            <td>October 5, 2016</td>
-            <td>Done</td>
-            <td>
-              <img onClick={this.props.handleEditClick} className="edit-icon" src="images/icon_edit.svg" />
-            </td>
-            <td>
-              <img className="delete-icon" src="images/icon_delete.svg" />
-            </td>
-          </tr>
+          {this.props.calendars.map(this.renderRow)}
         </tbody>
       </table>
     );
   }
 }
 
-export default CalendarTable;
+function mapStateToProps(state) {
+  return {
+    calendars: state.selectedClient.calendars
+  };
+}
+
+export default connect(mapStateToProps, null)(CalendarTable);
