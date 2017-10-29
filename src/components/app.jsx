@@ -29,7 +29,9 @@ class App extends Component {
 
   viewShowCalendars() {
     this.setState({
-      view: <ShowCalendars handleAddClick={this.viewAddCalendar} />
+      view: <ShowCalendars
+        handleEditClick={this.viewEditCalendar}
+        handleAddClick={this.viewAddCalendar} />
     });
   }
 

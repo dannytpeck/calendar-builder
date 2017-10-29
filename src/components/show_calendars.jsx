@@ -13,7 +13,7 @@ class ShowCalendars extends Component {
       <div>
         <ClientName />
         <h5 className="my-5">Calendars:</h5>
-        <CalendarTable />
+        <CalendarTable handleEditClick={this.props.handleEditClick} />
         <div className="add-calendar-button my-4" onClick={this.props.handleAddClick}>
           <img className="add-icon" src="images/icon_add.svg" />
           <h5>Add New Calendar</h5>
