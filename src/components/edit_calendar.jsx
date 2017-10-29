@@ -12,6 +12,14 @@ class EditCalendar extends Component {
     };
   }
 
+  componentDidMount() {
+    /* global $ */
+    $('.calendar-link').tooltip({
+      html: true,
+      trigger: 'click'
+    });
+  }
+
   render() {
     return (
       <div className="add-calendar">
@@ -21,7 +29,10 @@ class EditCalendar extends Component {
 
         <div className="calendar-name-and-link">
           <h4 className="calendar-name">Calendar_2018</h4>
-          <img className="calendar-link" src="images/icon_link.svg" />
+          <img className="calendar-link" type="image" src="images/icon_link.svg"
+            data-toggle="tooltip" data-placement="bottom"
+            title="<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>https://mywellnessnumbers.com/cb/iifhjhwlxxxxa</h5>" />
+
         </div>
 
         <div className="calendar-accordion my-4 clear" id="accordion" role="tablist">
@@ -36,7 +47,7 @@ class EditCalendar extends Component {
                 </a>
               </h5>
             </div>
-            <div id="collapseOne" className="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+            <div id="collapseOne" className="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
               <div className="card-body">
                 <table className="table table-striped">
                   <thead>

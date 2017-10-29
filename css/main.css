@@ -108,6 +108,21 @@ h1, h2, h3, h4, h5 {
   margin-bottom: 0;
 }
 
+.tooltip.show {
+  opacity: 1;
+}
+
+.tooltip-inner {
+  position: relative;
+  right: 45%;
+  text-align: left;
+  padding: 0 20px;
+  background-color: white;
+  border: 1px solid black;
+  color: inherit;
+  max-width: inherit;
+}
+
 /* Images */
 
 .oi-magnifying-glass {
