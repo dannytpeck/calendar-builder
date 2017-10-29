@@ -6,6 +6,7 @@ import { fetchClients } from '../actions/index';
 import ShowCalendars from './show_calendars';
 import AddCalendar from './add_calendar';
 import EditCalendar from './edit_calendar';
+import EditChallenge from './edit_challenge';
 
 class App extends Component {
   constructor(props) {
@@ -15,36 +16,40 @@ class App extends Component {
       view: ''
     };
 
-    this.handleAddClick = this.handleAddClick.bind(this);
-    this.handleCancelClick = this.handleCancelClick.bind(this);
-    this.handleNextClick = this.handleNextClick.bind(this);
+    this.viewShowCalendars = this.viewShowCalendars.bind(this);
+    this.viewAddCalendar = this.viewAddCalendar.bind(this);
+    this.viewEditCalendar = this.viewEditCalendar.bind(this);
+    this.viewEditChallenge = this.viewEditChallenge.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchClients();
+    this.viewShowCalendars();
+  }
+
+  viewShowCalendars() {
     this.setState({
-      view: <ShowCalendars handleAddClick={this.handleAddClick} />
+      view: <ShowCalendars handleAddClick={this.viewAddCalendar} />
     });
   }
 
-  handleAddClick() {
+  viewAddCalendar() {
     this.setState({
       view: <AddCalendar
-        handleCancelClick={this.handleCancelClick}
-        handleNextClick={this.handleNextClick}
-      />
+        handleCancelClick={this.viewShowCalendars}
+        handleNextClick={this.viewEditCalendar} />
     });
   }
 
-  handleCancelClick() {
+  viewEditCalendar() {
     this.setState({
-      view: <ShowCalendars handleAddClick={this.handleAddClick} />
+      view: <EditCalendar handleCancelClick={this.viewShowCalendars} />
     });
   }
 
-  handleNextClick() {
+  viewEditChallenge() {
     this.setState({
-      view: <EditCalendar handleCancelClick={this.handleCancelClick} />
+      view: <EditChallenge handleCancelClick={this.viewEditCalendar} />
     });
   }
 
