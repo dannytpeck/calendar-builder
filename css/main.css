@@ -90,7 +90,7 @@ h1, h2, h3, h4, h5 {
   padding: 0;
 }
 
-.mb-0 span:first-child {
+.mb-0 > a > span:first-child {
   display: inline-block;
   min-width: 80px;
 }

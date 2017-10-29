@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { selectCalendar } from '../actions/index';
 
 class CalendarTable extends Component {
   constructor(props) {
     super(props);
 
     this.renderRow = this.renderRow.bind(this);
+    this.editCalendar = this.editCalendar.bind(this);
+  }
+
+  editCalendar(calendar) {
+    this.props.selectCalendar(calendar);
+    this.props.handleEditClick();
   }
 
   renderRow(calendar) {
@@ -16,7 +24,7 @@ class CalendarTable extends Component {
         <td>{calendar.updated}</td>
         <td>{calendar.status}</td>
         <td>
-          <img onClick={this.props.handleEditClick} className="edit-icon" src="images/icon_edit.svg" />
+          <img onClick={() => this.editCalendar(calendar)} className="edit-icon" src="images/icon_edit.svg" />
         </td>
         <td>
           <img className="delete-icon" src="images/icon_delete.svg" />
@@ -52,4 +60,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(CalendarTable);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ selectCalendar }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CalendarTable);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Header from './header';
 import ClientName from './client_name';
@@ -20,7 +21,52 @@ class EditCalendar extends Component {
     });
   }
 
+  hpImage(category) {
+    switch (category) {
+      case 'Health & Fitness':
+        return 'images/HP_Icon_Health_Fitness.png';
+      case 'Growth & Development':
+        return 'images/HP_Icon_Growth_Development.png';
+      case 'Contribution & Sustainability':
+        return 'images/HP_Icon_Contribution_Sustainability.png';
+      case 'Money & Prosperity':
+        return 'images/HP_Icon_Money_Prosperity.png';
+    }
+  }
+
+  teamImage(team) {
+    if (team === 'Yes') {
+      return 'images/icon_team.svg';
+    } else {
+      return 'images/icon_individual.svg';
+    }
+  }
+
+  renderRow(challenge, startDate, endDate) {
+    return (
+      <tr key={challenge.name}>
+        <td scope="row">{challenge.name}</td>
+        <td>{challenge.required}</td>
+        <td>{challenge.type}</td>
+        <td>
+          <img className="table-icon" src={this.hpImage(challenge.category)} />
+          <img className="table-icon" src={this.teamImage(challenge.team)} />
+        </td>
+        <td>{startDate} - {endDate}</td>
+        <td>{challenge.tracking}</td>
+      <td>{challenge.points} ({challenge.totalPoints})</td>
+        <td>
+          <img className="table-icon" src="images/icon_edit.svg" />
+          <img className="table-icon" src="images/icon_comment.svg" />
+          <img className="table-icon" src="images/icon_delete.svg" />
+        </td>
+      </tr>
+    );
+  }
+
   render() {
+    const calendar = this.props.calendar;
+
     return (
       <div className="add-calendar">
         <Header />
@@ -28,26 +74,30 @@ class EditCalendar extends Component {
         <ClientName />
 
         <div className="calendar-name-and-link">
-          <h4 className="calendar-name">Calendar_2018</h4>
-          <img className="calendar-link" type="image" src="images/icon_link.svg"
-            data-toggle="tooltip" data-placement="bottom"
+          <h4 className="calendar-name">{calendar.name}</h4>
+          <img className="calendar-link"
+            type="image"
+            src="images/icon_link.svg"
+            data-toggle="tooltip"
+            data-placement="bottom"
             title="<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>https://mywellnessnumbers.com/cb/iifhjhwlxxxxa</h5>" />
-
         </div>
 
         <div className="calendar-accordion my-4 clear" id="accordion" role="tablist">
           <div className="card">
-            <div className="card-header" role="tab" id="headingOne">
+
+            <div className="card-header" role="tab" id="headingYearlong">
               <h5 className="mb-0">
-                <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <a data-toggle="collapse" href="#collapseYearlong">
                   <span>Yearlong</span>
-                  <span className="left-15">01/08/2018 - 12/17/2018</span>
-                  <span className="left-15">800 Points</span>
+                  <span className="left-15">{calendar.yearlong.startDate} - {calendar.yearlong.endDate}</span>
+                  <span className="left-15">{calendar.yearlong.points} Points</span>
                   <span className="oi oi-caret-bottom"></span>
                 </a>
               </h5>
             </div>
-            <div id="collapseOne" className="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+
+            <div id="collapseYearlong" className="collapse" role="tabpanel" data-parent="#accordion">
               <div className="card-body">
                 <table className="table table-striped">
                   <thead>
@@ -63,74 +113,7 @@ class EditCalendar extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
+                    {calendar.yearlong.challenges.map(challenge => this.renderRow(challenge, calendar.yearlong.startDate, calendar.yearlong.endDate))}
                   </tbody>
                 </table>
               </div>
@@ -350,4 +333,11 @@ class EditCalendar extends Component {
   }
 }
 
-export default EditCalendar;
+
+function mapStateToProps(state) {
+  return {
+    calendar: state.selectedCalendar
+  };
+}
+
+export default connect(mapStateToProps, null)(EditCalendar);
