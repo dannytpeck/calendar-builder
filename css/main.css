@@ -2,6 +2,10 @@ h1, h2, h3, h4, h5 {
   font-weight: normal;
 }
 
+.table td, .table th {
+  padding: .75rem .5rem
+}
+
 .container {
   color: #555;
 }
@@ -77,9 +81,6 @@ h1, h2, h3, h4, h5 {
   margin-top: 10%;
   margin-bottom: 20px;
 }
-.calendar-accordion th {
-  text-align: center;
-}
 
 .card a {
   text-decoration: none;
@@ -105,7 +106,7 @@ h1, h2, h3, h4, h5 {
 
 .tooltip-inner {
   position: relative;
-  right: 45%;
+  right: 15%;
   text-align: left;
   padding: 0 20px;
   background-color: white;

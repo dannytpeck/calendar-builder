@@ -64,6 +64,47 @@ class EditCalendar extends Component {
     );
   }
 
+  renderCard(title, id, calendarPeriod) {
+    return (
+      <div className="card">
+
+        <div className="card-header" role="tab" id={'header' + id}>
+          <h5 className="mb-0">
+            <a data-toggle="collapse" href={'#collapse' + id}>
+              <span>{title}</span>
+              <span className="left-15">{calendarPeriod.startDate} - {calendarPeriod.endDate}</span>
+              <span className="left-15">{calendarPeriod.points} Points</span>
+              <span className="oi oi-caret-bottom"></span>
+            </a>
+          </h5>
+        </div>
+
+        <div id={'collapse' + id} className="collapse" role="tabpanel" data-parent="#accordion">
+          <div className="card-body">
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Required?</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Dates</th>
+                  <th scope="col">Tracking</th>
+                  <th scope="col">Points (Total)</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {calendarPeriod.challenges.map(challenge => this.renderRow(challenge, calendarPeriod.startDate, calendarPeriod.endDate))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    );
+  }
+
   render() {
     const calendar = this.props.calendar;
 
@@ -84,241 +125,15 @@ class EditCalendar extends Component {
         </div>
 
         <div className="calendar-accordion my-4 clear" id="accordion" role="tablist">
-          <div className="card">
-
-            <div className="card-header" role="tab" id="headingYearlong">
-              <h5 className="mb-0">
-                <a data-toggle="collapse" href="#collapseYearlong">
-                  <span>Yearlong</span>
-                  <span className="left-15">{calendar.yearlong.startDate} - {calendar.yearlong.endDate}</span>
-                  <span className="left-15">{calendar.yearlong.points} Points</span>
-                  <span className="oi oi-caret-bottom"></span>
-                </a>
-              </h5>
-            </div>
-
-            <div id="collapseYearlong" className="collapse" role="tabpanel" data-parent="#accordion">
-              <div className="card-body">
-                <table className="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Required?</th>
-                      <th scope="col">Type</th>
-                      <th scope="col">Category</th>
-                      <th scope="col">Dates</th>
-                      <th scope="col">Tracking</th>
-                      <th scope="col">Points (Total)</th>
-                      <th scope="col">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {calendar.yearlong.challenges.map(challenge => this.renderRow(challenge, calendar.yearlong.startDate, calendar.yearlong.endDate))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div className="card">
-            <div className="card-header" role="tab" id="headingTwo">
-              <h5 className="mb-0">
-                <a className="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  <span>Phase 1</span>
-                  <span className="left-15">01/08/2018 - 04/08/2018</span>
-                  <span className="left-15">750 Points</span>
-                  <span className="oi oi-caret-bottom"></span>
-                </a>
-              </h5>
-            </div>
-            <div id="collapseTwo" className="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
-              <div className="card-body">
-                <table className="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Required?</th>
-                      <th scope="col">Type</th>
-                      <th scope="col">Category</th>
-                      <th scope="col">Dates</th>
-                      <th scope="col">Tracking</th>
-                      <th scope="col">Points (Total)</th>
-                      <th scope="col">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div className="card">
-            <div className="card-header" role="tab" id="headingThree">
-              <h5 className="mb-0">
-                <a className="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  <span>Phase 1B</span>
-                  <span className="left-15">01/29/2018 - 04/08/2018</span>
-                  <span className="left-15">300 Points</span>
-                  <span className="oi oi-caret-bottom"></span>
-                </a>
-              </h5>
-            </div>
-            <div id="collapseThree" className="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
-              <div className="card-body">
-                <table className="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Required?</th>
-                      <th scope="col">Type</th>
-                      <th scope="col">Category</th>
-                      <th scope="col">Dates</th>
-                      <th scope="col">Tracking</th>
-                      <th scope="col">Points (Total)</th>
-                      <th scope="col">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Complete a Health Screening</td>
-                      <td>Yes</td>
-                      <td>CIE</td>
-                      <td>
-                        <img className="table-icon" src="images/HP_Icon_Health_Fitness.png" />
-                        <img className="table-icon" src="images/icon_individual.svg" />
-                      </td>
-                      <td>01/08/18 - 12/17/18</td>
-                      <td>One Time</td>
-                      <td>150 (150)</td>
-                      <td>
-                        <img className="table-icon" src="images/icon_edit.svg" />
-                        <img className="table-icon" src="images/icon_comment.svg" />
-                        <img className="table-icon" src="images/icon_delete.svg" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+          {this.renderCard('Yearlong', 'yearlong', calendar.yearlong)}
+          {this.renderCard('Phase 1', 'one', calendar.phase1)}
+          {this.renderCard('Phase 1B', 'oneB', calendar.phase1b)}
+          {this.renderCard('Phase 2', 'two', calendar.phase2)}
+          {this.renderCard('Phase 2B', 'twoB', calendar.phase2b)}
+          {this.renderCard('Phase 3', 'three', calendar.phase3)}
+          {this.renderCard('Phase 3B', 'threeB', calendar.phase3b)}
+          {this.renderCard('Phase 4', 'four', calendar.phase4)}
+          {this.renderCard('Phase 4B', 'fourB', calendar.phase4b)}
         </div>
 
         <h5 className="point-total my-3">{this.state.points} Points</h5>
