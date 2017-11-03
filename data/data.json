@@ -14,14 +14,174 @@
             "points": 800,
             "challenges": [
               {
-                "name": "Complete a Health Screening",
+                "name": "Wellbeing Assessment",
                 "required": "Yes",
                 "type": "CIE",
                 "category": "Health & Fitness",
                 "team": "No",
                 "tracking": "One Time",
+                "points": 300,
+                "totalPoints": 300
+              },
+              {
+                "name": "Know Your Numbers (Wellmetrics)",
+                "required": "Yes",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 300,
+                "totalPoints": 300
+              },
+              {
+                "name": "Roadmap to Success",
+                "required": "Yes",
+                "type": "CIE",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 400,
+                "totalPoints": 400
+              },
+              {
+                "name": "Understand Your Numbers (video)",
+                "required": "No",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 200,
+                "totalPoints": 200
+              },
+              {
+                "name": "Sign in for First Time",
+                "required": "No",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 25,
+                "totalPoints": 25
+              },
+              {
+                "name": "Roadmap Checkpoint",
+                "required": "No",
+                "type": "Self-Report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Bi-weekly",
+                "points": 5,
+                "totalPoints": 240
+              },
+              {
+                "name": "Preventive Visit: Medical",
+                "required": "No",
+                "type": "Self-Report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
                 "points": 150,
                 "totalPoints": 150
+              },
+              {
+                "name": "Preventive Visit: Dental",
+                "required": "No",
+                "type": "Self-Report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Semi-Annually",
+                "points": 75,
+                "totalPoints": 150
+              },
+              {
+                "name": "Preventive Visit: Vision",
+                "required": "No",
+                "type": "Self-Report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 150,
+                "totalPoints": 150
+              },
+              {
+                "name": "Hot Topics",
+                "required": "No",
+                "type": "Self-Report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Monthly",
+                "points": 25,
+                "totalPoints": 300
+              },
+              {
+                "name": "Human Performance 1:1",
+                "required": "No",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 250,
+                "totalPoints": 250
+              },
+              {
+                "name": "Healthy BMI/WHtR",
+                "required": "No",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
+              },
+              {
+                "name": "Healthy Blood Pressure",
+                "required": "No",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
+              },
+              {
+                "name": "Healthy Blood Glucose",
+                "required": "No",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
+              },
+              {
+                "name": "Healthy HDL",
+                "required": "No",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
+              },
+              {
+                "name": "Healthy Triglycerides",
+                "required": "No",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
+              },
+              {
+                "name": "Tobacco Free",
+                "required": "No",
+                "type": "CIE",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
               }
             ]
           },
@@ -33,12 +193,62 @@
               {
                 "name": "Mindful Eating",
                 "required": "No",
-                "type": "Self-report",
+                "type": "Self-Report",
                 "category": "Health & Fitness",
                 "team": "No",
                 "tracking": "Weekly",
-                "points": 5,
-                "totalPoints": 60
+                "points": 10,
+                "totalPoints": 130
+              },
+              {
+                "name": "150 Sweat",
+                "required": "No",
+                "type": "Self-Report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 130
+              },
+              {
+                "name": "Visualize to Actualize",
+                "required": "No",
+                "type": "Self-Report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 130
+              },
+              {
+                "name": "Mindful Minute",
+                "required": "No",
+                "type": "Self-Report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 130
+              },
+              {
+                "name": "Choose To Reuse",
+                "required": "No",
+                "type": "Self-Report",
+                "category": "Contribution & Sustainability",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 130
+              },
+              {
+                "name": "A Penny Saved is a Penny Earned",
+                "required": "No",
+                "type": "Self-Report",
+                "category": "Money & Prosperity",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 130
               }
             ]
           },
@@ -48,14 +258,34 @@
             "points": 300,
             "challenges": [
               {
-                "name": "Phase 1B Challenge",
+                "name": "Green Light Carbs",
                 "required": "No",
                 "type": "Self-report",
                 "category": "Health & Fitness",
                 "team": "No",
                 "tracking": "Weekly",
-                "points": 5,
-                "totalPoints": 60
+                "points": 10,
+                "totalPoints": 100
+              },
+              {
+                "name": "Media Time-Out",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 100
+              },
+              {
+                "name": "Financial Barriers Forgotten",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Money & Prosperity",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
               }
             ]
           },
@@ -65,14 +295,64 @@
             "points": 750,
             "challenges": [
               {
-                "name": "Phase 2 Challenge",
+                "name": "Water First for Thirst",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Sleep Like A Log",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Maximize Your Workouts",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Making Friends with Failure",
                 "required": "No",
                 "type": "Self-report",
                 "category": "Growth & Development",
                 "team": "No",
                 "tracking": "Weekly",
-                "points": 5,
-                "totalPoints": 60
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Calculate Your Carbon Footprint",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Contribution & Sustainability",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Create Your Budget",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Money & Prosperity",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
               }
             ]
           },
@@ -82,14 +362,34 @@
             "points": 300,
             "challenges": [
               {
-                "name": "Phase 2B Challenge",
+                "name": "Spice, Spice, Baby",
                 "required": "No",
                 "type": "Self-report",
-                "category": "Growth & Development",
+                "category": "Health & Fitness",
                 "team": "No",
                 "tracking": "Weekly",
-                "points": 5,
-                "totalPoints": 60
+                "points": 10,
+                "totalPoints": 90
+              },
+              {
+                "name": "Pay it Forward",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Contribution & Sustainability",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 90
+              },
+              {
+                "name": "The \"Just In Case\" Fund",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Money & Prosperity",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 50,
+                "totalPoints": 50
               }
             ]
           },
@@ -99,14 +399,74 @@
             "points": 750,
             "challenges": [
               {
-                "name": "Phase 3 Challenge",
+                "name": "Keep it Whole",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Decreasing Stimulants, Increasing Sleep",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Put Stress to the Test",
                 "required": "No",
                 "type": "Self-report",
                 "category": "Growth & Development",
                 "team": "No",
                 "tracking": "Weekly",
-                "points": 5,
-                "totalPoints": 60
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Emotional Fitness Master",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Plant for the Planet",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Contribution & Sustainability",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Clean Green",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Contribution & Sustainability",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
+              },
+              {
+                "name": "Contribute to Retirement",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Contribution & Sustainability",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
               }
             ]
           },
@@ -116,14 +476,24 @@
             "points": 300,
             "challenges": [
               {
-                "name": "Phase 3B Challenge",
+                "name": "Optionally Organic",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 90
+              },
+              {
+                "name": "Three Great Things",
                 "required": "No",
                 "type": "Self-report",
                 "category": "Growth & Development",
                 "team": "No",
                 "tracking": "Weekly",
-                "points": 5,
-                "totalPoints": 60
+                "points": 10,
+                "totalPoints": 90
               }
             ]
           },
@@ -133,14 +503,94 @@
             "points": 750,
             "challenges": [
               {
-                "name": "Phase 4 Challenge",
+                "name": "Fuel with Fat",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Drink Swap",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Life on the Move",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Health & Fitness",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Pat Yourself on the Back",
                 "required": "No",
                 "type": "Self-report",
                 "category": "Growth & Development",
                 "team": "No",
                 "tracking": "Weekly",
-                "points": 5,
-                "totalPoints": 60
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Protect Your Credit",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Money & Prosperity",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
+              },
+              {
+                "name": "Time Well Spent",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Contribution & Sustainability",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Getting Around",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Contribution & Sustainability",
+                "team": "No",
+                "tracking": "Weekly",
+                "points": 10,
+                "totalPoints": 120
+              },
+              {
+                "name": "Embrace Your Budget",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Money & Prosperity",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
+              },
+              {
+                "name": "Your Listening Ears",
+                "required": "No",
+                "type": "Self-report",
+                "category": "Growth & Development",
+                "team": "No",
+                "tracking": "One Time",
+                "points": 50,
+                "totalPoints": 50
               }
             ]
           },
