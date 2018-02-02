@@ -24,12 +24,13 @@ class ClientSelect extends Component {
   }
 
   selectClient(client) {
+    const name = client.fields['Account Name'];
     this.props.selectClient(client);
-    this.setState({ open: false, searchText: client.name });
+    this.setState({ open: false, searchText: name });
   }
 
   renderClient(client) {
-    const name = client.name;
+    const name = client.fields['Account Name'];
     return (
       <span className="dropdown-item" key={name}
         onClick={() => this.selectClient(client)}>
@@ -40,7 +41,7 @@ class ClientSelect extends Component {
 
   render() {
     const filteredClients = this.props.clients.filter(client => {
-      const name = client.name.toLowerCase();
+      const name = client.fields['Account Name'].toLowerCase();
       const searchText = this.state.searchText.toLowerCase();
       return name.includes(searchText);
     });

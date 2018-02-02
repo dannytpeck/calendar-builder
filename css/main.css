@@ -29,6 +29,7 @@ h1, h2, h3, h4, h5 {
 
 .client-list {
   width: 30%;
+  overflow: hidden;
 }
 
 .add-calendar-button h5 {
