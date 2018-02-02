@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import Header from './header';
 import ClientName from './client_name';
@@ -148,11 +147,4 @@ class EditCalendar extends Component {
   }
 }
 
-
-function mapStateToProps(state) {
-  return {
-    calendar: state.selectedCalendar
-  };
-}
-
-export default connect(mapStateToProps, null)(EditCalendar);
+export default EditCalendar;

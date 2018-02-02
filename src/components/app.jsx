@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fetchClients } from '../actions/index';
+import axios from 'axios';
 
 import ShowCalendars from './show_calendars';
 import AddCalendar from './add_calendar';
@@ -13,26 +11,45 @@ class App extends Component {
     super(props);
 
     this.state = {
-      view: ''
+      view: null,
+      clients: [],
+      selectedClient: null
     };
 
-    this.viewShowCalendars = this.viewShowCalendars.bind(this);
-    this.viewAddCalendar = this.viewAddCalendar.bind(this);
-    this.viewEditCalendar = this.viewEditCalendar.bind(this);
-    this.viewEditChallenge = this.viewEditChallenge.bind(this);
+    this.selectClient = this.selectClient.bind(this);
   }
 
+  // When app starts, fetch clients and set initial view
   componentDidMount() {
-    this.props.fetchClients();
-    this.viewShowCalendars();
+    this.fetchClients();
+    this.setState({ view: 'ShowCalendars' });
   }
 
-  viewShowCalendars() {
-    this.setState({
-      view: <ShowCalendars
-        handleEditClick={this.viewEditCalendar}
-        handleAddClick={this.viewAddCalendar} />
-    });
+  fetchClients() {
+    const url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Clients?api_key=keyCxnlep0bgotSrX';
+
+    axios.get(url)
+      .then(response => this.setState({ clients: response.data.records }))
+      .catch(error => console.error(error));
+  }
+
+  selectClient(client) {
+    this.setState({ selectedClient: client });
+  }
+
+  renderView(view) {
+    switch (view) {
+      case 'ShowCalendars':
+        return (
+          <ShowCalendars
+            clients={this.state.clients}
+            selectedClient={this.state.selectedClient}
+            selectClient={this.selectClient}
+            handleEditClick={this.viewEditCalendar}
+            handleAddClick={this.viewAddCalendar} />
+        );
+        break;
+    }
   }
 
   viewAddCalendar() {
@@ -56,25 +73,16 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state);
+
     return (
       <div className="app">
 
-        {this.state.view}
+        {this.renderView(this.state.view)}
 
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  console.log(state);
-  return {
-    client: state.selectedClient
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchClients }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

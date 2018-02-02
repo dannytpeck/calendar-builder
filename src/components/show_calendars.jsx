@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import Header from './header';
 import ClientSelect from './client_select';
@@ -26,17 +25,11 @@ class ShowCalendars extends Component {
     return (
       <div className="show-calendars">
         <Header />
-        <ClientSelect />
-        {this.props.client.name ? this.renderCalendars() : <GetStartedFolder />}
+        <ClientSelect clients={this.props.clients} selectClient={this.props.selectClient} />
+        {this.props.selectedClient ? this.renderCalendars() : <GetStartedFolder />}
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    client: state.selectedClient
-  };
-}
-
-export default connect(mapStateToProps, null)(ShowCalendars);
+export default ShowCalendars;

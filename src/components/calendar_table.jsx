@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { selectCalendar } from '../actions/index';
 
 class CalendarTable extends Component {
   constructor(props) {
@@ -54,14 +51,4 @@ class CalendarTable extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    calendars: state.selectedClient.calendars
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ selectCalendar }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CalendarTable);
+export default CalendarTable;

@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { selectClient } from '../actions/index';
 
 class ClientSelect extends Component {
   constructor(props) {
@@ -9,7 +6,7 @@ class ClientSelect extends Component {
 
     this.state = {
       open: false,
-      searchText: this.props.client.name || ''
+      searchText: this.props.selectedClient || ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -40,6 +37,8 @@ class ClientSelect extends Component {
   }
 
   render() {
+    console.log(this.state);
+
     const filteredClients = this.props.clients.filter(client => {
       const name = client.fields['Account Name'].toLowerCase();
       const searchText = this.state.searchText.toLowerCase();
@@ -64,15 +63,4 @@ class ClientSelect extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    clients: state.clients,
-    client: state.selectedClient
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ selectClient }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ClientSelect);
+export default ClientSelect;
