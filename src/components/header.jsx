@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class GetStartedFolder extends Component {
+class Header extends Component {
   render() {
     return (
       <div className="header">
@@ -14,4 +14,4 @@ class GetStartedFolder extends Component {
   }
 }
 
-export default GetStartedFolder;
+export default Header;
