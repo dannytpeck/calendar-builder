@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 class ClientName extends Component {
   render() {
@@ -9,10 +8,4 @@ class ClientName extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    selectedClient: state.selectedClient
-  };
-}
-
-export default connect(mapStateToProps, null)(ClientName);
+export default ClientName;

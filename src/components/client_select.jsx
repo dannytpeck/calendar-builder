@@ -37,9 +37,7 @@ class ClientSelect extends Component {
   }
 
   render() {
-    console.log(this.state);
-
-    const filteredClients = this.props.clients.filter(client => {
+      const filteredClients = this.props.clients.filter(client => {
       const name = client.fields['Account Name'].toLowerCase();
       const searchText = this.state.searchText.toLowerCase();
       return name.includes(searchText);

@@ -13,10 +13,13 @@ class App extends Component {
     this.state = {
       view: null,
       clients: [],
-      selectedClient: null
+      selectedClient: null,
+      selectedCalendar: null
     };
 
     this.selectClient = this.selectClient.bind(this);
+    this.selectCalendar = this.selectCalendar.bind(this);
+    this.viewEditCalendar = this.viewEditCalendar.bind(this);
   }
 
   // When app starts, fetch clients and set initial view
@@ -37,6 +40,10 @@ class App extends Component {
     this.setState({ selectedClient: client });
   }
 
+  selectCalendar(calendar) {
+    this.setState({ selectedCalendar: calendar });
+  }
+
   renderView(view) {
     switch (view) {
       case 'ShowCalendars':
@@ -45,31 +52,44 @@ class App extends Component {
             clients={this.state.clients}
             selectedClient={this.state.selectedClient}
             selectClient={this.selectClient}
+            selectCalendar={this.selectCalendar}
             handleEditClick={this.viewEditCalendar}
             handleAddClick={this.viewAddCalendar} />
         );
-        break;
+      case 'AddCalendar':
+        return (
+          <AddCalendar
+            handleCancelClick={this.viewShowCalendars}
+            handleNextClick={this.viewEditCalendar} />
+        );
+      case 'EditCalendar':
+        return (
+          <EditCalendar
+            selectedClient={this.state.selectedClient}
+            selectedCalendar={this.state.selectedCalendar}
+            handleCancelClick={this.viewShowCalendars} />
+        );
+      case 'EditChallenge':
+        return (
+          <EditChallenge handleCancelClick={this.viewEditCalendar} />
+        );
     }
   }
 
+  viewShowCalendars() {
+    this.setState({ view: 'ShowCalendars' });
+  }
+
   viewAddCalendar() {
-    this.setState({
-      view: <AddCalendar
-        handleCancelClick={this.viewShowCalendars}
-        handleNextClick={this.viewEditCalendar} />
-    });
+    this.setState({ view: 'AddCalendar' });
   }
 
   viewEditCalendar() {
-    this.setState({
-      view: <EditCalendar handleCancelClick={this.viewShowCalendars} />
-    });
+    this.setState({ view: 'EditCalendar' });
   }
 
   viewEditChallenge() {
-    this.setState({
-      view: <EditChallenge handleCancelClick={this.viewEditCalendar} />
-    });
+    this.setState({ view: 'EditChallenge' });
   }
 
   render() {
