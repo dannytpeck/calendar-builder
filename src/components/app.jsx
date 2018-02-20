@@ -19,7 +19,10 @@ class App extends Component {
 
     this.selectClient = this.selectClient.bind(this);
     this.selectCalendar = this.selectCalendar.bind(this);
+    this.viewShowCalendars = this.viewShowCalendars.bind(this);
+    this.viewAddCalendar = this.viewAddCalendar.bind(this);
     this.viewEditCalendar = this.viewEditCalendar.bind(this);
+    this.viewEditChallenge = this.viewEditChallenge.bind(this);
   }
 
   // When app starts, fetch clients and set initial view
@@ -59,6 +62,7 @@ class App extends Component {
       case 'AddCalendar':
         return (
           <AddCalendar
+            selectedClient={this.state.selectedClient}
             handleCancelClick={this.viewShowCalendars}
             handleNextClick={this.viewEditCalendar} />
         );
@@ -84,8 +88,18 @@ class App extends Component {
     this.setState({ view: 'AddCalendar' });
   }
 
-  viewEditCalendar() {
-    this.setState({ view: 'EditCalendar' });
+  viewEditCalendar(calendar) {
+    console.log(calendar);
+
+    if (calendar) {
+      this.setState({
+        view: 'EditCalendar',
+        selectedCalendar: calendar
+      });
+    } else {
+      this.setState({ view: 'EditCalendar' });
+    }
+    
   }
 
   viewEditChallenge() {
