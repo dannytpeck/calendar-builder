@@ -9,7 +9,7 @@ class AddCalendar extends Component {
       <div className="add-calendar">
         <Header />
         <h2>Create New Calendar</h2>
-        <ClientName />
+        <ClientName selectedClient={this.props.selectedClient} />
 
         <div className="select-template my-5">
           <h5>Select Template:</h5>
@@ -40,7 +40,7 @@ class AddCalendar extends Component {
 
         <div className="buttons my-5">
           <span className="cancel-button" onClick={this.props.handleCancelClick}>Cancel</span>
-          <button className="btn btn-primary next-button" onClick={this.props.handleNextClick}>Next</button>
+          <button className="btn btn-primary next-button" onClick={() => this.props.handleNextClick('newCalendar')}>Next</button>
         </div>
 
       </div>
