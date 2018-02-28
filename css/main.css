@@ -130,6 +130,11 @@ h1, h2, h3, h4, h5 {
   margin-left: 15%;
 }
 
+.left-abs-73 {
+  position: absolute;
+  left: 73%;
+}
+
 .right {
   float: right;
 }
