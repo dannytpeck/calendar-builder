@@ -11,7 +11,7 @@ class AccordionCard extends Component {
   }
 
   componentDidMount() {
-    this.fetchChallenges();
+    //this.fetchChallenges();
   }
 
   fetchChallenges() {
@@ -44,20 +44,18 @@ class AccordionCard extends Component {
   }
 
   renderRow(challenge) {
-    const calendar = this.props.calendar;
-
     return (
-      <tr key={challenge.fields.name}>
-        <td scope="row">{challenge.fields.name}</td>
-        <td>{challenge.fields.required}</td>
-        <td>{challenge.fields.type}</td>
+      <tr key={challenge.id}>
+        <td scope="row">{challenge.fields['Name']}</td>
+        <td>{challenge.fields['Required']}</td>
+        <td>{challenge.fields['Verified'] === 'No' ? 'Self-Report' : 'CIE'}</td>
         <td>
-          <img className="table-icon" src={this.hpImage(challenge.fields.category)} />
-          <img className="table-icon" src={this.teamImage(challenge.fields.team)} />
+          <img className="table-icon" src={this.hpImage(challenge.fields['HP Element'])} />
+          <img className="table-icon" src={this.teamImage(challenge.fields['Team/Ix'])} />
         </td>
-        <td>{calendar.startDate} - {calendar.endDate}</td>
-        <td>{challenge.fields.tracking}</td>
-      <td>{challenge.fields.points} ({challenge.fields.totalPoints})</td>
+        <td>{challenge.fields['Start date']} - {challenge.fields['End date']}</td>
+        <td>{challenge.fields['Frequency']}</td>
+      <td>{challenge.fields['Points']} ({challenge.fields['Total Points']})</td>
         <td>
           <img className="table-icon" src="images/icon_edit.svg" />
           <img className="table-icon" src="images/icon_comment.svg" />
@@ -67,18 +65,18 @@ class AccordionCard extends Component {
     );
   }
 
-  renderRows(challengeIds) {
-    const filteredChallenges = this.state.challenges.filter(challenge => {
-      return challengeIds.includes(challenge.id);
-    });
-
-    return filteredChallenges.map(challenge => this.renderRow(challenge));
-  }
-
   render() {
     const id = this.props.id;
     const title = this.props.title;
     const calendar = this.props.calendar;
+
+    const startDate = calendar.length > 0 ? calendar[0].fields['Start date'] : 'N/A';
+    const endDate = calendar.length > 0 ? calendar[0].fields['End date'] : 'N/A';
+
+    let totalPoints = 0;
+    calendar.map(challenge => {
+      totalPoints += Number(challenge.fields['Total Points']);
+    });
 
     return (
       <div className="card">
@@ -87,8 +85,8 @@ class AccordionCard extends Component {
           <h5 className="mb-0">
             <a data-toggle="collapse" href={'#collapse' + id}>
               <span>{title}</span>
-              <span className="left-15">{calendar.startDate} - {calendar.endDate}</span>
-              <span className="left-15">{calendar.points} Points</span>
+              <span className="left-15">{startDate} - {endDate}</span>
+              <span className="left-abs-73">{totalPoints} Points</span>
               <span className="oi oi-caret-bottom"></span>
             </a>
           </h5>
@@ -110,7 +108,7 @@ class AccordionCard extends Component {
                 </tr>
               </thead>
               <tbody>
-                {calendar[id] ?  this.renderRows(calendar[id]) : ''}
+                {calendar.map(challenge => this.renderRow(challenge))}
               </tbody>
             </table>
           </div>
