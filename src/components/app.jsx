@@ -20,6 +20,7 @@ class App extends Component {
 
     this.selectClient = this.selectClient.bind(this);
     this.selectCalendar = this.selectCalendar.bind(this);
+    this.selectChallenge = this.selectChallenge.bind(this);
     this.viewShowCalendars = this.viewShowCalendars.bind(this);
     this.viewAddCalendar = this.viewAddCalendar.bind(this);
     this.viewEditCalendar = this.viewEditCalendar.bind(this);
@@ -48,6 +49,10 @@ class App extends Component {
     this.setState({ selectedCalendar: calendar });
   }
 
+  selectChallenge(challenge) {
+    this.setState({ selectedChallenge: challenge });
+  }
+
   renderView(view) {
     switch (view) {
       case 'ShowCalendars':
@@ -72,7 +77,9 @@ class App extends Component {
           <EditCalendar
             selectedClient={this.state.selectedClient}
             selectedCalendar={this.state.selectedCalendar}
-            handleCancelClick={this.viewShowCalendars} />
+            handleCancelClick={this.viewShowCalendars}
+            selectChallenge={this.selectChallenge}
+            handleEditChallengeClick={this.viewEditChallenge} />
         );
       case 'EditChallenge':
         return (
@@ -92,8 +99,6 @@ class App extends Component {
   }
 
   viewEditCalendar(calendar) {
-    console.log(calendar);
-
     if (calendar) {
       this.setState({
         view: 'EditCalendar',
@@ -102,7 +107,6 @@ class App extends Component {
     } else {
       this.setState({ view: 'EditCalendar' });
     }
-
   }
 
   viewEditChallenge() {
@@ -116,8 +120,6 @@ class App extends Component {
       <div className="app">
 
         {this.renderView(this.state.view)}
-
-        <button onClick={this.viewEditChallenge}>Show Edit Challenge Page</button>
 
       </div>
     );

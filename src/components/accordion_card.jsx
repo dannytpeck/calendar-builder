@@ -10,16 +10,9 @@ class AccordionCard extends Component {
     };
   }
 
-  componentDidMount() {
-    //this.fetchChallenges();
-  }
-
-  fetchChallenges() {
-    const url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Challenges?api_key=keyCxnlep0bgotSrX';
-
-    axios.get(url)
-      .then(response => this.setState({ challenges: response.data.records }))
-      .catch(error => console.error(error));
+  editChallenge(challenge) {
+    this.props.selectChallenge(challenge);
+    this.props.handleEditChallengeClick();
   }
 
   hpImage(category) {
@@ -57,7 +50,7 @@ class AccordionCard extends Component {
         <td>{challenge.fields['Frequency']}</td>
       <td>{challenge.fields['Points']} ({challenge.fields['Total Points']})</td>
         <td>
-          <img className="table-icon" src="images/icon_edit.svg" />
+          <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
           <img className="table-icon" src="images/icon_comment.svg" />
           <img className="table-icon" src="images/icon_delete.svg" />
         </td>
@@ -67,11 +60,11 @@ class AccordionCard extends Component {
 
   render() {
     const id = this.props.id;
-    const title = this.props.title;
     const calendar = this.props.calendar;
 
-    const startDate = calendar.length > 0 ? calendar[0].fields['Start date'] : 'N/A';
-    const endDate = calendar.length > 0 ? calendar[0].fields['End date'] : 'N/A';
+    const title = calendar[0].fields['Phase'];
+    const startDate = calendar[0].fields['Start date'];
+    const endDate = calendar[0].fields['End date'];
 
     let totalPoints = 0;
     calendar.map(challenge => {
