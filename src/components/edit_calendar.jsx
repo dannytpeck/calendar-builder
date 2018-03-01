@@ -5,14 +5,6 @@ import ClientName from './client_name';
 import AccordionCard from './accordion_card';
 
 class EditCalendar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      points: 5000
-    };
-  }
-
   componentDidMount() {
     /* global $ */
     $('.calendar-link').tooltip({
@@ -23,6 +15,7 @@ class EditCalendar extends Component {
 
   render() {
     const calendar = this.props.selectedCalendar;
+
     const yearlong = calendar.filter(challenge => {
       return challenge.fields.Phase === 'Yearlong';
     });
@@ -49,6 +42,11 @@ class EditCalendar extends Component {
     });
     const phase4b = calendar.filter(challenge => {
       return challenge.fields.Phase === 'Phase 4B';
+    });
+
+    let points = 0;
+    calendar.map(challenge => {
+      points += Number(challenge.fields['Total Points']);
     });
 
     return (
@@ -79,7 +77,7 @@ class EditCalendar extends Component {
           <AccordionCard title={'Phase 4B'} id={'phase4b'} calendar={phase4b} />
         </div>
 
-        <h5 className="point-total my-3">{this.state.points} Points</h5>
+        <h5 className="point-total my-3">{points} Points</h5>
 
         <div className="buttons">
           <span className="cancel-button" onClick={this.props.handleCancelClick}>Cancel</span>
