@@ -36,7 +36,7 @@ class AccordionCard extends Component {
   }
 
   teamImage(team) {
-    if (team === 'Yes') {
+    if (team === 'Team') {
       return 'images/icon_team.svg';
     } else {
       return 'images/icon_individual.svg';
