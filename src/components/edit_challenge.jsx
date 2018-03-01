@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import Header from './header';
 
 class EditChallenge extends Component {
   render() {
+    const challenge = this.props.selectedChallenge;
+    const startDate = moment(challenge.fields['Start date']).format('YYYY-MM-DD');
+    const endDate = moment(challenge.fields['End date']).format('YYYY-MM-DD');
+
     return (
       <div className="edit-challenge">
         <Header />
@@ -14,14 +19,14 @@ class EditChallenge extends Component {
           <div className="col-3">
             <label htmlFor="start-date">Start Date</label>
             <div className="input-group">
-              <input type="date" className="form-control" id="start-date" />
+              <input type="date" className="form-control" id="start-date" defaultValue={startDate} />
             </div>
           </div>
 
           <div className="col-3">
             <label htmlFor="end-date">End Date</label>
             <div className="input-group">
-              <input type="date" className="form-control" id="end-date" />
+              <input type="date" className="form-control" id="end-date" defaultValue={endDate} />
             </div>
           </div>
 
@@ -37,8 +42,8 @@ class EditChallenge extends Component {
             <label htmlFor="individual-team">Individual/Team</label>
             <div className="input-group">
               <select className="custom-select form-control" id="individual-team">
-                <option defaultValue value="Individual">Individual</option>
-                <option value="Units - Challenge Period">Team</option>
+                <option value="Individual" defaultValue={challenge.fields['Team/Ix'] === 'Individual'}>Individual</option>
+                <option value="Team" defaultValue={challenge.fields['Team/Ix'] === 'Team'}>Team</option>
               </select>
             </div>
           </div>
@@ -63,7 +68,7 @@ class EditChallenge extends Component {
           <div className="col-1">
             <label htmlFor="points">Points</label>
             <div className="input-group">
-              <input type="text" className="form-control" id="points" />
+              <input type="text" className="form-control" id="points" defaultValue={challenge.fields['Points']} />
             </div>
           </div>
 
@@ -108,7 +113,7 @@ class EditChallenge extends Component {
           <div className="col-4">
             <label htmlFor="title">Title</label>
             <div className="input-group">
-              <input type="text" className="form-control" id="title" />
+              <input type="text" className="form-control" id="title" defaultValue={challenge.fields['Name']} />
             </div>
           </div>
         </div>

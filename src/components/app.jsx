@@ -85,7 +85,7 @@ class App extends Component {
         return (
           <EditChallenge
             selectedChallenge={this.state.selectedChallenge}
-            handleCancelClick={this.viewShowCalendars} />
+            handleCancelClick={this.viewEditCalendar} />
         );
     }
   }
@@ -99,7 +99,7 @@ class App extends Component {
   }
 
   viewEditCalendar(calendar) {
-    if (calendar) {
+    if (calendar.length > 0) {
       this.setState({
         view: 'EditCalendar',
         selectedCalendar: calendar
