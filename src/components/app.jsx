@@ -14,7 +14,8 @@ class App extends Component {
       view: null,
       clients: [],
       selectedClient: null,
-      selectedCalendar: null
+      selectedCalendar: null,
+      selectedChallenge: null
     };
 
     this.selectClient = this.selectClient.bind(this);
@@ -75,7 +76,9 @@ class App extends Component {
         );
       case 'EditChallenge':
         return (
-          <EditChallenge handleCancelClick={this.viewEditCalendar} />
+          <EditChallenge
+            selectedChallenge={this.state.selectedChallenge}
+            handleCancelClick={this.viewShowCalendars} />
         );
     }
   }
@@ -99,7 +102,7 @@ class App extends Component {
     } else {
       this.setState({ view: 'EditCalendar' });
     }
-    
+
   }
 
   viewEditChallenge() {
@@ -113,6 +116,8 @@ class App extends Component {
       <div className="app">
 
         {this.renderView(this.state.view)}
+
+        <button onClick={this.viewEditChallenge}>Show Edit Challenge Page</button>
 
       </div>
     );
