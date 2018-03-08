@@ -46,8 +46,9 @@ class AddCalendar extends Component {
   }
 
   createCalendar() {
-    const startDate = this.state.startDate;
-    const endDate = this.state.endDate;
+    const { template, startDate, endDate,
+            oneTimePoints, weeklyPoints, teamPoints } = this.state;
+
     const phase1start = startDate;
     const phase1end = moment(phase1start).add(90, 'days').format();
     const phase2start = moment(phase1end).add(1, 'days').format();
