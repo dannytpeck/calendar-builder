@@ -13,9 +13,9 @@ class AddCalendar extends Component {
       template: null,
       startDate: null,
       endDate: null,
-      oneTimePoints: 0,
-      weeklyPoints: 0,
-      teamPoints: 0,
+      oneTimePoints: null,
+      weeklyPoints: null,
+      teamPoints: null,
       calendar: null
     };
 
@@ -45,49 +45,52 @@ class AddCalendar extends Component {
       .catch(error => console.error(error));
   }
 
+  validateFields() {
+    /* globals $ */
+    const $startDate = $('#startDate');
+    const $endDate = $('#endDate');
+    const $oneTimePoints = $('#oneTimePoints');
+    const $weeklyPoints = $('#weeklyPoints');
+    const $teamPoints = $('#teamPoints');
+
+    let validInputs = true;
+
+    function validate($element) {
+      if ($element.val()) {
+        $element.removeClass('is-invalid');
+      } else {
+        $element.addClass('is-invalid');
+        validInputs = false;
+      }
+    }
+
+    validate($startDate);
+    validate($endDate);
+    validate($oneTimePoints);
+    validate($weeklyPoints);
+    validate($teamPoints);
+
+    return validInputs;
+  }
+
   createCalendar() {
+    const validated = this.validateFields();
+
     const { template, startDate, endDate,
             oneTimePoints, weeklyPoints, teamPoints } = this.state;
 
-    const phase1start = startDate;
-    const phase1end = moment(phase1start).add(90, 'days').format();
-    const phase2start = moment(phase1end).add(1, 'days').format();
-    const phase2end = moment(phase2start).add(83, 'days').format();
-    const phase3start = moment(phase2end).add(1, 'days').format();
-    const phase3end = moment(phase3start).add(83, 'days').format();
-    const phase4start = moment(phase3end).add(1, 'days').format();
-    const phase4end = endDate;
+    if (validated) {
+      const phase1start = startDate;
+      const phase1end = moment(phase1start).add(90, 'days').format();
+      const phase2start = moment(phase1end).add(1, 'days').format();
+      const phase2end = moment(phase2start).add(83, 'days').format();
+      const phase3start = moment(phase2end).add(1, 'days').format();
+      const phase3end = moment(phase3start).add(83, 'days').format();
+      const phase4start = moment(phase3end).add(1, 'days').format();
+      const phase4end = endDate;
+    }
 
     console.log(this.state);
-  }
-
-  calculatePhases() {
-    const startDate = this.state.startDate;
-    const endDate = this.state.endDate;
-    const phase1start = startDate;
-    const phase1end = moment(phase1start).add(90, 'days').format();
-    const phase2start = moment(phase1end).add(1, 'days').format();
-    const phase2end = moment(phase2start).add(83, 'days').format();
-    const phase3start = moment(phase2end).add(1, 'days').format();
-    const phase3end = moment(phase3start).add(83, 'days').format();
-    const phase4start = moment(phase3end).add(1, 'days').format();
-    const phase4end = endDate;
-
-    console.log(`
-      yearlong: ${startDate} - ${endDate}
-      phase1: ${phase1start} - ${phase1end}
-      phase2: ${phase2start} - ${phase2end}
-      phase3: ${phase3start} - ${phase3end}
-      phase4: ${phase4start} - ${phase4end}
-    `);
-
-    return {
-      yearlong: startDate - endDate,
-      phase1: phase1start - phase1end,
-      phase2: phase2start - phase2end,
-      phase3: phase3start - phase3end,
-      phase4: phase4start - phase4end
-    };
   }
 
   handleChangeTemplate(e) {
@@ -125,33 +128,33 @@ class AddCalendar extends Component {
 
         <div className="select-template my-5">
           <h5>Select Template:</h5>
-          <select className="form-control" onChange={this.handleChangeTemplate}>
-            <option>none</option>
+          <select id="template" className="form-control" onChange={this.handleChangeTemplate}>
+            <option>None</option>
             <option>HP 2018 Calendar</option>
           </select>
         </div>
 
         <div className="program-dates my-5">
           <h5>Program Dates:</h5>
-          <span>Start Date:</span><input className="form-control" type="date" onChange={this.handleChangeStartDate} />
-          <span>End Date:</span><input className="form-control" type="date" onChange={this.handleChangeEndDate} />
+          <span>Start Date:</span><input id="startDate" className="form-control" type="date" onChange={this.handleChangeStartDate} />
+          <span>End Date:</span><input id="endDate" className="form-control" type="date" onChange={this.handleChangeEndDate} />
         </div>
 
         <div className="point-structure my-5">
           <h5 className="my-4">Point Structure:</h5>
           <p>
             <span>One-Time Challenge:</span>
-            <input className="form-control" type="text" onChange={this.handleChangeOneTimePoints} />
+            <input id="oneTimePoints" className="form-control" type="text" onChange={this.handleChangeOneTimePoints} />
             <span>points</span>
           </p>
           <p>
             <span>Weekly Challenges:</span>
-            <input className="form-control" type="text" onChange={this.handleChangeWeeklyPoints} />
+            <input id="weeklyPoints" className="form-control" type="text" onChange={this.handleChangeWeeklyPoints} />
             <span>points</span>
           </p>
           <p>
             <span>Team Challenge:</span>
-            <input className="form-control" type="text" onChange={this.handleChangeTeamPoints} />
+            <input id="teamPoints" className="form-control" type="text" onChange={this.handleChangeTeamPoints} />
             <span>points</span>
           </p>
         </div>
