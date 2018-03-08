@@ -30,7 +30,17 @@ class App extends Component {
   // When app starts, fetch clients and set initial view
   componentDidMount() {
     this.fetchClients();
-    this.setState({ view: 'ShowCalendars' });
+    // this.setState({ view: 'ShowCalendars' });
+    this.setState({
+      selectedClient: {
+        fields: {
+          'Account Name': 'Ascent Resources',
+          'Limeade PSK': '2cc948e6-2b24-49a7-a6ed-df96e03d315f',
+          'Limeade e=': 'AscentResources'
+        }
+      },
+      view: 'AddCalendar'
+    });
   }
 
   fetchClients() {

@@ -10,14 +10,19 @@ class AddCalendar extends Component {
     super(props);
 
     this.state = {
+      calendar: null,
       startDate: null,
-      endDate: null
+      endDate: null,
+      oneTimePoints: 0,
+      weeklyPoints: 0,
+      teamPoints: 0
     };
 
     this.handleChangeStartDate = this.handleChangeStartDate.bind(this);
     this.handleChangeEndDate = this.handleChangeEndDate.bind(this);
     this.calculatePhases = this.calculatePhases.bind(this);
     this.loadTemplate = this.loadTemplate.bind(this);
+    this.createCalendar = this.createCalendar.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +37,21 @@ class AddCalendar extends Component {
         this.props.handleNextClick(response.data.records);
       })
       .catch(error => console.error(error));
+  }
+
+  createCalendar() {
+    const startDate = this.state.startDate;
+    const endDate = this.state.endDate;
+    const phase1start = startDate;
+    const phase1end = moment(phase1start).add(90, 'days').format();
+    const phase2start = moment(phase1end).add(1, 'days').format();
+    const phase2end = moment(phase2start).add(83, 'days').format();
+    const phase3start = moment(phase2end).add(1, 'days').format();
+    const phase3end = moment(phase3start).add(83, 'days').format();
+    const phase4start = moment(phase3end).add(1, 'days').format();
+    const phase4end = endDate;
+
+    console.log(this.state);
   }
 
   calculatePhases() {
@@ -49,10 +69,18 @@ class AddCalendar extends Component {
     console.log(`
       yearlong: ${startDate} - ${endDate}
       phase1: ${phase1start} - ${phase1end}
-      phase1: ${phase2start} - ${phase2end}
-      phase1: ${phase3start} - ${phase3end}
-      phase1: ${phase4start} - ${phase4end}
+      phase2: ${phase2start} - ${phase2end}
+      phase3: ${phase3start} - ${phase3end}
+      phase4: ${phase4start} - ${phase4end}
     `);
+
+    return {
+      yearlong: startDate - endDate,
+      phase1: phase1start - phase1end,
+      phase2: phase2start - phase2end,
+      phase3: phase3start - phase3end,
+      phase4: phase4start - phase4end
+    };
   }
 
   handleChangeStartDate(e) {
@@ -101,7 +129,8 @@ class AddCalendar extends Component {
 
         <div className="buttons my-5">
           <span className="cancel-button" onClick={this.props.handleCancelClick}>Cancel</span>
-          <button className="btn btn-primary next-button" onClick={this.loadTemplate}>Next</button>
+          {/* <button className="btn btn-primary next-button" onClick={this.loadTemplate}>Next</button> */}
+          <button className="btn btn-primary next-button" onClick={this.createCalendar}>Next</button>
         </div>
 
       </div>
