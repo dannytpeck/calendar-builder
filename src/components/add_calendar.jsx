@@ -10,16 +10,22 @@ class AddCalendar extends Component {
     super(props);
 
     this.state = {
-      calendar: null,
+      template: null,
       startDate: null,
       endDate: null,
       oneTimePoints: 0,
       weeklyPoints: 0,
-      teamPoints: 0
+      teamPoints: 0,
+      calendar: null
     };
 
+    this.handleChangeTemplate = this.handleChangeTemplate.bind(this);
     this.handleChangeStartDate = this.handleChangeStartDate.bind(this);
     this.handleChangeEndDate = this.handleChangeEndDate.bind(this);
+    this.handleChangeOneTimePoints = this.handleChangeOneTimePoints.bind(this);
+    this.handleChangeWeeklyPoints = this.handleChangeWeeklyPoints.bind(this);
+    this.handleChangeTeamPoints = this.handleChangeTeamPoints.bind(this);
+
     this.calculatePhases = this.calculatePhases.bind(this);
     this.loadTemplate = this.loadTemplate.bind(this);
     this.createCalendar = this.createCalendar.bind(this);
@@ -83,6 +89,10 @@ class AddCalendar extends Component {
     };
   }
 
+  handleChangeTemplate(e) {
+    this.setState({ template: e.target.value });
+  }
+
   handleChangeStartDate(e) {
     const date = moment(e.target.value).format();
     this.setState({ startDate: date });
@@ -91,6 +101,18 @@ class AddCalendar extends Component {
   handleChangeEndDate(e) {
     const date = moment(e.target.value).format();
     this.setState({ endDate: date });
+  }
+
+  handleChangeOneTimePoints(e) {
+    this.setState({ oneTimePoints: e.target.value });
+  }
+
+  handleChangeWeeklyPoints(e) {
+    this.setState({ weeklyPoints: e.target.value });
+  }
+
+  handleChangeTeamPoints(e) {
+    this.setState({ teamPoints: e.target.value });
   }
 
   render() {
@@ -102,7 +124,7 @@ class AddCalendar extends Component {
 
         <div className="select-template my-5">
           <h5>Select Template:</h5>
-          <select className="form-control">
+          <select className="form-control" onChange={this.handleChangeTemplate}>
             <option>none</option>
             <option>HP 2018 Calendar</option>
           </select>
@@ -117,13 +139,19 @@ class AddCalendar extends Component {
         <div className="point-structure my-5">
           <h5 className="my-4">Point Structure:</h5>
           <p>
-            <span>One-Time Challenge:</span><input className="form-control" type="text" /><span>points</span>
+            <span>One-Time Challenge:</span>
+            <input className="form-control" type="text" onChange={this.handleChangeOneTimePoints} />
+            <span>points</span>
           </p>
           <p>
-            <span>Weekly Challenges:</span><input className="form-control" type="text" /><span>points</span>
+            <span>Weekly Challenges:</span>
+            <input className="form-control" type="text" onChange={this.handleChangeWeeklyPoints} />
+            <span>points</span>
           </p>
           <p>
-            <span>Team Challenge:</span><input className="form-control" type="text" /><span>points</span>
+            <span>Team Challenge:</span>
+            <input className="form-control" type="text" onChange={this.handleChangeTeamPoints} />
+            <span>points</span>
           </p>
         </div>
 
