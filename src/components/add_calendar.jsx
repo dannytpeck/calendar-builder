@@ -26,22 +26,11 @@ class AddCalendar extends Component {
     this.handleChangeWeeklyPoints = this.handleChangeWeeklyPoints.bind(this);
     this.handleChangeTeamPoints = this.handleChangeTeamPoints.bind(this);
 
-    this.loadTemplate = this.loadTemplate.bind(this);
     this.createCalendar = this.createCalendar.bind(this);
   }
 
   componentDidMount() {
     //this.loadTemplate();
-  }
-
-  loadTemplate() {
-    const url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Templates?api_key=keyCxnlep0bgotSrX&view=Default';
-
-    axios.get(url)
-      .then(response => {
-        this.props.handleNextClick(response.data.records);
-      })
-      .catch(error => console.error(error));
   }
 
   validateFields() {
@@ -52,14 +41,14 @@ class AddCalendar extends Component {
     const $weeklyPoints = $('#weeklyPoints');
     const $teamPoints = $('#teamPoints');
 
-    let validInputs = true;
+    let allInputsAreValid = true;
 
     function validate($element) {
       if ($element.val()) {
         $element.removeClass('is-invalid');
       } else {
         $element.addClass('is-invalid');
-        validInputs = false;
+        allInputsAreValid = false;
       }
     }
 
@@ -69,10 +58,10 @@ class AddCalendar extends Component {
     validate($weeklyPoints);
     validate($teamPoints);
 
-    return validInputs;
+    return allInputsAreValid;
   }
 
-  createCalendar() {
+  createCalendar(e) {
     const validated = this.validateFields();
 
     const { template, startDate, endDate,
@@ -89,7 +78,26 @@ class AddCalendar extends Component {
       const phase4end = endDate;
     }
 
-    console.log(this.state);
+    let url;
+
+    switch (template) {
+      case 'HP 2018 Calendar':
+        url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Templates?api_key=keyCxnlep0bgotSrX&view=Default';
+        break;
+      default:
+        url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/EmptyCalendar?api_key=keyCxnlep0bgotSrX';
+        break;
+    }
+
+    axios.get(url)
+      .then(response => {
+
+        const records = response.data.records;
+        console.log(records);
+        this.props.handleNextClick(records);
+
+      })
+      .catch(error => console.error(error));
   }
 
   handleChangeTemplate(e) {
