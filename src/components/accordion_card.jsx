@@ -114,7 +114,7 @@ class AccordionCard extends Component {
                   <td>
                     <img className="add-challenge-icon" src="/images/icon_add.svg" />
                     <span className="add-challenge-text">Add Challenge</span>
-                    <ChallengeSelect />
+                    <ChallengeSelect challenges={this.props.challenges} />
                   </td>
                 </tr>
               </tfoot>

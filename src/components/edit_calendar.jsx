@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import moment from 'moment';
 
 import Header from './header';
@@ -6,12 +7,30 @@ import ClientName from './client_name';
 import AccordionCard from './accordion_card';
 
 class EditCalendar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      challenges: []
+    };
+  }
+
   componentDidMount() {
+    this.fetchChallenges();
+
     /* global $ */
     $('.calendar-link').tooltip({
       html: true,
       trigger: 'click'
     });
+  }
+
+  fetchChallenges() {
+    const url = 'https://mywellnessnumbers.com/thelibrary/challenges/';
+
+    axios.get(url)
+      .then(response => this.setState({ challenges: response.data }))
+      .catch(error => console.error(error));
   }
 
   render() {
@@ -37,6 +56,8 @@ class EditCalendar extends Component {
 
     const programYear = calendar[0].fields['Program Year'] ? calendar[0].fields['Program Year'] : moment().format('YYYY');
 
+    console.log(this.state);
+
     return (
       <div className="add-calendar">
         <Header />
@@ -56,38 +77,47 @@ class EditCalendar extends Component {
         <div className="calendar-accordion my-4 clear" id="accordion" role="tablist">
           {<AccordionCard
             calendar={yearlong} id={'yearlong'} title={'Yearlong'}
+            challenges={this.state.challenges}
             selectChallenge={this.props.selectChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick} />}
           {<AccordionCard
             calendar={phase1} id={'phase1'} title={'Phase 1'}
+            challenges={this.state.challenges}
             selectChallenge={this.props.selectChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick} />}
           {<AccordionCard
             calendar={phase1b} id={'phase1b'} title={'Phase 1B'}
+            challenges={this.state.challenges}
             selectChallenge={this.props.selectChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick} />}
           {<AccordionCard
             calendar={phase2} id={'phase2'} title={'Phase 2'}
+            challenges={this.state.challenges}
             selectChallenge={this.props.selectChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick} />}
           {<AccordionCard
             calendar={phase2b} id={'phase2b'} title={'Phase 2B'}
+            challenges={this.state.challenges}
             selectChallenge={this.props.selectChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick} />}
           {<AccordionCard
             calendar={phase3} id={'phase3'} title={'Phase 3'}
+            challenges={this.state.challenges}
             selectChallenge={this.props.selectChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick} />}
           {<AccordionCard
             calendar={phase3b} id={'phase3b'} title={'Phase 3B'}
+            challenges={this.state.challenges}
             selectChallenge={this.props.selectChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick} />}
           {<AccordionCard
             calendar={phase4} id={'phase4'} title={'Phase 4'}
+            challenges={this.state.challenges}
             selectChallenge={this.props.selectChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick} />}
           {<AccordionCard
             calendar={phase4b} id={'phase4b'} title={'Phase 4B'}
+            challenges={this.state.challenges}
             selectChallenge={this.props.selectChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick} />}
         </div>
