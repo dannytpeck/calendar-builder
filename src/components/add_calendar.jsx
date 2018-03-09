@@ -26,7 +26,6 @@ class AddCalendar extends Component {
     this.handleChangeWeeklyPoints = this.handleChangeWeeklyPoints.bind(this);
     this.handleChangeTeamPoints = this.handleChangeTeamPoints.bind(this);
 
-    this.calculatePhases = this.calculatePhases.bind(this);
     this.loadTemplate = this.loadTemplate.bind(this);
     this.createCalendar = this.createCalendar.bind(this);
   }
