@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import ChallengeSelect from './challenge_select';
+
 class AccordionCard extends Component {
   constructor(props) {
     super(props);
@@ -112,6 +114,7 @@ class AccordionCard extends Component {
                   <td>
                     <img className="add-challenge-icon" src="/images/icon_add.svg" />
                     <span className="add-challenge-text">Add Challenge</span>
+                    <ChallengeSelect />
                   </td>
                 </tr>
               </tfoot>

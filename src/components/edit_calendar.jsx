@@ -17,45 +17,25 @@ class EditCalendar extends Component {
   render() {
     const calendar = this.props.selectedCalendar;
 
-    const yearlong = calendar.filter(challenge => {
-      return challenge.fields.Phase === 'Yearlong';
-    });
-    const phase1 = calendar.filter(challenge => {
-      return challenge.fields.Phase === 'Phase 1';
-    });
-    const phase1b = calendar.filter(challenge => {
-      return challenge.fields.Phase === 'Phase 1B';
-    });
-    const phase2 = calendar.filter(challenge => {
-      return challenge.fields.Phase === 'Phase 2';
-    });
-    const phase2b = calendar.filter(challenge => {
-      return challenge.fields.Phase === 'Phase 2B';
-    });
-    const phase3 = calendar.filter(challenge => {
-      return challenge.fields.Phase === 'Phase 3';
-    });
-    const phase3b = calendar.filter(challenge => {
-      return challenge.fields.Phase === 'Phase 3B';
-    });
-    const phase4 = calendar.filter(challenge => {
-      return challenge.fields.Phase === 'Phase 4';
-    });
-    const phase4b = calendar.filter(challenge => {
-      return challenge.fields.Phase === 'Phase 4B';
-    });
+    const yearlong = calendar.filter(challenge => challenge.fields.Phase === 'Yearlong');
+    const phase1 = calendar.filter(challenge => challenge.fields.Phase === 'Phase 1');
+    const phase1b = calendar.filter(challenge => challenge.fields.Phase === 'Phase 1B');
+    const phase2 = calendar.filter(challenge => challenge.fields.Phase === 'Phase 2');
+    const phase2b = calendar.filter(challenge => challenge.fields.Phase === 'Phase 2B');
+    const phase3 = calendar.filter(challenge => challenge.fields.Phase === 'Phase 3');
+    const phase3b = calendar.filter(challenge => challenge.fields.Phase === 'Phase 3B');
+    const phase4 = calendar.filter(challenge => challenge.fields.Phase === 'Phase 4');
+    const phase4b = calendar.filter(challenge => challenge.fields.Phase === 'Phase 4B');
 
     let totalPoints = 0;
     calendar.map(challenge => {
       const points = Number(challenge.fields['Total Points']);
       if (!isNaN(points)) {
-        totalPoints += Number(challenge.fields['Total Points']);
+        totalPoints += points;
       }
     });
 
-    const programYear = calendar[0].fields['Program Year'] ?
-                        calendar[0].fields['Program Year'] :
-                        moment().format('YYYY');
+    const programYear = calendar[0].fields['Program Year'] ? calendar[0].fields['Program Year'] : moment().format('YYYY');
 
     return (
       <div className="add-calendar">
