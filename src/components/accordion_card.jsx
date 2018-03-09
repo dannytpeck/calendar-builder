@@ -37,39 +37,43 @@ class AccordionCard extends Component {
   }
 
   renderRow(challenge) {
-    return (
-      <tr key={challenge.id}>
-        <td scope="row">{challenge.fields['Name']}</td>
-        <td>{challenge.fields['Required']}</td>
-        <td>{challenge.fields['Verified'] === 'No' ? 'Self-Report' : 'CIE'}</td>
-        <td>
-          <img className="table-icon" src={this.hpImage(challenge.fields['HP Element'])} />
-          <img className="table-icon" src={this.teamImage(challenge.fields['Team/Ix'])} />
-        </td>
-        <td>{challenge.fields['Start date']} - {challenge.fields['End date']}</td>
-        <td>{challenge.fields['Frequency']}</td>
-      <td>{challenge.fields['Points']} ({challenge.fields['Total Points']})</td>
-        <td>
-          <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
-          <img className="table-icon" src="images/icon_comment.svg" />
-          <img className="table-icon" src="images/icon_delete.svg" />
-        </td>
-      </tr>
-    );
+    if (challenge.fields) {
+      return (
+        <tr key={challenge.id}>
+          <td scope="row">{challenge.fields['Name']}</td>
+          <td>{challenge.fields['Required']}</td>
+          <td>{challenge.fields['Verified'] === 'No' ? 'Self-Report' : 'CIE'}</td>
+          <td>
+            <img className="table-icon" src={this.hpImage(challenge.fields['HP Element'])} />
+            <img className="table-icon" src={this.teamImage(challenge.fields['Team/Ix'])} />
+          </td>
+          <td>{challenge.fields['Start date']} - {challenge.fields['End date']}</td>
+          <td>{challenge.fields['Frequency']}</td>
+        <td>{challenge.fields['Points']} ({challenge.fields['Total Points']})</td>
+          <td>
+            <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
+            <img className="table-icon" src="images/icon_comment.svg" />
+            <img className="table-icon" src="images/icon_delete.svg" />
+          </td>
+        </tr>
+      );
+    }
   }
 
   render() {
-    const id = this.props.id;
-    const calendar = this.props.calendar;
+    const { id, calendar, title } = this.props;
 
-    const title = calendar[0].fields['Phase'];
-    const startDate = calendar[0].fields['Start date'];
-    const endDate = calendar[0].fields['End date'];
-
-    let totalPoints = 0;
-    calendar.map(challenge => {
-      totalPoints += Number(challenge.fields['Total Points']);
-    });
+    let startDate, endDate, totalPoints = 0;
+    if (calendar.length > 0) {
+      startDate = calendar[0].fields['Start date'];
+      endDate = calendar[0].fields['End date'];
+      calendar.map(challenge => {
+        totalPoints += Number(challenge.fields['Total Points']);
+      });
+    } else {
+      startDate = '';
+      endDate = '';
+    }
 
     return (
       <div className="card">

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import Header from './header';
 import ClientName from './client_name';
@@ -44,10 +45,17 @@ class EditCalendar extends Component {
       return challenge.fields.Phase === 'Phase 4B';
     });
 
-    let points = 0;
+    let totalPoints = 0;
     calendar.map(challenge => {
-      points += Number(challenge.fields['Total Points']);
+      const points = Number(challenge.fields['Total Points']);
+      if (!isNaN(points)) {
+        totalPoints += Number(challenge.fields['Total Points']);
+      }
     });
+
+    const programYear = calendar[0].fields['Program Year'] ?
+                        calendar[0].fields['Program Year'] :
+                        moment().format('YYYY');
 
     return (
       <div className="add-calendar">
@@ -56,7 +64,7 @@ class EditCalendar extends Component {
         <ClientName selectedClient={this.props.selectedClient} />
 
         <div className="calendar-name-and-link">
-          <h4 className="calendar-name">{'Calendar_' + calendar[0].fields['Program Year']}</h4>
+          <h4 className="calendar-name">{'Calendar_' + programYear}</h4>
           <img className="calendar-link"
             type="image"
             src="images/icon_link.svg"
@@ -66,45 +74,45 @@ class EditCalendar extends Component {
         </div>
 
         <div className="calendar-accordion my-4 clear" id="accordion" role="tablist">
-          {yearlong.length > 0 ? <AccordionCard
-                                  calendar={yearlong} id={'yearlong'}
-                                  selectChallenge={this.props.selectChallenge}
-                                  handleEditChallengeClick={this.props.handleEditChallengeClick} /> : ''}
-          {phase1.length > 0 ? <AccordionCard
-                                  calendar={phase1} id={'phase1'}
-                                  selectChallenge={this.props.selectChallenge}
-                                  handleEditChallengeClick={this.props.handleEditChallengeClick} /> : ''}
-          {phase1b.length > 0 ? <AccordionCard
-                                  calendar={phase1b} id={'phase1b'}
-                                  selectChallenge={this.props.selectChallenge}
-                                  handleEditChallengeClick={this.props.handleEditChallengeClick} /> : ''}
-          {phase2.length > 0 ? <AccordionCard
-                                  calendar={phase2} id={'phase2'}
-                                  selectChallenge={this.props.selectChallenge}
-                                  handleEditChallengeClick={this.props.handleEditChallengeClick} /> : ''}
-          {phase2b.length > 0 ? <AccordionCard
-                                  calendar={phase2b} id={'phase2b'}
-                                  selectChallenge={this.props.selectChallenge}
-                                  handleEditChallengeClick={this.props.handleEditChallengeClick} /> : ''}
-          {phase3.length > 0 ? <AccordionCard
-                                  calendar={phase3} id={'phase3'}
-                                  selectChallenge={this.props.selectChallenge}
-                                  handleEditChallengeClick={this.props.handleEditChallengeClick} /> : ''}
-          {phase3b.length > 0 ? <AccordionCard
-                                  calendar={phase3b} id={'phase3b'}
-                                  selectChallenge={this.props.selectChallenge}
-                                  handleEditChallengeClick={this.props.handleEditChallengeClick} /> : ''}
-          {phase4.length > 0 ? <AccordionCard
-                                  calendar={phase4} id={'phase4'}
-                                  selectChallenge={this.props.selectChallenge}
-                                  handleEditChallengeClick={this.props.handleEditChallengeClick} /> : ''}
-          {phase4b.length > 0 ? <AccordionCard
-                                  calendar={phase4b} id={'phase4b'}
-                                  selectChallenge={this.props.selectChallenge}
-                                  handleEditChallengeClick={this.props.handleEditChallengeClick} /> : ''}
+          {<AccordionCard
+            calendar={yearlong} id={'yearlong'} title={'Yearlong'}
+            selectChallenge={this.props.selectChallenge}
+            handleEditChallengeClick={this.props.handleEditChallengeClick} />}
+          {<AccordionCard
+            calendar={phase1} id={'phase1'} title={'Phase 1'}
+            selectChallenge={this.props.selectChallenge}
+            handleEditChallengeClick={this.props.handleEditChallengeClick} />}
+          {<AccordionCard
+            calendar={phase1b} id={'phase1b'} title={'Phase 1B'}
+            selectChallenge={this.props.selectChallenge}
+            handleEditChallengeClick={this.props.handleEditChallengeClick} />}
+          {<AccordionCard
+            calendar={phase2} id={'phase2'} title={'Phase 2'}
+            selectChallenge={this.props.selectChallenge}
+            handleEditChallengeClick={this.props.handleEditChallengeClick} />}
+          {<AccordionCard
+            calendar={phase2b} id={'phase2b'} title={'Phase 2B'}
+            selectChallenge={this.props.selectChallenge}
+            handleEditChallengeClick={this.props.handleEditChallengeClick} />}
+          {<AccordionCard
+            calendar={phase3} id={'phase3'} title={'Phase 3'}
+            selectChallenge={this.props.selectChallenge}
+            handleEditChallengeClick={this.props.handleEditChallengeClick} />}
+          {<AccordionCard
+            calendar={phase3b} id={'phase3b'} title={'Phase 3B'}
+            selectChallenge={this.props.selectChallenge}
+            handleEditChallengeClick={this.props.handleEditChallengeClick} />}
+          {<AccordionCard
+            calendar={phase4} id={'phase4'} title={'Phase 4'}
+            selectChallenge={this.props.selectChallenge}
+            handleEditChallengeClick={this.props.handleEditChallengeClick} />}
+          {<AccordionCard
+            calendar={phase4b} id={'phase4b'} title={'Phase 4B'}
+            selectChallenge={this.props.selectChallenge}
+            handleEditChallengeClick={this.props.handleEditChallengeClick} />}
         </div>
 
-        <h5 className="point-total my-3">{points} Points</h5>
+        <h5 className="point-total my-3">{totalPoints} Points</h5>
 
         <div className="buttons">
           <span className="cancel-button" onClick={this.props.handleCancelClick}>Cancel</span>
