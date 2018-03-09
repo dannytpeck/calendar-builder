@@ -4,7 +4,7 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <a href="/">
+        <a href="#">
           <img className="home-button" src="images/icon_home.svg" />
         </a>
         <img className="logo" src="images/ADURO-Logo-Horizontal.png" />
