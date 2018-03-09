@@ -107,6 +107,14 @@ class AccordionCard extends Component {
               <tbody>
                 {calendar.map(challenge => this.renderRow(challenge))}
               </tbody>
+              <tfoot>
+                <tr>
+                  <td>
+                    <img className="add-challenge-icon" src="/images/icon_add.svg" />
+                    <span className="add-challenge-text">Add Challenge</span>
+                  </td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>

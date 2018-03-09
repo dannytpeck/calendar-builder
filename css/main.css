@@ -121,6 +121,10 @@ h1, h2, h3, h4, h5 {
   right: 15px;
 }
 
+.add-challenge-text {
+  vertical-align: middle;
+}
+
 /* Helpers */
 .clear {
   clear: both;
@@ -173,6 +177,8 @@ h1, h2, h3, h4, h5 {
 
 .add-icon {
   width: 32px;
+  border-radius: 50%;
+  background-color: #d92c27;
 }
 
 .calendar-link {
@@ -193,4 +199,11 @@ h1, h2, h3, h4, h5 {
 .delete-resource-icon {
   width: 24px;
   padding-top: 50%;
+}
+
+.add-challenge-icon {
+  width: 28px;
+  border-radius: 50%;
+  background-color: #d92c27;
+  margin: 8px;
 }
