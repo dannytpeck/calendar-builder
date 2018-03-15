@@ -27,6 +27,7 @@ class AddCalendar extends Component {
     this.handleChangeTeamPoints = this.handleChangeTeamPoints.bind(this);
 
     this.createCalendar = this.createCalendar.bind(this);
+    this.submitCalendar = this.submitCalendar.bind(this);
   }
 
   componentDidMount() {
@@ -61,43 +62,96 @@ class AddCalendar extends Component {
     return allInputsAreValid;
   }
 
-  createCalendar(e) {
+  createCalendar(records) {
     const validated = this.validateFields();
 
     const { template, startDate, endDate,
             oneTimePoints, weeklyPoints, teamPoints } = this.state;
 
+    const phase1start = startDate;
+    const phase1bstart = moment(phase1start).add(21, 'days').format();
+    const phase1end = moment(phase1start).add(90, 'days').format();
+    const phase2start = moment(phase1end).add(1, 'days').format();
+    const phase2bstart = moment(phase2start).add(21, 'days').format();
+    const phase2end = moment(phase2start).add(83, 'days').format();
+    const phase3start = moment(phase2end).add(1, 'days').format();
+    const phase3bstart = moment(phase3start).add(21, 'days').format();
+    const phase3end = moment(phase3start).add(83, 'days').format();
+    const phase4start = moment(phase3end).add(1, 'days').format();
+    const phase4bstart = moment(phase4start).add(21, 'days').format();
+    const phase4end = endDate;
+
+    records.map(record => {
+      switch (record.fields['Phase']) {
+        case 'Yearlong':
+          record.fields['Start date'] = startDate;
+          record.fields['End date'] = endDate;
+          break;
+        case 'Phase 1':
+          record.fields['Start date'] = phase1start;
+          record.fields['End date'] = phase1end;
+          break;
+        case 'Phase 1B':
+          record.fields['Start date'] = phase1bstart;
+          record.fields['End date'] = phase1end;
+          break;
+        case 'Phase 2':
+          record.fields['Start date'] = phase2start;
+          record.fields['End date'] = phase2end;
+          break;
+        case 'Phase 2B':
+          record.fields['Start date'] = phase2bstart;
+          record.fields['End date'] = phase2end;
+          break;
+        case 'Phase 3':
+          record.fields['Start date'] = phase3start;
+          record.fields['End date'] = phase3end;
+          break;
+        case 'Phase 3B':
+          record.fields['Start date'] = phase3bstart;
+          record.fields['End date'] = phase3end;
+          break;
+        case 'Phase 4':
+          record.fields['Start date'] = phase4start;
+          record.fields['End date'] = phase4end;
+          break;
+        case 'Phase 4B':
+          record.fields['Start date'] = phase4bstart;
+          record.fields['End date'] = phase4end;
+          break;
+      }
+
+    });
+
+    console.log(records);
+
+    return records;
+  }
+
+  submitCalendar(e) {
+    const validated = this.validateFields();
+    const { template } = this.state;
+
     if (validated) {
-      const phase1start = startDate;
-      const phase1end = moment(phase1start).add(90, 'days').format();
-      const phase2start = moment(phase1end).add(1, 'days').format();
-      const phase2end = moment(phase2start).add(83, 'days').format();
-      const phase3start = moment(phase2end).add(1, 'days').format();
-      const phase3end = moment(phase3start).add(83, 'days').format();
-      const phase4start = moment(phase3end).add(1, 'days').format();
-      const phase4end = endDate;
+      let url;
+
+      switch (template) {
+        case 'HP 2018 Calendar':
+          url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Templates?api_key=keyCxnlep0bgotSrX&view=Default';
+          break;
+        default:
+          url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/EmptyCalendar?api_key=keyCxnlep0bgotSrX';
+          break;
+      }
+
+      axios.get(url)
+        .then(response => {
+          const calendar = this.createCalendar(response.data.records);
+          this.props.handleNextClick(calendar);
+        })
+        .catch(error => console.error(error));
     }
 
-    let url;
-
-    switch (template) {
-      case 'HP 2018 Calendar':
-        url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Templates?api_key=keyCxnlep0bgotSrX&view=Default';
-        break;
-      default:
-        url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/EmptyCalendar?api_key=keyCxnlep0bgotSrX';
-        break;
-    }
-
-    axios.get(url)
-      .then(response => {
-
-        const records = response.data.records;
-        console.log(records);
-        this.props.handleNextClick(records);
-
-      })
-      .catch(error => console.error(error));
   }
 
   handleChangeTemplate(e) {
@@ -169,7 +223,7 @@ class AddCalendar extends Component {
         <div className="buttons my-5">
           <span className="cancel-button" onClick={this.props.handleCancelClick}>Cancel</span>
           {/* <button className="btn btn-primary next-button" onClick={this.loadTemplate}>Next</button> */}
-          <button className="btn btn-primary next-button" onClick={this.createCalendar}>Next</button>
+          <button className="btn btn-primary next-button" onClick={this.submitCalendar}>Next</button>
         </div>
 
       </div>
