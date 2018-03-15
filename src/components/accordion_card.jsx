@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
 import ChallengeSelect from './challenge_select';
 
@@ -13,7 +14,6 @@ class AccordionCard extends Component {
   }
 
   editChallenge(challenge) {
-    this.props.selectChallenge(challenge);
     this.props.handleEditChallengeClick();
   }
 
@@ -39,6 +39,9 @@ class AccordionCard extends Component {
   }
 
   renderRow(challenge) {
+    const startDate = moment(challenge.fields['Start date']).format('L');
+    const endDate = moment(challenge.fields['End date']).format('L');
+
     if (challenge.fields) {
       return (
         <tr key={challenge.id}>
@@ -49,7 +52,7 @@ class AccordionCard extends Component {
             <img className="table-icon" src={this.hpImage(challenge.fields['HP Element'])} />
             <img className="table-icon" src={this.teamImage(challenge.fields['Team/Ix'])} />
           </td>
-          <td>{challenge.fields['Start date']} - {challenge.fields['End date']}</td>
+          <td>{startDate} - {endDate}</td>
           <td>{challenge.fields['Frequency']}</td>
         <td>{challenge.fields['Points']} ({challenge.fields['Total Points']})</td>
           <td>
@@ -67,8 +70,8 @@ class AccordionCard extends Component {
 
     let startDate, endDate, totalPoints = 0;
     if (calendar.length > 0) {
-      startDate = calendar[0].fields['Start date'];
-      endDate = calendar[0].fields['End date'];
+      startDate = moment(calendar[0].fields['Start date']).format('L');
+      endDate = moment(calendar[0].fields['End date']).format('L');
       calendar.map(challenge => {
         totalPoints += Number(challenge.fields['Total Points']);
       });
@@ -112,9 +115,8 @@ class AccordionCard extends Component {
               <tfoot>
                 <tr>
                   <td>
+                    <ChallengeSelect challenges={this.props.challenges} selectChallenge={this.props.selectChallenge} />
                     <img className="add-challenge-icon" src="images/icon_add.svg" />
-                    <span className="add-challenge-text">Add Challenge</span>
-                    <ChallengeSelect challenges={this.props.challenges} />
                   </td>
                 </tr>
               </tfoot>

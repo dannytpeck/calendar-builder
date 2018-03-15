@@ -20,10 +20,10 @@ class ChallengeSelect extends Component {
     }
   }
 
-  selectChallenge(client) {
-    // const name = client.fields['Account Name'];
-    // this.props.selectClient(client);
-    // this.setState({ open: false, searchText: name });
+  selectChallenge(challenge) {
+    const title = challenge.title;
+    this.props.selectChallenge(challenge);
+    this.setState({ open: false, searchText: title });
   }
 
   cleanTitle(title) {
@@ -38,7 +38,7 @@ class ChallengeSelect extends Component {
 
     return (
       <span className="dropdown-item" key={slug}
-        onClick={() => this.selectChallenge(title)}>
+        onClick={() => this.selectChallenge(challenge)}>
         {title}
       </span>
     );
@@ -55,7 +55,7 @@ class ChallengeSelect extends Component {
       <div className="challenge-select">
         <div className="dropdown">
           <div className="challenge-search input-group">
-            <input value={this.state.searchText} onChange={this.handleChange} type="text" className="form-control" placeholder="Challenge" />
+            <input value={this.state.searchText} onChange={this.handleChange} type="text" className="challenge-search-box form-control" placeholder="Add Challenge" />
             <span className="oi oi-magnifying-glass"></span>
           </div>
 
