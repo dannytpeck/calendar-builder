@@ -63,10 +63,7 @@ class AddCalendar extends Component {
   }
 
   createCalendar(records) {
-    const validated = this.validateFields();
-
-    const { template, startDate, endDate,
-            oneTimePoints, weeklyPoints, teamPoints } = this.state;
+    const { startDate, endDate, oneTimePoints, weeklyPoints, teamPoints } = this.state;
 
     const phase1start = startDate;
     const phase1bstart = moment(phase1start).add(21, 'days').format();
@@ -82,6 +79,7 @@ class AddCalendar extends Component {
     const phase4end = endDate;
 
     records.map(record => {
+      // Update phase dates based on user input
       switch (record.fields['Phase']) {
         case 'Yearlong':
           record.fields['Start date'] = startDate;
@@ -119,6 +117,23 @@ class AddCalendar extends Component {
           record.fields['Start date'] = phase4bstart;
           record.fields['End date'] = phase4end;
           break;
+      }
+
+      // Update point values based on user input
+      const teamType = record.fields['Team/Ix'];
+      const frequency = record.fields['Frequency'];
+      const verified = record.fields['Verified'] === 'Yes';
+
+      if (!verified) {
+        if (teamType === 'Team') {
+          record.fields['Points'] = teamPoints;
+        } else {
+          if (frequency === 'One Time') {
+            record.fields['Points'] = oneTimePoints;
+          } else if (frequency === 'Weekly') {
+            record.fields['Points'] = weeklyPoints;
+          }
+        }
       }
 
     });

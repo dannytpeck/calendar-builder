@@ -56,8 +56,6 @@ class EditCalendar extends Component {
 
     const programYear = calendar[0].fields['Program Year'] ? calendar[0].fields['Program Year'] : moment().format('YYYY');
 
-    console.log(this.state);
-
     return (
       <div className="add-calendar">
         <Header />

@@ -72,8 +72,26 @@ class AccordionCard extends Component {
     if (calendar.length > 0) {
       startDate = moment(calendar[0].fields['Start date']).format('L');
       endDate = moment(calendar[0].fields['End date']).format('L');
+
       calendar.map(challenge => {
-        totalPoints += Number(challenge.fields['Total Points']);
+        const frequency = challenge.fields['Frequency'];
+        const start = moment(challenge.fields['Start date']);
+        const end = moment(challenge.fields['End date']);
+        const dayDifference = end.diff(start, 'days');
+        const weeks = Math.ceil(dayDifference / 7);
+
+        // Update total points based on points and frequency
+        if (frequency === 'One Time') {
+          challenge.fields['Total Points'] = challenge.fields['Points'];
+        } else if (frequency === 'Weekly') {
+          challenge.fields['Total Points'] = challenge.fields['Points'] * weeks;
+        }
+
+        // Calculate total points for the whole phase
+        const points = Number(challenge.fields['Total Points']);
+        if (!isNaN(points)) {
+          totalPoints += points;
+        }
       });
     } else {
       startDate = '';
