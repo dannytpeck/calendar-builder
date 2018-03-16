@@ -33,6 +33,9 @@ class ChallengeSelect extends Component {
     const calendar = this.props.selectedCalendar;
     const challenge = this.props.selectedChallenge;
     const employerName = this.props.selectedClient.fields['Limeade e='];
+    const startDate = this.props.startDate ? this.props.startDate : moment().format();
+    const endDate = this.props.endDate ? this.props.endDate : moment().format();
+
     let programYear = moment().format('YYYY');
     if (calendar[0]) {
       programYear = calendar[0].fields['Program Year'];
@@ -47,8 +50,8 @@ class ChallengeSelect extends Component {
           'EmployerName': employerName,
           'Program Year': programYear,
           'Phase': this.props.phase,
-          'Start date': '1/1/1970',
-          'End date': '1/1/1970',
+          'Start date': startDate,
+          'End date': endDate,
           'Required': 'No',
           'Verified': 'No',
           'Name': challenge.title,

@@ -140,7 +140,9 @@ class AccordionCard extends Component {
                       selectedCalendar={this.props.selectedCalendar}
                       selectedChallenge={this.props.selectedChallenge}
                       addChallengeToCalendar={this.props.addChallengeToCalendar}
-                      phase={this.props.title} />
+                      phase={this.props.title}
+                      startDate={startDate}
+                      endDate={endDate} />
                   </td>
                 </tr>
               </tfoot>
