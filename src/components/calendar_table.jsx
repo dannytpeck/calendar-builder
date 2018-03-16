@@ -29,7 +29,7 @@ class CalendarTable extends Component {
   editCalendar(calendar) {
     const employerName = calendar.fields.client;
     const programYear = calendar.fields.year;
-    const url = `https://api.airtable.com/v0/appN1J6yscNwlzbzq/Challenges?api_key=keyCxnlep0bgotSrX&filterByFormula=AND({EmployerName}='${employerName}',{Program Year}='${programYear}')`;
+    const url = `https://api.airtable.com/v0/appN1J6yscNwlzbzq/Challenges?api_key=keyCxnlep0bgotSrX&view=Default&filterByFormula=AND({EmployerName}='${employerName}',{Program Year}='${programYear}')`;
 
     axios.get(url)
       .then(response => {
