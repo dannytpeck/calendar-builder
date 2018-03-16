@@ -143,8 +143,6 @@ h1, h2, h3, h4, h5 {
   float: right;
 }
 
-/* Images */
-
 .oi-magnifying-glass {
   position: absolute;
   z-index: 10;
@@ -215,4 +213,26 @@ h1, h2, h3, h4, h5 {
 
 .challenge-search {
   width: 100%;
+}
+
+.editing-row .form-control {
+  width: auto;
+}
+
+.editing-row .edit-points {
+  display: inline-block;
+  margin-right: 5px;
+  width: 50%;
+}
+
+.edit-date {
+  display: inline-block;
+}
+
+.category-cell {
+  min-width: 88px;
+}
+
+.actions-cell {
+  min-width: 132px;
 }
