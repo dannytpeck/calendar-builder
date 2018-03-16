@@ -25,6 +25,7 @@ class App extends Component {
     this.viewAddCalendar = this.viewAddCalendar.bind(this);
     this.viewEditCalendar = this.viewEditCalendar.bind(this);
     this.viewEditChallenge = this.viewEditChallenge.bind(this);
+    this.addChallengeToCalendar = this.addChallengeToCalendar.bind(this);
   }
 
   // When app starts, fetch clients and set initial view
@@ -63,6 +64,11 @@ class App extends Component {
     this.setState({ selectedChallenge: challenge });
   }
 
+  addChallengeToCalendar(challenge) {
+    const newCalendar = [...this.state.selectedCalendar, challenge];
+    this.setState({ selectedCalendar: newCalendar, selectedChallenge: null });
+  }
+
   renderView(view) {
     switch (view) {
       case 'ShowCalendars':
@@ -89,8 +95,9 @@ class App extends Component {
             selectedCalendar={this.state.selectedCalendar}
             selectedChallenge={this.state.selectedChallenge}
             handleCancelClick={this.viewShowCalendars}
+            handleEditChallengeClick={this.viewEditChallenge}
             selectChallenge={this.selectChallenge}
-            handleEditChallengeClick={this.viewEditChallenge} />
+            addChallengeToCalendar={this.addChallengeToCalendar} />
         );
       case 'EditChallenge':
         return (

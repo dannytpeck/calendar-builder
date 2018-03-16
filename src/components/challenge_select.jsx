@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import moment from 'moment';
+import crypto from 'crypto';
 
 class ChallengeSelect extends Component {
   constructor(props) {
@@ -28,14 +30,42 @@ class ChallengeSelect extends Component {
   }
 
   addChallenge() {
+    const calendar = this.props.selectedCalendar;
     const challenge = this.props.selectedChallenge;
-
-    if (challenge) {
-      console.log('Added ' + challenge.title + '!');
-    } else {
-      console.log('No challenge selected!');
+    const employerName = this.props.selectedClient.fields['Limeade e='];
+    let programYear = moment().format('YYYY');
+    if (calendar[0]) {
+      programYear = calendar[0].fields['Program Year'];
     }
 
+    if (challenge) {
+      const id = 'rec' + crypto.randomBytes(14).toString('hex').slice(0, 14);
+
+      const newChallenge = {
+        id: id,
+        fields: {
+          'EmployerName': employerName,
+          'Program Year': programYear,
+          'Phase': this.props.phase,
+          'Start date': '1/1/1970',
+          'End date': '1/1/1970',
+          'Required': 'No',
+          'Verified': 'No',
+          'Name': challenge.title,
+          'Team/Ix': 'Individual',
+          'Frequency': 'One Time',
+          'Points': 0,
+          'Total Points': 0,
+          'Device Enabled': 'No',
+          'HP Element': 'Health & Fitness',
+        }
+      };
+
+      this.props.addChallengeToCalendar(newChallenge);
+      this.setState({ searchText: '' });
+    } else {
+      alert('Select a challenge!');
+    }
   }
 
   cleanTitle(title) {
