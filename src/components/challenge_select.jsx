@@ -10,6 +10,7 @@ class ChallengeSelect extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.addChallenge = this.addChallenge.bind(this);
   }
 
   handleChange(e) {
@@ -24,6 +25,17 @@ class ChallengeSelect extends Component {
     const title = challenge.title;
     this.props.selectChallenge(challenge);
     this.setState({ open: false, searchText: title });
+  }
+
+  addChallenge() {
+    const challenge = this.props.selectedChallenge;
+
+    if (challenge) {
+      console.log('Added ' + challenge.title + '!');
+    } else {
+      console.log('No challenge selected!');
+    }
+
   }
 
   cleanTitle(title) {
@@ -63,6 +75,7 @@ class ChallengeSelect extends Component {
             {filteredChallenges.length ? filteredChallenges.map(challenge => this.renderChallenge(challenge)) : ''}
           </div>
         </div>
+        <img className="add-challenge-icon" src="images/icon_add.svg" onClick={this.addChallenge} />
       </div>
     );
   }

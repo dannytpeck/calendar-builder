@@ -87,6 +87,7 @@ class App extends Component {
           <EditCalendar
             selectedClient={this.state.selectedClient}
             selectedCalendar={this.state.selectedCalendar}
+            selectedChallenge={this.state.selectedChallenge}
             handleCancelClick={this.viewShowCalendars}
             selectChallenge={this.selectChallenge}
             handleEditChallengeClick={this.viewEditChallenge} />
