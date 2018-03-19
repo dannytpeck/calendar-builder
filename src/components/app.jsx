@@ -59,6 +59,8 @@ class App extends Component {
         .catch(error => console.error(error));
     });
 
+    this.viewShowCalendars();
+
   }
 
   selectClient(client) {
