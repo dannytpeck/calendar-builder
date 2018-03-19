@@ -39,6 +39,20 @@ class CalendarTable extends Component {
       .catch(error => console.error(error));
   }
 
+  deleteCalendar(calendarToDelete) {
+    const url = `https://api.airtable.com/v0/appN1J6yscNwlzbzq/Calendars/${calendarToDelete.id}?api_key=keyCxnlep0bgotSrX`;
+
+    // Remove calendar from DB
+    axios.delete(url).then(response => {
+      // Then remove calendar from view
+      let updatedCalendars = this.state.calendars.filter(calendar => calendar.id !== calendarToDelete.id);
+      this.setState({
+        calendars: updatedCalendars
+      });
+    }).catch(error => console.error(error));
+
+  }
+
   renderRow(calendar) {
     const { name, year, updated, status } = calendar.fields;
 
@@ -52,7 +66,7 @@ class CalendarTable extends Component {
           <img onClick={() => this.editCalendar(calendar)} className="edit-icon" src="images/icon_edit.svg" />
         </td>
         <td>
-          <img className="delete-icon" src="images/icon_delete.svg" />
+          <img onClick={() => this.deleteCalendar(calendar)} className="delete-icon" src="images/icon_delete.svg" />
         </td>
       </tr>
     );
