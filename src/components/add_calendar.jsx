@@ -30,10 +30,6 @@ class AddCalendar extends Component {
     this.submitCalendar = this.submitCalendar.bind(this);
   }
 
-  componentDidMount() {
-    //this.loadTemplate();
-  }
-
   validateFields() {
     /* globals $ */
     const $startDate = $('#startDate');
@@ -138,7 +134,21 @@ class AddCalendar extends Component {
 
     });
 
-    console.log(records);
+    // Create the calendar in airtable db
+    const url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Calendars?api_key=keyCxnlep0bgotSrX';
+    const data = {
+      fields: {
+        client: this.props.selectedClient.fields['Limeade e='],
+        name: 'Calendar_' + moment().format('YYYY'),
+        year: moment().format('YYYY'),
+        updated: moment().format('L'),
+        status: 'In Progress'
+      }
+    };
+
+    axios.post(url, data)
+      .then(response => console.log(response))
+      .catch(error => console.error(error));
 
     return records;
   }
@@ -163,6 +173,7 @@ class AddCalendar extends Component {
         .then(response => {
           const calendar = this.createCalendar(response.data.records);
           this.props.handleNextClick(calendar);
+
         })
         .catch(error => console.error(error));
     }
@@ -237,7 +248,6 @@ class AddCalendar extends Component {
 
         <div className="buttons my-5">
           <span className="cancel-button" onClick={this.props.handleCancelClick}>Cancel</span>
-          {/* <button className="btn btn-primary next-button" onClick={this.loadTemplate}>Next</button> */}
           <button className="btn btn-primary next-button" onClick={this.submitCalendar}>Next</button>
         </div>
 
