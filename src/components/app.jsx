@@ -26,6 +26,7 @@ class App extends Component {
     this.viewEditCalendar = this.viewEditCalendar.bind(this);
     this.viewEditChallenge = this.viewEditChallenge.bind(this);
     this.addChallengeToCalendar = this.addChallengeToCalendar.bind(this);
+    this.saveCalendar = this.saveCalendar.bind(this);
   }
 
   // When app starts, fetch clients and set initial view
@@ -40,6 +41,21 @@ class App extends Component {
     axios.get(url)
       .then(response => this.setState({ clients: response.data.records }))
       .catch(error => console.error(error));
+  }
+
+  saveCalendar() {
+    const calendar = this.state.selectedCalendar;
+    const employerName = this.state.selectedClient.fields['Limeade e='];
+
+    const url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Challenges?api_key=keyCxnlep0bgotSrX';
+    calendar.map(challenge => {
+      delete challenge.fields.id;
+      challenge.fields['EmployerName'] = employerName;
+
+      axios.post(url, { fields: challenge.fields })
+        .catch(error => console.error(error));
+    });
+
   }
 
   selectClient(client) {
@@ -85,6 +101,7 @@ class App extends Component {
             selectedCalendar={this.state.selectedCalendar}
             selectedChallenge={this.state.selectedChallenge}
             handleCancelClick={this.viewShowCalendars}
+            handleDoneClick={this.saveCalendar}
             handleEditChallengeClick={this.viewEditChallenge}
             selectChallenge={this.selectChallenge}
             addChallengeToCalendar={this.addChallengeToCalendar} />

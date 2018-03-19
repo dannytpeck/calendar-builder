@@ -178,7 +178,7 @@ class AccordionCard extends Component {
         if (frequency === 'One Time') {
           challenge.fields['Total Points'] = challenge.fields['Points'];
         } else if (frequency === 'Weekly') {
-          challenge.fields['Total Points'] = challenge.fields['Points'] * weeks;
+          challenge.fields['Total Points'] = (challenge.fields['Points'] * weeks).toString();
         }
 
         // Calculate total points for the whole phase

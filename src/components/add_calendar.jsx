@@ -147,7 +147,6 @@ class AddCalendar extends Component {
     };
 
     axios.post(url, data)
-      .then(response => console.log(response))
       .catch(error => console.error(error));
 
     return records;
