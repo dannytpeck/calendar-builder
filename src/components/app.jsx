@@ -15,7 +15,8 @@ class App extends Component {
       clients: [],
       selectedClient: null,
       selectedCalendar: null,
-      selectedChallenge: null
+      selectedChallenge: null,
+      programYear: null
     };
 
     this.selectClient = this.selectClient.bind(this);
@@ -27,6 +28,7 @@ class App extends Component {
     this.viewEditChallenge = this.viewEditChallenge.bind(this);
     this.addChallengeToCalendar = this.addChallengeToCalendar.bind(this);
     this.saveCalendar = this.saveCalendar.bind(this);
+    this.setProgramYear = this.setProgramYear.bind(this);
   }
 
   // When app starts, fetch clients and set initial view
@@ -51,6 +53,7 @@ class App extends Component {
     calendar.map(challenge => {
       delete challenge.fields.id;
       challenge.fields['EmployerName'] = employerName;
+      challenge.fields['Program Year'] = this.state.programYear;
 
       axios.post(url, { fields: challenge.fields })
         .catch(error => console.error(error));
@@ -68,6 +71,10 @@ class App extends Component {
 
   selectChallenge(challenge) {
     this.setState({ selectedChallenge: challenge });
+  }
+
+  setProgramYear(year) {
+    this.setState({ programYear: year });
   }
 
   addChallengeToCalendar(challenge) {
@@ -92,7 +99,8 @@ class App extends Component {
           <AddCalendar
             selectedClient={this.state.selectedClient}
             handleCancelClick={this.viewShowCalendars}
-            handleNextClick={this.viewEditCalendar} />
+            handleNextClick={this.viewEditCalendar}
+            setProgramYear={this.setProgramYear} />
         );
       case 'EditCalendar':
         return (

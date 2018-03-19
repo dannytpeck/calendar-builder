@@ -136,11 +136,13 @@ class AddCalendar extends Component {
 
     // Create the calendar in airtable db
     const url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Calendars?api_key=keyCxnlep0bgotSrX';
+    const year = moment(startDate).format('YYYY');
+    this.props.setProgramYear(year);
     const data = {
       fields: {
         client: this.props.selectedClient.fields['Limeade e='],
-        name: 'Calendar_' + moment().format('YYYY'),
-        year: moment().format('YYYY'),
+        name: 'Calendar_' + year,
+        year: year,
         updated: moment().format('L'),
         status: 'In Progress'
       }
