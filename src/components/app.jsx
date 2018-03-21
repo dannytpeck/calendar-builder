@@ -40,18 +40,21 @@ class App extends Component {
   }
 
   fetchClients() {
-    const url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Clients?api_key=keyCxnlep0bgotSrX';
-
-    axios.get(url)
-      .then(response => this.setState({ clients: response.data.records }))
-      .catch(error => console.error(error));
+    base('Clients').select().eachPage((records, fetchNextPage) => {
+      this.setState({ clients: records });
+      fetchNextPage();
+    }, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
   }
 
   saveCalendar() {
     const calendar = this.state.selectedCalendar;
     const employerName = this.state.selectedClient.fields['Limeade e='];
 
-    const url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Challenges?api_key=keyCxnlep0bgotSrX';
     calendar.map(challenge => {
       delete challenge.fields.id;
       challenge.fields['EmployerName'] = employerName;
@@ -60,20 +63,16 @@ class App extends Component {
         challenge.fields['Program Year'] = this.state.programYear;
       }
 
-      base('Challenges').create(challenge.fields, function(err, record) {
+      base('Challenges').create(challenge.fields, (err, record) => {
         if (err) {
           console.error(err);
           return;
         }
         console.log(record.getId());
       });
-
-      // axios.post(url, { fields: challenge.fields })
-      //   .catch(error => console.error(error));
     });
 
     this.viewShowCalendars();
-
   }
 
   selectClient(client) {
