@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import Airtable from 'airtable';
+const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
 import Header from './header';
 import ClientName from './client_name';
@@ -11,17 +13,39 @@ class EditCalendar extends Component {
     super(props);
 
     this.state = {
-      challenges: []
+      challenges: [],
+      calendar: []
     };
   }
 
   componentDidMount() {
     this.fetchChallenges();
+    this.fetchCalendar();
 
     /* global $ */
     $('.calendar-link').tooltip({
       html: true,
       trigger: 'click'
+    });
+  }
+
+  fetchCalendar() {
+    const employerName = this.props.selectedClient.fields['Limeade e='];
+    const programYear = this.props.programYear;
+
+    base('Challenges').select({
+      view: 'Default',
+      filterByFormula: `AND({EmployerName}='${employerName}',{Program Year}='${programYear}')`
+    }).eachPage((records, fetchNextPage) => {
+
+      this.setState({ calendar: records });
+
+      fetchNextPage();
+    }, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
     });
   }
 
@@ -34,7 +58,7 @@ class EditCalendar extends Component {
   }
 
   render() {
-    const calendar = this.props.selectedCalendar;
+    const calendar = this.state.calendar;
 
     const yearlong = calendar.filter(challenge => challenge.fields.Phase === 'Yearlong');
     const phase1 = calendar.filter(challenge => challenge.fields.Phase === 'Phase 1');
@@ -54,7 +78,7 @@ class EditCalendar extends Component {
       }
     });
 
-    const programYear = calendar[0].fields['Program Year'] ? calendar[0].fields['Program Year'] : moment().format('YYYY');
+    const programYear = calendar[0] && calendar[0].fields['Program Year'] ? calendar[0].fields['Program Year'] : moment().format('YYYY');
 
     return (
       <div className="add-calendar">

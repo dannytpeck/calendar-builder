@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import moment from 'moment';
 
 import ChallengeSelect from './challenge_select';

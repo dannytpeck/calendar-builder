@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import moment from 'moment';
+import Airtable from 'airtable';
+const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
 import Header from './header';
 import ClientName from './client_name';
@@ -74,6 +75,10 @@ class AddCalendar extends Component {
     const phase4bstart = moment(phase4start).add(21, 'days').format();
     const phase4end = endDate;
 
+    const employerName = this.props.selectedClient.fields['Limeade e='];
+    const programYear = moment(startDate).format('YYYY');
+    this.props.setProgramYear(programYear);
+
     records.map(record => {
       // Update phase dates based on user input
       switch (record.fields['Phase']) {
@@ -132,26 +137,35 @@ class AddCalendar extends Component {
         }
       }
 
+      // Save the record to Airtable
+      delete record.fields.id;
+      record.fields['EmployerName'] = employerName;
+      record.fields['Program Year'] = programYear;
+
+      base('Challenges').create(record.fields, (err, record) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      });
+
     });
 
-    // Create the calendar in airtable db
-    const url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Calendars?api_key=keyCxnlep0bgotSrX';
-    const year = moment(startDate).format('YYYY');
-    this.props.setProgramYear(year);
-    const data = {
-      fields: {
-        client: this.props.selectedClient.fields['Limeade e='],
-        name: 'Calendar_' + year,
-        year: year,
-        updated: moment().format('L'),
-        status: 'In Progress'
+    // Create the calendar in airtable
+    base('Calendars').create({
+      client: this.props.selectedClient.fields['Limeade e='],
+      name: 'Calendar_' + programYear,
+      year: programYear,
+      updated: moment().format('L'),
+      status: 'In Progress'
+    }, function(err, record) {
+      if (err) {
+        console.error(err);
+        return;
       }
-    };
+    });
 
-    axios.post(url, data)
-      .catch(error => console.error(error));
-
-    return records;
+    return { employerName, programYear };
   }
 
   submitCalendar(e) {
@@ -159,24 +173,31 @@ class AddCalendar extends Component {
     const { template } = this.state;
 
     if (validated) {
-      let url;
+      let table;
 
       switch (template) {
         case 'HP 2018 Calendar':
-          url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Templates?api_key=keyCxnlep0bgotSrX&view=Default';
+          table = 'Templates';
           break;
         default:
-          url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/EmptyCalendar?api_key=keyCxnlep0bgotSrX';
+          table = 'EmptyCalendar';
           break;
       }
 
-      axios.get(url)
-        .then(response => {
-          const calendar = this.createCalendar(response.data.records);
-          this.props.handleNextClick(calendar);
+      base(table).select({
+        view: 'Default'
+      }).eachPage((records, fetchNextPage) => {
 
-        })
-        .catch(error => console.error(error));
+        this.createCalendar(records);
+        this.props.handleNextClick();
+
+        fetchNextPage();
+      }, (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      });
     }
 
   }

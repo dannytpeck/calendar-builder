@@ -17,7 +17,8 @@ class ShowCalendars extends Component {
         <CalendarTable
           selectedClient={this.props.selectedClient}
           selectCalendar={this.props.selectCalendar}
-          handleEditClick={this.props.handleEditClick} />
+          handleEditClick={this.props.handleEditClick}
+          setProgramYear={this.props.setProgramYear} />
 
         <div className="add-calendar-button my-4" onClick={this.props.handleAddClick}>
           <img className="add-icon" src="images/icon_add.svg" />

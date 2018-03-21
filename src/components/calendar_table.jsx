@@ -41,8 +41,8 @@ class CalendarTable extends Component {
       filterByFormula: `AND({EmployerName}='${employerName}',{Program Year}='${programYear}')`
     }).eachPage((records, fetchNextPage) => {
 
-      this.props.selectCalendar(records);
-      this.props.handleEditClick(records);
+      this.props.setProgramYear(programYear);
+      this.props.handleEditClick();
 
       fetchNextPage();
     }, (err) => {

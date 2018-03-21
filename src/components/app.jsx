@@ -69,7 +69,6 @@ class App extends Component {
           console.error(err);
           return;
         }
-        console.log(record.getId());
       });
     });
 
@@ -107,7 +106,8 @@ class App extends Component {
             selectClient={this.selectClient}
             selectCalendar={this.selectCalendar}
             handleEditClick={this.viewEditCalendar}
-            handleAddClick={this.viewAddCalendar} />
+            handleAddClick={this.viewAddCalendar}
+            setProgramYear={this.setProgramYear} />
         );
       case 'AddCalendar':
         return (
@@ -121,6 +121,7 @@ class App extends Component {
         return (
           <EditCalendar
             selectedClient={this.state.selectedClient}
+            programYear={this.state.programYear}
             selectedCalendar={this.state.selectedCalendar}
             selectedChallenge={this.state.selectedChallenge}
             handleCancelClick={this.viewShowCalendars}
@@ -146,15 +147,8 @@ class App extends Component {
     this.setState({ view: 'AddCalendar' });
   }
 
-  viewEditCalendar(calendar) {
-    if (calendar.length > 0) {
-      this.setState({
-        view: 'EditCalendar',
-        selectedCalendar: calendar
-      });
-    } else {
-      this.setState({ view: 'EditCalendar' });
-    }
+  viewEditCalendar() {
+    this.setState({ view: 'EditCalendar' });
   }
 
   viewEditChallenge() {
