@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import Airtable from 'airtable';
+const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
 class CalendarTable extends Component {
   constructor(props) {
@@ -18,39 +19,53 @@ class CalendarTable extends Component {
   }
 
   fetchCalendars() {
-    const client = this.props.selectedClient;
-    const url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Calendars?api_key=keyCxnlep0bgotSrX';
+    base('Calendars').select().eachPage((records, fetchNextPage) => {
 
-    axios.get(url)
-      .then(response => this.setState({ calendars: response.data.records }))
-      .catch(error => console.error(error));
+      this.setState({ calendars: records });
+
+      fetchNextPage();
+    }, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
   }
 
   editCalendar(calendar) {
     const employerName = calendar.fields.client;
     const programYear = calendar.fields.year;
-    const url = `https://api.airtable.com/v0/appN1J6yscNwlzbzq/Challenges?api_key=keyCxnlep0bgotSrX&view=Default&filterByFormula=AND({EmployerName}='${employerName}',{Program Year}='${programYear}')`;
 
-    axios.get(url)
-      .then(response => {
-        this.props.selectCalendar(response.data.records);
-        this.props.handleEditClick(response.data.records);
-      })
-      .catch(error => console.error(error));
+    base('Challenges').select({
+      view: 'Default',
+      filterByFormula: `AND({EmployerName}='${employerName}',{Program Year}='${programYear}')`
+    }).eachPage((records, fetchNextPage) => {
+
+      this.props.selectCalendar(records);
+      this.props.handleEditClick(records);
+
+      fetchNextPage();
+    }, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
   }
 
   deleteCalendar(calendarToDelete) {
-    const url = `https://api.airtable.com/v0/appN1J6yscNwlzbzq/Calendars/${calendarToDelete.id}?api_key=keyCxnlep0bgotSrX`;
+    base('Calendars').destroy(calendarToDelete.id, (err, deletedRecord) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
 
-    // Remove calendar from DB
-    axios.delete(url).then(response => {
-      // Then remove calendar from view
-      let updatedCalendars = this.state.calendars.filter(calendar => calendar.id !== calendarToDelete.id);
+      // Remove calendar from view
+      let updatedCalendars = this.state.calendars.filter(calendar => calendar.id !== deletedRecord.id);
       this.setState({
         calendars: updatedCalendars
       });
-    }).catch(error => console.error(error));
-
+    });
   }
 
   renderRow(calendar) {

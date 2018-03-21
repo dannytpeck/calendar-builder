@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
@@ -41,7 +40,9 @@ class App extends Component {
 
   fetchClients() {
     base('Clients').select().eachPage((records, fetchNextPage) => {
+
       this.setState({ clients: records });
+
       fetchNextPage();
     }, (err) => {
       if (err) {
