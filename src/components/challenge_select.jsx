@@ -24,7 +24,7 @@ class ChallengeSelect extends Component {
   }
 
   selectChallenge(challenge) {
-    const title = challenge.title;
+    const title = challenge.fields.title;
     this.props.selectChallenge(challenge);
     this.setState({ open: false, searchText: title });
   }
@@ -54,7 +54,7 @@ class ChallengeSelect extends Component {
           'End date': endDate,
           'Required': 'No',
           'Verified': 'No',
-          'Name': challenge.title,
+          'Name': challenge.fields.title,
           'Team/Ix': 'Individual',
           'Frequency': 'One Time',
           'Points': 0,
@@ -78,8 +78,8 @@ class ChallengeSelect extends Component {
   }
 
   renderChallenge(challenge) {
-    const slug = challenge.slug;
-    const title = this.cleanTitle(challenge.title);
+    const slug = challenge.fields.slug;
+    const title = this.cleanTitle(challenge.fields.title);
 
     return (
       <span className="dropdown-item" key={slug}
@@ -91,7 +91,7 @@ class ChallengeSelect extends Component {
 
   render() {
     const filteredChallenges = this.props.challenges.filter(challenge => {
-      const title = this.cleanTitle(challenge.title.toLowerCase());
+      const title = this.cleanTitle(challenge.fields.title.toLowerCase());
       const searchText = this.state.searchText.toLowerCase();
       return title.includes(searchText);
     });

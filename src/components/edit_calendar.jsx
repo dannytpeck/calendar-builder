@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import moment from 'moment';
 import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
@@ -16,6 +15,8 @@ class EditCalendar extends Component {
       challenges: [],
       calendar: []
     };
+
+    this.addChallengeToCalendar = this.addChallengeToCalendar.bind(this);
   }
 
   componentDidMount() {
@@ -50,11 +51,26 @@ class EditCalendar extends Component {
   }
 
   fetchChallenges() {
-    const url = 'https://mywellnessnumbers.com/thelibrary/challenges/';
+    base('LibraryChallenges').select({
+      view: 'Default'
+    }).eachPage((records, fetchNextPage) => {
 
-    axios.get(url)
-      .then(response => this.setState({ challenges: response.data }))
-      .catch(error => console.error(error));
+      this.setState({ challenges: [...this.state.challenges, ...records] });
+
+      fetchNextPage();
+    }, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+  }
+
+  addChallengeToCalendar(challenge) {
+    const newCalendar = [...this.state.calendar, challenge];
+    this.setState({ calendar: newCalendar });
+
+    this.props.selectChallenge(null);
   }
 
   render() {
@@ -100,84 +116,84 @@ class EditCalendar extends Component {
           {<AccordionCard
             calendar={yearlong} id={'yearlong'} title={'Yearlong'}
             challenges={this.state.challenges}
+            selectedCalendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
-            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.props.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar} />}
           {<AccordionCard
             calendar={phase1} id={'phase1'} title={'Phase 1'}
             challenges={this.state.challenges}
+            selectedCalendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
-            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.props.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar} />}
           {<AccordionCard
             calendar={phase1b} id={'phase1b'} title={'Phase 1B'}
             challenges={this.state.challenges}
+            selectedCalendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
-            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.props.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar} />}
           {<AccordionCard
             calendar={phase2} id={'phase2'} title={'Phase 2'}
             challenges={this.state.challenges}
+            selectedCalendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
-            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.props.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar} />}
           {<AccordionCard
             calendar={phase2b} id={'phase2b'} title={'Phase 2B'}
             challenges={this.state.challenges}
+            selectedCalendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
-            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.props.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar} />}
           {<AccordionCard
             calendar={phase3} id={'phase3'} title={'Phase 3'}
             challenges={this.state.challenges}
+            selectedCalendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
-            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.props.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar} />}
           {<AccordionCard
             calendar={phase3b} id={'phase3b'} title={'Phase 3B'}
             challenges={this.state.challenges}
+            selectedCalendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
-            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.props.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar} />}
           {<AccordionCard
             calendar={phase4} id={'phase4'} title={'Phase 4'}
             challenges={this.state.challenges}
+            selectedCalendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
-            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.props.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar} />}
           {<AccordionCard
             calendar={phase4b} id={'phase4b'} title={'Phase 4B'}
             challenges={this.state.challenges}
+            selectedCalendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
-            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.props.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar} />}
         </div>
 
         <h5 className="point-total my-3">{totalPoints} Points</h5>

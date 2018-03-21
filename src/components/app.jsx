@@ -27,7 +27,6 @@ class App extends Component {
     this.viewAddCalendar = this.viewAddCalendar.bind(this);
     this.viewEditCalendar = this.viewEditCalendar.bind(this);
     this.viewEditChallenge = this.viewEditChallenge.bind(this);
-    this.addChallengeToCalendar = this.addChallengeToCalendar.bind(this);
     this.saveCalendar = this.saveCalendar.bind(this);
     this.setProgramYear = this.setProgramYear.bind(this);
   }
@@ -53,24 +52,24 @@ class App extends Component {
   }
 
   saveCalendar() {
-    const calendar = this.state.selectedCalendar;
-    const employerName = this.state.selectedClient.fields['Limeade e='];
-
-    calendar.map(challenge => {
-      delete challenge.fields.id;
-      challenge.fields['EmployerName'] = employerName;
-
-      if (!challenge.fields['Program Year']) {
-        challenge.fields['Program Year'] = this.state.programYear;
-      }
-
-      base('Challenges').create(challenge.fields, (err, record) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-      });
-    });
+    // const calendar = this.state.selectedCalendar;
+    // const employerName = this.state.selectedClient.fields['Limeade e='];
+    //
+    // calendar.map(challenge => {
+    //   delete challenge.fields.id;
+    //   challenge.fields['EmployerName'] = employerName;
+    //
+    //   if (!challenge.fields['Program Year']) {
+    //     challenge.fields['Program Year'] = this.state.programYear;
+    //   }
+    //
+    //   base('Challenges').create(challenge.fields, (err, record) => {
+    //     if (err) {
+    //       console.error(err);
+    //       return;
+    //     }
+    //   });
+    // });
 
     this.viewShowCalendars();
   }
@@ -89,11 +88,6 @@ class App extends Component {
 
   setProgramYear(year) {
     this.setState({ programYear: year });
-  }
-
-  addChallengeToCalendar(challenge) {
-    const newCalendar = [...this.state.selectedCalendar, challenge];
-    this.setState({ selectedCalendar: newCalendar, selectedChallenge: null });
   }
 
   renderView(view) {
@@ -122,13 +116,11 @@ class App extends Component {
           <EditCalendar
             selectedClient={this.state.selectedClient}
             programYear={this.state.programYear}
-            selectedCalendar={this.state.selectedCalendar}
             selectedChallenge={this.state.selectedChallenge}
             handleCancelClick={this.viewShowCalendars}
             handleDoneClick={this.saveCalendar}
             handleEditChallengeClick={this.viewEditChallenge}
-            selectChallenge={this.selectChallenge}
-            addChallengeToCalendar={this.addChallengeToCalendar} />
+            selectChallenge={this.selectChallenge} />
         );
       case 'EditChallenge':
         return (
