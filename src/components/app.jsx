@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Airtable from 'airtable';
+const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
 import ShowCalendars from './show_calendars';
 import AddCalendar from './add_calendar';
@@ -53,10 +55,21 @@ class App extends Component {
     calendar.map(challenge => {
       delete challenge.fields.id;
       challenge.fields['EmployerName'] = employerName;
-      challenge.fields['Program Year'] = this.state.programYear;
 
-      axios.post(url, { fields: challenge.fields })
-        .catch(error => console.error(error));
+      if (!challenge.fields['Program Year']) {
+        challenge.fields['Program Year'] = this.state.programYear;
+      }
+
+      base('Challenges').create(challenge.fields, function(err, record) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(record.getId());
+      });
+
+      // axios.post(url, { fields: challenge.fields })
+      //   .catch(error => console.error(error));
     });
 
     this.viewShowCalendars();
