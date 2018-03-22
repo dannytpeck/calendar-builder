@@ -17,10 +17,19 @@ class AccordionCard extends Component {
 
   editChallenge(challenge) {
     if (this.state.editingChallenge && this.state.editingChallenge.id === challenge.id) {
+      console.log('Saving...', challenge);
       this.setState({ editingChallenge: null });
     } else {
       this.setState({ editingChallenge: challenge });
     }
+  }
+
+  deleteChallenge(challenge) {
+    console.log('Deleting...', challenge);
+  }
+
+  openComment(challenge) {
+    console.log('Updating comment...', challenge);
   }
 
   hpImage(category) {
@@ -127,8 +136,8 @@ class AccordionCard extends Component {
         </td>
           <td className="actions-cell">
             <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
-            <img className="table-icon" src="images/icon_comment.svg" />
-            <img className="table-icon" src="images/icon_delete.svg" />
+            <img className="table-icon" src="images/icon_comment.svg" onClick={() => this.openComment(challenge)} />
+            <img className="table-icon" src="images/icon_delete.svg" onClick={() => this.deleteChallenge(challenge)} />
           </td>
         </tr>
       );
@@ -147,8 +156,8 @@ class AccordionCard extends Component {
         <td>{challenge.fields['Points']} ({challenge.fields['Total Points']})</td>
           <td>
             <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
-            <img className="table-icon" src="images/icon_comment.svg" />
-            <img className="table-icon" src="images/icon_delete.svg" />
+            <img className="table-icon" src="images/icon_comment.svg" onClick={() => this.openComment(challenge)} />
+            <img className="table-icon" src="images/icon_delete.svg" onClick={() => this.deleteChallenge(challenge)} />
           </td>
         </tr>
       );
