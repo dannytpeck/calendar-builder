@@ -15,6 +15,10 @@ class AccordionCard extends Component {
     this.renderRow = this.renderRow.bind(this);
   }
 
+  componentDidMount() {
+
+  }
+
   editChallenge(challenge) {
     if (this.state.editingChallenge && this.state.editingChallenge.id === challenge.id) {
       console.log('Saving...', challenge);
@@ -136,7 +140,12 @@ class AccordionCard extends Component {
         </td>
           <td className="actions-cell">
             <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
-            <img className="table-icon" src="images/icon_comment.svg" onClick={() => this.openComment(challenge)} />
+            <img className="table-icon"
+              type="image"
+              src="images/icon_comment.svg"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="<h5 class='my-3'>Comments</h5><textarea></textarea>" />
             <img className="table-icon" src="images/icon_delete.svg" onClick={() => this.deleteChallenge(challenge)} />
           </td>
         </tr>
@@ -156,7 +165,12 @@ class AccordionCard extends Component {
         <td>{challenge.fields['Points']} ({challenge.fields['Total Points']})</td>
           <td>
             <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
-            <img className="table-icon" src="images/icon_comment.svg" onClick={() => this.openComment(challenge)} />
+            <img className="table-icon"
+              type="image"
+              src="images/icon_comment.svg"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="<h5 class='my-3'>Comments</h5><textarea></textarea>" />
             <img className="table-icon" src="images/icon_delete.svg" onClick={() => this.deleteChallenge(challenge)} />
           </td>
         </tr>
@@ -167,6 +181,12 @@ class AccordionCard extends Component {
   }
 
   render() {
+    /* global $ */
+    $('.table-icon').tooltip({
+      html: true,
+      trigger: 'click'
+    });
+
     const { id, phase, title } = this.props;
 
     let startDate, endDate, totalPoints = 0;
