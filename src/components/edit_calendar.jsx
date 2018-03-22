@@ -109,7 +109,7 @@ class EditCalendar extends Component {
             src="images/icon_link.svg"
             data-toggle="tooltip"
             data-placement="bottom"
-            title="<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>https://mywellnessnumbers.com/cb/iifhjhwlxxxxa</h5>" />
+            title={`<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>https://mywellnessnumbers.com/cb/${this.props.selectedCalendar.fields.hash}</h5>`} />
         </div>
 
         <div className="calendar-accordion my-4 clear" id="accordion" role="tablist">

@@ -42,6 +42,7 @@ class CalendarTable extends Component {
     }).eachPage((records, fetchNextPage) => {
 
       this.props.setProgramYear(programYear);
+      this.props.selectCalendar(calendar);
       this.props.handleEditClick();
 
       fetchNextPage();

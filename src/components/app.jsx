@@ -15,11 +15,13 @@ class App extends Component {
       view: null,
       clients: [],
       selectedClient: null,
+      selectedCalendar: null,
       selectedChallenge: null,
       programYear: null
     };
 
     this.selectClient = this.selectClient.bind(this);
+    this.selectCalendar = this.selectCalendar.bind(this);
     this.selectChallenge = this.selectChallenge.bind(this);
     this.viewShowCalendars = this.viewShowCalendars.bind(this);
     this.viewAddCalendar = this.viewAddCalendar.bind(this);
@@ -50,6 +52,10 @@ class App extends Component {
 
   selectClient(client) {
     this.setState({ selectedClient: client });
+  }
+
+  selectCalendar(calendar) {
+    this.setState({ selectedCalendar: calendar });
   }
 
   selectChallenge(challenge) {
@@ -85,6 +91,7 @@ class App extends Component {
         return (
           <EditCalendar
             selectedClient={this.state.selectedClient}
+            selectedCalendar={this.state.selectedCalendar}
             programYear={this.state.programYear}
             handleDoneClick={this.viewShowCalendars}
             handleEditChallengeClick={this.viewEditChallenge}
