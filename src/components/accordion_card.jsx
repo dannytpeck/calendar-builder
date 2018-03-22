@@ -16,7 +16,6 @@ class AccordionCard extends Component {
   }
 
   editChallenge(challenge) {
-    // this.props.handleEditChallengeClick();
     if (this.state.editingChallenge && this.state.editingChallenge.id === challenge.id) {
       this.setState({ editingChallenge: null });
     } else {
@@ -159,14 +158,14 @@ class AccordionCard extends Component {
   }
 
   render() {
-    const { id, calendar, title } = this.props;
+    const { id, phase, title } = this.props;
 
     let startDate, endDate, totalPoints = 0;
-    if (calendar.length > 0) {
-      startDate = moment(calendar[0].fields['Start date']).format('L');
-      endDate = moment(calendar[0].fields['End date']).format('L');
+    if (phase.length > 0) {
+      startDate = moment(phase[0].fields['Start date']).format('L');
+      endDate = moment(phase[0].fields['End date']).format('L');
 
-      calendar.map(challenge => {
+      phase.map(challenge => {
         const frequency = challenge.fields['Frequency'];
         const start = moment(challenge.fields['Start date']);
         const end = moment(challenge.fields['End date']);
@@ -221,16 +220,16 @@ class AccordionCard extends Component {
                 </tr>
               </thead>
               <tbody>
-                {calendar.map(challenge => this.renderRow(challenge))}
+                {phase.map(challenge => this.renderRow(challenge))}
               </tbody>
               <tfoot>
                 <tr>
                   <td>
                     <ChallengeSelect
+                      calendar={this.props.calendar}
                       challenges={this.props.challenges}
                       selectChallenge={this.props.selectChallenge}
                       selectedClient={this.props.selectedClient}
-                      selectedCalendar={this.props.selectedCalendar}
                       selectedChallenge={this.props.selectedChallenge}
                       addChallengeToCalendar={this.props.addChallengeToCalendar}
                       phase={this.props.title}

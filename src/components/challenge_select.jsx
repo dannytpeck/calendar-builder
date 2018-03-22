@@ -30,7 +30,7 @@ class ChallengeSelect extends Component {
   }
 
   addChallenge() {
-    const calendar = this.props.selectedCalendar;
+    const calendar = this.props.calendar;
     const challenge = this.props.selectedChallenge;
     const employerName = this.props.selectedClient.fields['Limeade e='];
     const startDate = this.props.startDate ? this.props.startDate : moment().format();

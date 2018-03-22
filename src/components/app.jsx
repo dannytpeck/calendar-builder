@@ -15,19 +15,16 @@ class App extends Component {
       view: null,
       clients: [],
       selectedClient: null,
-      selectedCalendar: null,
       selectedChallenge: null,
       programYear: null
     };
 
     this.selectClient = this.selectClient.bind(this);
-    this.selectCalendar = this.selectCalendar.bind(this);
     this.selectChallenge = this.selectChallenge.bind(this);
     this.viewShowCalendars = this.viewShowCalendars.bind(this);
     this.viewAddCalendar = this.viewAddCalendar.bind(this);
     this.viewEditCalendar = this.viewEditCalendar.bind(this);
     this.viewEditChallenge = this.viewEditChallenge.bind(this);
-    this.saveCalendar = this.saveCalendar.bind(this);
     this.setProgramYear = this.setProgramYear.bind(this);
   }
 
@@ -51,35 +48,8 @@ class App extends Component {
     });
   }
 
-  saveCalendar() {
-    // const calendar = this.state.selectedCalendar;
-    // const employerName = this.state.selectedClient.fields['Limeade e='];
-    //
-    // calendar.map(challenge => {
-    //   delete challenge.fields.id;
-    //   challenge.fields['EmployerName'] = employerName;
-    //
-    //   if (!challenge.fields['Program Year']) {
-    //     challenge.fields['Program Year'] = this.state.programYear;
-    //   }
-    //
-    //   base('Challenges').create(challenge.fields, (err, record) => {
-    //     if (err) {
-    //       console.error(err);
-    //       return;
-    //     }
-    //   });
-    // });
-
-    this.viewShowCalendars();
-  }
-
   selectClient(client) {
     this.setState({ selectedClient: client });
-  }
-
-  selectCalendar(calendar) {
-    this.setState({ selectedCalendar: calendar });
   }
 
   selectChallenge(challenge) {
@@ -118,7 +88,7 @@ class App extends Component {
             programYear={this.state.programYear}
             selectedChallenge={this.state.selectedChallenge}
             handleCancelClick={this.viewShowCalendars}
-            handleDoneClick={this.saveCalendar}
+            handleDoneClick={this.viewShowCalendars}
             handleEditChallengeClick={this.viewEditChallenge}
             selectChallenge={this.selectChallenge} />
         );
