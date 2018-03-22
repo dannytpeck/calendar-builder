@@ -86,11 +86,10 @@ class App extends Component {
           <EditCalendar
             selectedClient={this.state.selectedClient}
             programYear={this.state.programYear}
-            selectedChallenge={this.state.selectedChallenge}
-            handleCancelClick={this.viewShowCalendars}
             handleDoneClick={this.viewShowCalendars}
             handleEditChallengeClick={this.viewEditChallenge}
-            selectChallenge={this.selectChallenge} />
+            selectChallenge={this.selectChallenge}
+            selectedChallenge={this.state.selectedChallenge} />
         );
       case 'EditChallenge':
         return (

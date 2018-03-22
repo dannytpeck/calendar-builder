@@ -199,7 +199,6 @@ class EditCalendar extends Component {
         <h5 className="point-total my-3">{totalPoints} Points</h5>
 
         <div className="buttons">
-          <span className="cancel-button" onClick={this.props.handleCancelClick}>Cancel</span>
           <button className="btn btn-primary done-button" onClick={this.props.handleDoneClick}>Done</button>
         </div>
 
