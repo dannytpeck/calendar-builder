@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import Airtable from 'airtable';
+const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
 import ChallengeSelect from './challenge_select';
 
@@ -15,13 +17,19 @@ class AccordionCard extends Component {
     this.renderRow = this.renderRow.bind(this);
   }
 
-  componentDidMount() {
-
-  }
-
   editChallenge(challenge) {
     if (this.state.editingChallenge && this.state.editingChallenge.id === challenge.id) {
-      console.log('Saving...', challenge);
+
+      // Save challenge to Airtable
+      delete challenge.fields.id;
+      base('Challenges').replace(challenge.id, challenge.fields, function(err, record) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(record.get('Program Year'));
+      });
+
       this.setState({ editingChallenge: null });
     } else {
       this.setState({ editingChallenge: challenge });
