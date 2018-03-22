@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import crypto from 'crypto';
 
 class ChallengeSelect extends Component {
   constructor(props) {
@@ -42,10 +41,7 @@ class ChallengeSelect extends Component {
     }
 
     if (challenge) {
-      const id = 'rec' + crypto.randomBytes(14).toString('hex').slice(0, 14);
-
       const newChallenge = {
-        id: id,
         fields: {
           'EmployerName': employerName,
           'Program Year': programYear,

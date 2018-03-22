@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import crypto from 'crypto';
 import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
@@ -79,6 +80,24 @@ class AddCalendar extends Component {
     const programYear = moment(startDate).format('YYYY');
     this.props.setProgramYear(programYear);
 
+    const hash = crypto.randomBytes(14).toString('hex').slice(0, 14);
+
+    // Create the calendar in airtable
+    base('Calendars').create({
+      hash: hash,
+      name: 'Calendar_' + programYear,
+      client: employerName,
+      year: programYear,
+      updated: moment().format('L'),
+      status: 'In Progress'
+    }, function(err, record) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+
+    // Create all the challenges in airtable
     records.map(record => {
       // Update phase dates based on user input
       switch (record.fields['Phase']) {
@@ -138,9 +157,9 @@ class AddCalendar extends Component {
       }
 
       // Save the record to Airtable
-      delete record.fields.id;
       record.fields['EmployerName'] = employerName;
       record.fields['Program Year'] = programYear;
+      record.fields['Calendar'] = hash;
 
       base('Challenges').create(record.fields, (err, record) => {
         if (err) {
@@ -149,20 +168,6 @@ class AddCalendar extends Component {
         }
       });
 
-    });
-
-    // Create the calendar in airtable
-    base('Calendars').create({
-      client: this.props.selectedClient.fields['Limeade e='],
-      name: 'Calendar_' + programYear,
-      year: programYear,
-      updated: moment().format('L'),
-      status: 'In Progress'
-    }, function(err, record) {
-      if (err) {
-        console.error(err);
-        return;
-      }
     });
 
     return { employerName, programYear };

@@ -21,7 +21,6 @@ class AccordionCard extends Component {
     if (this.state.editingChallenge && this.state.editingChallenge.id === challenge.id) {
 
       // Save challenge to Airtable
-      delete challenge.fields.id;
       base('Challenges').replace(challenge.id, challenge.fields, function(err, record) {
         if (err) {
           console.error(err);
