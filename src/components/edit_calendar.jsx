@@ -32,8 +32,6 @@ class EditCalendar extends Component {
 
   fetchCalendar() {
     const hash = this.props.selectedCalendar.fields.hash;
-    const employerName = this.props.selectedClient.fields['Limeade e='];
-    const programYear = this.props.programYear;
 
     base('Challenges').select({
       view: 'Default',
@@ -70,7 +68,6 @@ class EditCalendar extends Component {
   addChallengeToCalendar(challenge) {
     const newCalendar = [...this.state.calendar, challenge];
     this.setState({ calendar: newCalendar });
-
     this.props.selectChallenge(null);
   }
 
