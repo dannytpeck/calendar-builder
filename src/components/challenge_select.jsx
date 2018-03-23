@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import Airtable from 'airtable';
+const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
 class ChallengeSelect extends Component {
   constructor(props) {
@@ -32,8 +34,9 @@ class ChallengeSelect extends Component {
     const calendar = this.props.calendar;
     const challenge = this.props.selectedChallenge;
     const employerName = this.props.selectedClient.fields['Limeade e='];
-    const startDate = this.props.startDate ? this.props.startDate : moment().format();
-    const endDate = this.props.endDate ? this.props.endDate : moment().format();
+    const startDate = this.props.startDate ? this.props.startDate : moment().format('YYYY-MM-DD');
+    const endDate = this.props.endDate ? this.props.endDate : moment().format('YYYY-MM-DD');
+    const hash = this.props.selectedCalendar.fields.hash;
 
     let programYear = moment().format('YYYY');
     if (calendar[0]) {
@@ -41,26 +44,29 @@ class ChallengeSelect extends Component {
     }
 
     if (challenge) {
-      const newChallenge = {
-        fields: {
-          'EmployerName': employerName,
-          'Program Year': programYear,
-          'Phase': this.props.phase,
-          'Start date': startDate,
-          'End date': endDate,
-          'Required': 'No',
-          'Verified': 'No',
-          'Name': challenge.fields.title,
-          'Team/Ix': 'Individual',
-          'Frequency': 'One Time',
-          'Points': 0,
-          'Total Points': 0,
-          'Device Enabled': 'No',
-          'HP Element': 'Health & Fitness',
+      base('Challenges').create({
+        'Name': challenge.fields.title,
+        'Calendar': hash,
+        'EmployerName': employerName,
+        'Program Year': programYear,
+        'Phase': this.props.phase,
+        'Start date': startDate,
+        'End date': endDate,
+        'Required': 'No',
+        'Verified': 'No',
+        'Team/Ix': 'Individual',
+        'Frequency': 'One Time',
+        'Points': '0',
+        'Total Points': '0',
+        'Device Enabled': 'No',
+        'HP Element': 'Health & Fitness'
+      }, (err, record) => {
+        if (err) {
+          console.error(err);
+          return;
         }
-      };
-
-      this.props.addChallengeToCalendar(newChallenge);
+        this.props.addChallengeToCalendar(record);
+      });
       this.setState({ searchText: '' });
     } else {
       alert('Select a challenge!');

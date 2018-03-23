@@ -64,16 +64,16 @@ class AddCalendar extends Component {
     const { startDate, endDate, oneTimePoints, weeklyPoints, teamPoints } = this.state;
 
     const phase1start = startDate;
-    const phase1bstart = moment(phase1start).add(21, 'days').format();
-    const phase1end = moment(phase1start).add(90, 'days').format();
-    const phase2start = moment(phase1end).add(1, 'days').format();
-    const phase2bstart = moment(phase2start).add(21, 'days').format();
-    const phase2end = moment(phase2start).add(83, 'days').format();
-    const phase3start = moment(phase2end).add(1, 'days').format();
-    const phase3bstart = moment(phase3start).add(21, 'days').format();
-    const phase3end = moment(phase3start).add(83, 'days').format();
-    const phase4start = moment(phase3end).add(1, 'days').format();
-    const phase4bstart = moment(phase4start).add(21, 'days').format();
+    const phase1bstart = moment(phase1start).add(21, 'days').format('YYYY-MM-DD');
+    const phase1end = moment(phase1start).add(90, 'days').format('YYYY-MM-DD');
+    const phase2start = moment(phase1end).add(1, 'days').format('YYYY-MM-DD');
+    const phase2bstart = moment(phase2start).add(21, 'days').format('YYYY-MM-DD');
+    const phase2end = moment(phase2start).add(83, 'days').format('YYYY-MM-DD');
+    const phase3start = moment(phase2end).add(1, 'days').format('YYYY-MM-DD');
+    const phase3bstart = moment(phase3start).add(21, 'days').format('YYYY-MM-DD');
+    const phase3end = moment(phase3start).add(83, 'days').format('YYYY-MM-DD');
+    const phase4start = moment(phase3end).add(1, 'days').format('YYYY-MM-DD');
+    const phase4bstart = moment(phase4start).add(21, 'days').format('YYYY-MM-DD');
     const phase4end = endDate;
 
     const employerName = this.props.selectedClient.fields['Limeade e='];
@@ -213,12 +213,12 @@ class AddCalendar extends Component {
   }
 
   handleChangeStartDate(e) {
-    const date = moment(e.target.value).format();
+    const date = moment(e.target.value).format('YYYY-MM-DD');
     this.setState({ startDate: date });
   }
 
   handleChangeEndDate(e) {
-    const date = moment(e.target.value).format();
+    const date = moment(e.target.value).format('YYYY-MM-DD');
     this.setState({ endDate: date });
   }
 

@@ -118,6 +118,7 @@ class EditCalendar extends Component {
             calendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
+            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
             addChallengeToCalendar={this.addChallengeToCalendar} />}
@@ -127,6 +128,7 @@ class EditCalendar extends Component {
             calendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
+            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
             addChallengeToCalendar={this.addChallengeToCalendar} />}
@@ -136,6 +138,7 @@ class EditCalendar extends Component {
             calendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
+            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
             addChallengeToCalendar={this.addChallengeToCalendar} />}
@@ -145,6 +148,7 @@ class EditCalendar extends Component {
             calendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
+            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
             addChallengeToCalendar={this.addChallengeToCalendar} />}
@@ -154,6 +158,7 @@ class EditCalendar extends Component {
             calendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
+            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
             addChallengeToCalendar={this.addChallengeToCalendar} />}
@@ -163,6 +168,7 @@ class EditCalendar extends Component {
             calendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
+            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
             addChallengeToCalendar={this.addChallengeToCalendar} />}
@@ -172,6 +178,7 @@ class EditCalendar extends Component {
             calendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
+            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
             addChallengeToCalendar={this.addChallengeToCalendar} />}
@@ -181,6 +188,7 @@ class EditCalendar extends Component {
             calendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
+            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
             addChallengeToCalendar={this.addChallengeToCalendar} />}
@@ -190,6 +198,7 @@ class EditCalendar extends Component {
             calendar={this.state.calendar}
             selectChallenge={this.props.selectChallenge}
             selectedClient={this.props.selectedClient}
+            selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
             addChallengeToCalendar={this.addChallengeToCalendar} />}

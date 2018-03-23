@@ -198,8 +198,8 @@ class AccordionCard extends Component {
 
     let startDate, endDate, totalPoints = 0;
     if (phase.length > 0) {
-      startDate = moment(phase[0].fields['Start date']).format('L');
-      endDate = moment(phase[0].fields['End date']).format('L');
+      startDate = moment(phase[0].fields['Start date']).format('YYYY-MM-DD');
+      endDate = moment(phase[0].fields['End date']).format('YYYY-MM-DD');
 
       phase.map(challenge => {
         const frequency = challenge.fields['Frequency'];
@@ -226,6 +226,9 @@ class AccordionCard extends Component {
       endDate = '';
     }
 
+    const formattedStartDate = startDate ? moment(startDate).format('L') : '';
+    const formattedEndDate = endDate ? moment(endDate).format('L') : '';
+
     return (
       <div className="card">
 
@@ -233,7 +236,7 @@ class AccordionCard extends Component {
           <h5 className="mb-0">
             <a data-toggle="collapse" href={'#collapse' + id}>
               <span>{title}</span>
-              <span className="left-15">{startDate} - {endDate}</span>
+              <span className="left-15">{formattedStartDate} - {formattedEndDate}</span>
               <span className="left-abs-73">{totalPoints} Points</span>
               <span className="oi oi-caret-bottom"></span>
             </a>
@@ -266,6 +269,7 @@ class AccordionCard extends Component {
                       challenges={this.props.challenges}
                       selectChallenge={this.props.selectChallenge}
                       selectedClient={this.props.selectedClient}
+                      selectedCalendar={this.props.selectedCalendar}
                       selectedChallenge={this.props.selectedChallenge}
                       addChallengeToCalendar={this.props.addChallengeToCalendar}
                       phase={this.props.title}
