@@ -36,7 +36,13 @@ class AccordionCard extends Component {
   }
 
   deleteChallenge(challenge) {
-    console.log('Deleting...', challenge);
+    this.props.deleteChallengeFromCalendar(challenge);
+    base('Challenges').destroy(challenge.id, (err, deletedRecord) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
   }
 
   openComment(challenge) {

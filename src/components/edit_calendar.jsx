@@ -17,6 +17,7 @@ class EditCalendar extends Component {
     };
 
     this.addChallengeToCalendar = this.addChallengeToCalendar.bind(this);
+    this.deleteChallengeFromCalendar = this.deleteChallengeFromCalendar.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +72,11 @@ class EditCalendar extends Component {
     this.props.selectChallenge(null);
   }
 
+  deleteChallengeFromCalendar(challengeToBeDeleted) {
+    const newCalendar = this.state.calendar.filter(challenge => challenge.id !== challengeToBeDeleted.id);
+    this.setState({ calendar: newCalendar });
+  }
+
   render() {
     const calendar = this.state.calendar;
 
@@ -121,7 +127,8 @@ class EditCalendar extends Component {
             selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar}
+            deleteChallengeFromCalendar={this.deleteChallengeFromCalendar} />}
           {<AccordionCard
             phase={phase1} id={'phase1'} title={'Phase 1'}
             challenges={this.state.challenges}
@@ -131,7 +138,8 @@ class EditCalendar extends Component {
             selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar}
+            deleteChallengeFromCalendar={this.deleteChallengeFromCalendar} />}
           {<AccordionCard
             phase={phase1b} id={'phase1b'} title={'Phase 1B'}
             challenges={this.state.challenges}
@@ -141,7 +149,8 @@ class EditCalendar extends Component {
             selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar}
+            deleteChallengeFromCalendar={this.deleteChallengeFromCalendar} />}
           {<AccordionCard
             phase={phase2} id={'phase2'} title={'Phase 2'}
             challenges={this.state.challenges}
@@ -151,7 +160,8 @@ class EditCalendar extends Component {
             selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar}
+            deleteChallengeFromCalendar={this.deleteChallengeFromCalendar} />}
           {<AccordionCard
             phase={phase2b} id={'phase2b'} title={'Phase 2B'}
             challenges={this.state.challenges}
@@ -161,7 +171,8 @@ class EditCalendar extends Component {
             selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar}
+            deleteChallengeFromCalendar={this.deleteChallengeFromCalendar} />}
           {<AccordionCard
             phase={phase3} id={'phase3'} title={'Phase 3'}
             challenges={this.state.challenges}
@@ -171,7 +182,8 @@ class EditCalendar extends Component {
             selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar}
+            deleteChallengeFromCalendar={this.deleteChallengeFromCalendar} />}
           {<AccordionCard
             phase={phase3b} id={'phase3b'} title={'Phase 3B'}
             challenges={this.state.challenges}
@@ -181,7 +193,8 @@ class EditCalendar extends Component {
             selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar}
+            deleteChallengeFromCalendar={this.deleteChallengeFromCalendar} />}
           {<AccordionCard
             phase={phase4} id={'phase4'} title={'Phase 4'}
             challenges={this.state.challenges}
@@ -191,7 +204,8 @@ class EditCalendar extends Component {
             selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar}
+            deleteChallengeFromCalendar={this.deleteChallengeFromCalendar} />}
           {<AccordionCard
             phase={phase4b} id={'phase4b'} title={'Phase 4B'}
             challenges={this.state.challenges}
@@ -201,7 +215,8 @@ class EditCalendar extends Component {
             selectedCalendar={this.props.selectedCalendar}
             selectedChallenge={this.props.selectedChallenge}
             handleEditChallengeClick={this.props.handleEditChallengeClick}
-            addChallengeToCalendar={this.addChallengeToCalendar} />}
+            addChallengeToCalendar={this.addChallengeToCalendar}
+            deleteChallengeFromCalendar={this.deleteChallengeFromCalendar} />}
         </div>
 
         <h5 className="point-total my-3">{totalPoints} Points</h5>
