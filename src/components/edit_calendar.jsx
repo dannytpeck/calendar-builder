@@ -31,15 +31,16 @@ class EditCalendar extends Component {
   }
 
   fetchCalendar() {
+    const hash = this.props.selectedCalendar.fields.hash;
     const employerName = this.props.selectedClient.fields['Limeade e='];
     const programYear = this.props.programYear;
 
     base('Challenges').select({
       view: 'Default',
-      filterByFormula: `AND({EmployerName}='${employerName}',{Program Year}='${programYear}')`
+      filterByFormula: `{Calendar}='${hash}'`
     }).eachPage((records, fetchNextPage) => {
 
-      this.setState({ calendar: records });
+      this.setState({ calendar: [...this.state.calendar, ...records] });
 
       fetchNextPage();
     }, (err) => {
@@ -95,6 +96,7 @@ class EditCalendar extends Component {
     });
 
     const programYear = calendar[0] && calendar[0].fields['Program Year'] ? calendar[0].fields['Program Year'] : moment().format('YYYY');
+    const hash = this.props.selectedCalendar ? this.props.selectedCalendar.fields.hash : '';
 
     return (
       <div className="add-calendar">
@@ -109,7 +111,7 @@ class EditCalendar extends Component {
             src="images/icon_link.svg"
             data-toggle="tooltip"
             data-placement="bottom"
-            title={`<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>https://mywellnessnumbers.com/cb/${this.props.selectedCalendar.fields.hash}</h5>`} />
+            title={`<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>https://mywellnessnumbers.com/cb/${hash}</h5>`} />
         </div>
 
         <div className="calendar-accordion my-4 clear" id="accordion" role="tablist">

@@ -90,11 +90,13 @@ class AddCalendar extends Component {
       year: programYear,
       updated: moment().format('L'),
       status: 'In Progress'
-    }, function(err, record) {
+    }, (err, record) => {
       if (err) {
         console.error(err);
         return;
       }
+      this.props.selectCalendar(record);
+      this.props.handleNextClick();
     });
 
     // Create all the challenges in airtable
@@ -194,7 +196,6 @@ class AddCalendar extends Component {
       }).eachPage((records, fetchNextPage) => {
 
         this.createCalendar(records);
-        this.props.handleNextClick();
 
         fetchNextPage();
       }, (err) => {

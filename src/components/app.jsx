@@ -85,7 +85,8 @@ class App extends Component {
             selectedClient={this.state.selectedClient}
             handleCancelClick={this.viewShowCalendars}
             handleNextClick={this.viewEditCalendar}
-            setProgramYear={this.setProgramYear} />
+            setProgramYear={this.setProgramYear}
+            selectCalendar={this.selectCalendar} />
         );
       case 'EditCalendar':
         return (
