@@ -12,7 +12,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      view: null,
+      view: 'ShowCalendars',
       clients: [],
       selectedClient: null,
       selectedCalendar: null,
@@ -33,13 +33,12 @@ class App extends Component {
   // When app starts, fetch clients and set initial view
   componentDidMount() {
     this.fetchClients();
-    this.setState({ view: 'ShowCalendars' });
   }
 
   fetchClients() {
     base('Clients').select().eachPage((records, fetchNextPage) => {
 
-      this.setState({ clients: records });
+      this.setState({ clients: [...this.state.clients, ...records] });
 
       fetchNextPage();
     }, (err) => {
