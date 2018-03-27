@@ -145,6 +145,9 @@ class AccordionCard extends Component {
             <select className="form-control" value={frequency} onChange={(e) => this.updateTracking(e, challenge)}>
               <option>One Time</option>
               <option>Weekly</option>
+              <option>Monthly</option>
+              <option>Bi-weekly</option>
+              <option>Unlimited</option>
             </select>
           </td>
         <td>
@@ -215,10 +218,21 @@ class AccordionCard extends Component {
         const weeks = Math.ceil(dayDifference / 7);
 
         // Update total points based on points and frequency
-        if (frequency === 'One Time') {
-          challenge.fields['Total Points'] = challenge.fields['Points'];
-        } else if (frequency === 'Weekly') {
-          challenge.fields['Total Points'] = (challenge.fields['Points'] * weeks).toString();
+        switch (frequency) {
+          case 'Weekly':
+            challenge.fields['Total Points'] = (challenge.fields['Points'] * weeks).toString();
+            break;
+          case 'Bi-weekly':
+            challenge.fields['Total Points'] = (challenge.fields['Points'] * 26).toString();
+            break;
+          case 'Monthly':
+            challenge.fields['Total Points'] = (challenge.fields['Points'] * 12).toString();
+            break;
+          case 'Unlimited':
+            challenge.fields['Total Points'] = (challenge.fields['Points'] * 10).toString();
+            break;
+          default:
+            challenge.fields['Total Points'] = challenge.fields['Points'];
         }
 
         // Calculate total points for the whole phase
