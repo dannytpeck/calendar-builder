@@ -27,10 +27,11 @@ class AccordionCard extends Component {
           console.error(err);
           return;
         }
-        console.log(record.get('Program Year'));
       });
 
+      // Clear editingChallenge out
       this.setState({ editingChallenge: null });
+
     } else {
       this.setState({ editingChallenge: challenge });
     }
@@ -44,10 +45,6 @@ class AccordionCard extends Component {
         return;
       }
     });
-  }
-
-  openComment(challenge) {
-    console.log('Updating comment...', challenge);
   }
 
   hpImage(category) {
@@ -157,12 +154,7 @@ class AccordionCard extends Component {
         </td>
           <td className="actions-cell">
             <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
-            <img className="table-icon"
-              type="image"
-              src="images/icon_comment.svg"
-              data-toggle="tooltip"
-              data-placement="bottom"
-              title="<h5 class='my-3'>Comments</h5><textarea></textarea>" />
+            <CommentBox challenge={challenge} />
             <img className="table-icon" src="images/icon_delete.svg" onClick={() => this.deleteChallenge(challenge)} />
           </td>
         </tr>

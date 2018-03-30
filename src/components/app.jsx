@@ -124,13 +124,9 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state);
-
     return (
       <div className="app">
-
         {this.renderView(this.state.view)}
-
       </div>
     );
   }
