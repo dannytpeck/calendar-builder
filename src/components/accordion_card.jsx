@@ -4,6 +4,7 @@ import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
 import ChallengeSelect from './challenge_select';
+import CommentBox from './comment_box';
 
 class AccordionCard extends Component {
   constructor(props) {
@@ -181,12 +182,7 @@ class AccordionCard extends Component {
         <td>{challenge.fields['Points']} ({challenge.fields['Total Points']})</td>
           <td>
             <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
-            <img className="table-icon"
-              type="image"
-              src="images/icon_comment.svg"
-              data-toggle="tooltip"
-              data-placement="bottom"
-              title="<h5 class='my-3'>Comments</h5><textarea></textarea>" />
+            <CommentBox challenge={challenge} />
             <img className="table-icon" src="images/icon_delete.svg" onClick={() => this.deleteChallenge(challenge)} />
           </td>
         </tr>
