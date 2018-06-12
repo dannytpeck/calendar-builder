@@ -217,7 +217,7 @@ class AccordionCard extends Component {
             challenge.fields['Total Points'] = (challenge.fields['Points'] * 12).toString();
             break;
           case 'Unlimited':
-            challenge.fields['Total Points'] = (challenge.fields['Points'] * 10).toString();
+            challenge.fields['Total Points'] = (challenge.fields['Points'] * 4).toString();
             break;
           default:
             challenge.fields['Total Points'] = challenge.fields['Points'];
