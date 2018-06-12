@@ -59,7 +59,8 @@ class ChallengeSelect extends Component {
         'Points': '0',
         'Total Points': '0',
         'Device Enabled': 'No',
-        'HP Element': 'Health & Fitness'
+        'HP Element': 'Health & Fitness',
+        'Slug': challenge.fields.slug
       }, (err, record) => {
         if (err) {
           console.error(err);
