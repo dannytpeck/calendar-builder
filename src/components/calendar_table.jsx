@@ -54,6 +54,26 @@ class CalendarTable extends Component {
     });
   }
 
+  uploadCalendar(calendar) {
+    const hash = calendar.fields.hash;
+
+    base('Challenges').select({
+      view: 'Default',
+      filterByFormula: `{Calendar}='${hash}'`
+    }).eachPage((records, fetchNextPage) => {
+
+      // Will work fine as long as a calendar doesn't have more than 100 challenges
+      console.log(records);
+
+      fetchNextPage();
+    }, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+  }
+
   deleteCalendar(calendarToDelete) {
     base('Calendars').destroy(calendarToDelete.id, (err, deletedRecord) => {
       if (err) {
@@ -80,8 +100,7 @@ class CalendarTable extends Component {
         <td>{status}</td>
         <td>
           <img onClick={() => this.editCalendar(calendar)} className="edit-icon" src="images/icon_edit.svg" />
-        </td>
-        <td>
+          <img onClick={() => this.uploadCalendar(calendar)} className="upload-icon" src="images/icon_upload.svg" />
           <img onClick={() => this.deleteCalendar(calendar)} className="delete-icon" src="images/icon_delete.svg" />
         </td>
       </tr>
