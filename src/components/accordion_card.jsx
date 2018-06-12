@@ -116,12 +116,21 @@ class AccordionCard extends Component {
     });
   }
 
+  updateRequired(event, challenge) {
+    let updatedChallenge = { ...challenge };
+    updatedChallenge.fields['Required'] = event.target.value;
+    this.setState({
+      editingChallenge: updatedChallenge
+    });
+  }
+
   renderRow(challenge) {
     const startDate = moment(challenge.fields['Start date']).format('YYYY-MM-DD');
     const endDate = moment(challenge.fields['End date']).format('YYYY-MM-DD');
     const name = challenge.fields['Name'];
     const points = challenge.fields['Points'];
     const frequency = challenge.fields['Frequency'];
+    const required = challenge.fields['Required'];
 
     if (this.state.editingChallenge && this.state.editingChallenge.id === challenge.id) {
       return (
@@ -129,8 +138,13 @@ class AccordionCard extends Component {
           <td scope="row">
             <input type="text" className="form-control" value={name} onChange={(e) => this.updateName(e, challenge)} />
           </td>
-          <td>{challenge.fields['Required']}</td>
-          <td>{challenge.fields['Verified'] === 'No' ? 'Self-Report' : 'CIE'}</td>
+          <td>
+            <select className="form-control" value={required} onChange={(e) => this.updateRequired(e, challenge)}>
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </td>
+          <td>{challenge.fields['Verified'] === 'No' ? 'Self-Report' : 'Verified'}</td>
           <td className="category-cell">
             <img className="table-icon" src={this.hpImage(challenge.fields['HP Element'])} />
             <img className="table-icon" src={this.teamImage(challenge.fields['Team/Ix'])} />
