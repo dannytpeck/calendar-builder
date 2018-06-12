@@ -124,6 +124,14 @@ class AccordionCard extends Component {
     });
   }
 
+  updateVerified(event, challenge) {
+    let updatedChallenge = { ...challenge };
+    challenge.fields['Verified'] = event.target.value === 'Verified' ? 'Yes' : 'No';
+    this.setState({
+      editingChallenge: updatedChallenge
+    });
+  }
+
   renderRow(challenge) {
     const startDate = moment(challenge.fields['Start date']).format('YYYY-MM-DD');
     const endDate = moment(challenge.fields['End date']).format('YYYY-MM-DD');
@@ -131,6 +139,7 @@ class AccordionCard extends Component {
     const points = challenge.fields['Points'];
     const frequency = challenge.fields['Frequency'];
     const required = challenge.fields['Required'];
+    const verified = challenge.fields['Verified'];
 
     if (this.state.editingChallenge && this.state.editingChallenge.id === challenge.id) {
       return (
@@ -144,7 +153,12 @@ class AccordionCard extends Component {
               <option>Yes</option>
             </select>
           </td>
-          <td>{challenge.fields['Verified'] === 'No' ? 'Self-Report' : 'Verified'}</td>
+          <td>
+            <select className="form-control" value={verified === 'Yes' ? 'Verified' : 'Self-Report'} onChange={(e) => this.updateVerified(e, challenge)}>
+              <option>Self-Report</option>
+              <option>Verified</option>
+            </select>
+          </td>
           <td className="category-cell">
             <img className="table-icon" src={this.hpImage(challenge.fields['HP Element'])} />
             <img className="table-icon" src={this.teamImage(challenge.fields['Team/Ix'])} />
@@ -178,7 +192,7 @@ class AccordionCard extends Component {
         <tr key={challenge.id}>
           <td scope="row">{challenge.fields['Name']}</td>
           <td>{challenge.fields['Required']}</td>
-          <td>{challenge.fields['Verified'] === 'No' ? 'Self-Report' : 'CIE'}</td>
+          <td>{verified === 'Yes' ? 'Verified' : 'Self-Report'}</td>
           <td>
             <img className="table-icon" src={this.hpImage(challenge.fields['HP Element'])} />
             <img className="table-icon" src={this.teamImage(challenge.fields['Team/Ix'])} />
