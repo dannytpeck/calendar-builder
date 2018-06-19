@@ -6,6 +6,7 @@ const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzb
 import Header from './header';
 import ClientName from './client_name';
 import AccordionCard from './accordion_card';
+import ConfirmModal from './confirm_modal';
 
 class EditCalendar extends Component {
   constructor(props) {
@@ -220,6 +221,8 @@ class EditCalendar extends Component {
         </div>
 
         <h5 className="point-total my-3">{totalPoints} Points</h5>
+
+        <ConfirmModal />
 
         <div className="buttons">
           <button className="btn btn-primary done-button" onClick={this.props.handleDoneClick}>Done</button>

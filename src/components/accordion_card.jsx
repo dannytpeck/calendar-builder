@@ -37,8 +37,22 @@ class AccordionCard extends Component {
     }
   }
 
+  openDeleteConfirmModal(challenge) {
+    /* global $ */
+    $('#confirm-modal').modal();
+    $('.modal-body').html('<p>Are you sure you want to delete this challenge?</p>');
+    $('.modal-footer .btn-danger').off('click');
+    $('.modal-footer .btn-danger').click(() => {
+      this.deleteChallenge(challenge);
+    });
+  }
+
   deleteChallenge(challenge) {
     this.props.deleteChallengeFromCalendar(challenge);
+
+    // Hide the ConfirmModal
+    $('#confirm-modal').modal('hide');
+
     base('Challenges').destroy(challenge.id, (err, deletedRecord) => {
       if (err) {
         console.error(err);
@@ -183,7 +197,7 @@ class AccordionCard extends Component {
           <td className="actions-cell">
             <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
             <CommentBox challenge={challenge} />
-            <img className="table-icon" src="images/icon_delete.svg" onClick={() => this.deleteChallenge(challenge)} />
+            <img className="table-icon" src="images/icon_delete.svg" onClick={() => this.openDeleteConfirmModal(challenge)} />
           </td>
         </tr>
       );
@@ -203,7 +217,7 @@ class AccordionCard extends Component {
           <td>
             <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
             <CommentBox challenge={challenge} />
-            <img className="table-icon" src="images/icon_delete.svg" onClick={() => this.deleteChallenge(challenge)} />
+            <img className="table-icon" src="images/icon_delete.svg" onClick={() => this.openDeleteConfirmModal(challenge)} />
           </td>
         </tr>
       );

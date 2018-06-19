@@ -64,6 +64,7 @@ class CalendarTable extends Component {
     /* global $ */
     $('#confirm-modal').modal();
     $('.modal-body').html('<p>Are you sure you want to delete this calendar?</p>');
+    $('.modal-footer .btn-danger').off('click');
     $('.modal-footer .btn-danger').click(() => {
       this.deleteCalendar(calendarToDelete);
     });
