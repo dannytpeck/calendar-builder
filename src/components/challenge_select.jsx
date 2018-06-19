@@ -69,9 +69,33 @@ class ChallengeSelect extends Component {
         this.props.addChallengeToCalendar(record);
       });
       this.setState({ searchText: '' });
-    } else {
-      alert('Select a challenge!');
-    }
+    } else if (challenge === null) {
+      base('Challenges').create({
+        'Name': 'Custom',
+        'Calendar': hash,
+        'EmployerName': employerName,
+        'Program Year': programYear,
+        'Phase': this.props.phase,
+        'Start date': startDate,
+        'End date': endDate,
+        'Required': 'No',
+        'Verified': 'Custom',
+        'Team/Ix': 'Individual',
+        'Frequency': 'One Time',
+        'Points': '0',
+        'Total Points': '0',
+        'Device Enabled': 'No',
+        'HP Element': 'Health & Fitness',
+        'Slug': ''
+        }, (err, record) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        this.props.addChallengeToCalendar(record);
+      });
+      this.setState({ searchText: '' });
+      }
   }
 
   cleanTitle(title) {

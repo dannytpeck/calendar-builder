@@ -140,7 +140,7 @@ class AccordionCard extends Component {
 
   updateVerified(event, challenge) {
     let updatedChallenge = { ...challenge };
-    challenge.fields['Verified'] = event.target.value === 'Verified' ? 'Yes' : 'No';
+    challenge.fields['Verified'] = event.target.value;
     this.setState({
       editingChallenge: updatedChallenge
     });
@@ -168,9 +168,10 @@ class AccordionCard extends Component {
             </select>
           </td>
           <td>
-            <select className="form-control" value={verified === 'Yes' ? 'Verified' : 'Self-Report'} onChange={(e) => this.updateVerified(e, challenge)}>
+            <select className="form-control" value={verified} onChange={(e) => this.updateVerified(e, challenge)}>
               <option>Self-Report</option>
               <option>Verified</option>
+              <option>Custom</option>
             </select>
           </td>
           <td className="category-cell">
@@ -206,7 +207,7 @@ class AccordionCard extends Component {
         <tr key={challenge.id}>
           <td scope="row">{challenge.fields['Name']}</td>
           <td>{challenge.fields['Required']}</td>
-          <td>{verified === 'Yes' ? 'Verified' : 'Self-Report'}</td>
+          <td>{challenge.fields['Verified']}</td>
           <td>
             <img className="table-icon" src={this.hpImage(challenge.fields['HP Element'])} />
             <img className="table-icon" src={this.teamImage(challenge.fields['Team/Ix'])} />
