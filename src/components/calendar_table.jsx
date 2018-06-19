@@ -56,8 +56,10 @@ class CalendarTable extends Component {
 
   uploadCalendar(calendar) {
     const hash = calendar.fields.hash;
-    // TODO: send calendar Hash to Shiny Stone
-    // http://mywellnessnumbers.sftp.adurolife.com/shiny-stone/compile/index.html#?calendar=75b6e4552adbfe
+    window.open(
+      `http://mywellnessnumbers.sftp.adurolife.com/shiny-stone/compile/index.html#?calendar=${hash}`,
+      '_blank'
+    );
   }
 
   openDeleteConfirmModal(calendarToDelete) {
