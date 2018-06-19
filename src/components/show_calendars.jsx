@@ -5,6 +5,7 @@ import ClientSelect from './client_select';
 import GetStartedFolder from './get_started_folder';
 import ClientName from './client_name';
 import CalendarTable from './calendar_table';
+import ConfirmModal from './confirm_modal';
 
 class ShowCalendars extends Component {
   renderCalendars() {
@@ -19,6 +20,8 @@ class ShowCalendars extends Component {
           selectCalendar={this.props.selectCalendar}
           handleEditClick={this.props.handleEditClick}
           setProgramYear={this.props.setProgramYear} />
+
+        <ConfirmModal />
 
         <div className="add-calendar-button my-4" onClick={this.props.handleAddClick}>
           <img className="add-icon" src="images/icon_add.svg" />

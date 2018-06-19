@@ -56,21 +56,16 @@ class CalendarTable extends Component {
 
   uploadCalendar(calendar) {
     const hash = calendar.fields.hash;
+    // TODO: send calendar Hash to Shiny Stone
+    // http://mywellnessnumbers.sftp.adurolife.com/shiny-stone/compile/index.html#?calendar=75b6e4552adbfe
+  }
 
-    base('Challenges').select({
-      view: 'Default',
-      filterByFormula: `{Calendar}='${hash}'`
-    }).eachPage((records, fetchNextPage) => {
-
-      // Will work fine as long as a calendar doesn't have more than 100 challenges
-      console.log(records);
-
-      fetchNextPage();
-    }, (err) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
+  openDeleteConfirmModal(calendarToDelete) {
+    /* global $ */
+    $('#confirm-modal').modal();
+    $('.modal-body').html('<p>Are you sure you want to delete this calendar?</p>');
+    $('.modal-footer .btn-danger').click(() => {
+      this.deleteCalendar(calendarToDelete);
     });
   }
 
@@ -80,6 +75,9 @@ class CalendarTable extends Component {
         console.error(err);
         return;
       }
+
+      // Hide the ConfirmModal
+      $('#confirm-modal').modal('hide');
 
       // Remove calendar from view
       let updatedCalendars = this.state.calendars.filter(calendar => calendar.id !== deletedRecord.id);
@@ -101,7 +99,7 @@ class CalendarTable extends Component {
         <td>
           <img onClick={() => this.editCalendar(calendar)} className="edit-icon" src="images/icon_edit.svg" />
           <img onClick={() => this.uploadCalendar(calendar)} className="upload-icon" src="images/icon_upload.svg" />
-          <img onClick={() => this.deleteCalendar(calendar)} className="delete-icon" src="images/icon_delete.svg" />
+          <img onClick={() => this.openDeleteConfirmModal(calendar)} className="delete-icon" src="images/icon_delete.svg" />
         </td>
       </tr>
     );
