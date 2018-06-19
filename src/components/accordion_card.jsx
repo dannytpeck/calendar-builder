@@ -195,7 +195,7 @@ class AccordionCard extends Component {
           <span>({challenge.fields['Total Points']})</span>
         </td>
           <td className="actions-cell">
-            <img className="table-icon" src="images/icon_edit.svg" onClick={() => this.editChallenge(challenge)} />
+            <img className="table-icon" src="images/icon_save.svg" onClick={() => this.editChallenge(challenge)} />
             <CommentBox challenge={challenge} />
             <img className="table-icon" src="images/icon_delete.svg" onClick={() => this.openDeleteConfirmModal(challenge)} />
           </td>
