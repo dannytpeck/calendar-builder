@@ -87,6 +87,28 @@ class CalendarTable extends Component {
       this.setState({
         calendars: updatedCalendars
       });
+
+      // Remove challenges from airtable
+      base('Challenges').select({
+        view: 'Default',
+        filterByFormula: `{Calendar}='${calendarToDelete.fields['hash']}'`
+      }).eachPage((records, fetchNextPage) => {
+        records.map(record => {
+          base('Challenges').destroy(record.id, (err, deletedRecord) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
+          });
+        });
+        fetchNextPage();
+      }, (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      });
+
     });
   }
 
