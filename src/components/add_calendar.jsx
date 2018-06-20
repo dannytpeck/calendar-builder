@@ -96,7 +96,10 @@ class AddCalendar extends Component {
         return;
       }
       this.props.selectCalendar(record);
+
+      // Return to Show Calendars view
       this.props.handleNextClick();
+
     });
 
     // Create all the challenges in airtable
