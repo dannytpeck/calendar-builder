@@ -33,25 +33,11 @@ class CalendarTable extends Component {
   }
 
   editCalendar(calendar) {
-    const employerName = calendar.fields.client;
-    const programYear = calendar.fields.year;
-
-    base('Challenges').select({
-      view: 'Default',
-      filterByFormula: `AND({EmployerName}='${employerName}',{Program Year}='${programYear}')`
-    }).eachPage((records, fetchNextPage) => {
-
-      this.props.setProgramYear(programYear);
-      this.props.selectCalendar(calendar);
-      this.props.handleEditClick();
-
-      fetchNextPage();
-    }, (err) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-    });
+    const hash = calendar.fields.hash;
+    window.open(
+      `http://mywellnessnumbers.sftp.adurolife.com/calendar-builder/#/${hash}`,
+      '_blank'
+    );
   }
 
   uploadCalendar(calendar) {

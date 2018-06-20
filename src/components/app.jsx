@@ -83,7 +83,7 @@ class App extends Component {
           <AddCalendar
             selectedClient={this.state.selectedClient}
             handleCancelClick={this.viewShowCalendars}
-            handleNextClick={this.viewEditCalendar}
+            handleNextClick={this.viewShowCalendars}
             setProgramYear={this.setProgramYear}
             selectCalendar={this.selectCalendar} />
         );
