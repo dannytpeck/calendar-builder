@@ -154,9 +154,10 @@ h1, h2, h3, h4, h5 {
 }
 
 .edit-icon,
+.share-icon,
 .upload-icon {
   width: 24px;
-  margin-right: 20%;
+  margin-right: 10%;
 }
 
 .delete-icon {
