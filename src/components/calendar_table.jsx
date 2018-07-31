@@ -23,6 +23,12 @@ class CalendarTable extends Component {
 
       this.setState({ calendars: records });
 
+      // Activate tooltip
+      $('.share-icon').tooltip({
+        html: true,
+        trigger: 'click'
+      });
+
       fetchNextPage();
     }, (err) => {
       if (err) {
@@ -99,7 +105,7 @@ class CalendarTable extends Component {
   }
 
   renderRow(calendar) {
-    const { name, year, updated, status } = calendar.fields;
+    const { name, year, updated, status, hash } = calendar.fields;
 
     return (
       <tr key={calendar.id}>
@@ -109,7 +115,14 @@ class CalendarTable extends Component {
         <td>{status}</td>
         <td>
           <img onClick={() => this.editCalendar(calendar)} className="edit-icon" src="images/icon_edit.svg" />
-          <img className="share-icon" src="images/icon_link.svg" />
+
+          <img className="share-icon"
+            type="image"
+            src="images/icon_link.svg"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title={`<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>http://mywellnessnumbers.sftp.adurolife.com/calendar-builder/#/${hash}</h5>`} />
+
           <img onClick={() => this.uploadCalendar(calendar)} className="upload-icon" src="images/icon_upload.svg" />
           <img onClick={() => this.openDeleteConfirmModal(calendar)} className="delete-icon" src="images/icon_delete.svg" />
         </td>
@@ -118,6 +131,7 @@ class CalendarTable extends Component {
   }
 
   render() {
+
     const filteredCalendars = this.state.calendars.filter(calendar => {
       return calendar.fields.client === this.props.selectedClient.fields['Limeade e='];
     });
