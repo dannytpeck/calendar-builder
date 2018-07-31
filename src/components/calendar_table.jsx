@@ -109,6 +109,7 @@ class CalendarTable extends Component {
         <td>{status}</td>
         <td>
           <img onClick={() => this.editCalendar(calendar)} className="edit-icon" src="images/icon_edit.svg" />
+          <img className="share-icon" src="images/icon_link.svg" />
           <img onClick={() => this.uploadCalendar(calendar)} className="upload-icon" src="images/icon_upload.svg" />
           <img onClick={() => this.openDeleteConfirmModal(calendar)} className="delete-icon" src="images/icon_delete.svg" />
         </td>
