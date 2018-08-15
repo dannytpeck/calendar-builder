@@ -186,8 +186,11 @@ class AddCalendar extends Component {
       let table;
 
       switch (template) {
-        case 'HP 2018 Calendar':
+        case 'HP 2019 Calendar':
           table = 'Templates';
+          break;
+        case 'HP 2018 Calendar':
+          table = 'Templates 2018';
           break;
         default:
           table = 'EmptyCalendar';
@@ -248,6 +251,7 @@ class AddCalendar extends Component {
           <h5>Select Template:</h5>
           <select id="template" className="form-control" onChange={this.handleChangeTemplate}>
             <option>None</option>
+            <option>HP 2019 Calendar</option>
             <option>HP 2018 Calendar</option>
           </select>
         </div>
