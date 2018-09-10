@@ -145,17 +145,17 @@ class AddCalendar extends Component {
       }
 
       // Update point values based on user input
-      const teamType = record.fields['Team/Ix'];
-      const frequency = record.fields['Frequency'];
-      const verified = record.fields['Verified'] === 'Yes';
+      const teamActivity = record.fields['Team Activity'];
+      const rewardOccurrence = record.fields['Reward Occurrence'];
+      const verified = record.fields['Verified'] === 'Verified';
 
       if (!verified) {
-        if (teamType === 'Team') {
+        if (teamActivity === 'yes') {
           record.fields['Points'] = teamPoints;
         } else {
-          if (frequency === 'One Time') {
+          if (rewardOccurrence === 'Once') {
             record.fields['Points'] = oneTimePoints;
-          } else if (frequency === 'Weekly') {
+          } else if (rewardOccurrence === 'Weekly') {
             record.fields['Points'] = weeklyPoints;
           }
         }
