@@ -70,8 +70,8 @@ class AddCalendar extends Component {
     const phase2bstart = moment(phase2start).add(21, 'days').format('YYYY-MM-DD');
     const phase2end = moment(phase2start).add(83, 'days').format('YYYY-MM-DD');
     const phase3start = moment(phase2end).add(1, 'days').format('YYYY-MM-DD');
-    const phase3bstart = moment(phase3start).add(21, 'days').format('YYYY-MM-DD');
-    const phase3end = moment(phase3start).add(83, 'days').format('YYYY-MM-DD');
+    const phase3bstart = moment(phase3start).add(28, 'days').format('YYYY-MM-DD');
+    const phase3end = moment(phase3start).add(90, 'days').format('YYYY-MM-DD');
     const phase4start = moment(phase3end).add(1, 'days').format('YYYY-MM-DD');
     const phase4bstart = moment(phase4start).add(21, 'days').format('YYYY-MM-DD');
     const phase4end = endDate;
