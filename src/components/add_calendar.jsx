@@ -77,7 +77,12 @@ class AddCalendar extends Component {
     const phase4end = endDate;
 
     const employerName = this.props.selectedClient.fields['Limeade e='];
-    const programYear = moment(startDate).format('YYYY');
+    const programYearStart = moment(startDate).format('YYYY');
+    const programYearEnd = moment(endDate).format('YYYY');
+    const programYear = programYearStart === programYearEnd ?
+      programYearStart :
+      programYearStart + '-' + programYearEnd;
+
     this.props.setProgramYear(programYear);
 
     const hash = crypto.randomBytes(14).toString('hex').slice(0, 14);
