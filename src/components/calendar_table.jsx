@@ -41,7 +41,7 @@ class CalendarTable extends Component {
   editCalendar(calendar) {
     const hash = calendar.fields.hash;
     window.open(
-      `http://mywellnessnumbers.sftp.adurolife.com/calendar-builder/#/${hash}`,
+      `https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${hash}`,
       '_blank'
     );
   }
@@ -49,7 +49,7 @@ class CalendarTable extends Component {
   uploadCalendar(calendar) {
     const hash = calendar.fields.hash;
     window.open(
-      `http://mywellnessnumbers.sftp.adurolife.com/shiny-stone/compile/index.html#?calendar=${hash}`,
+      `https://calendarbuilder.dev.adurolife.com/shiny-stone/compile/index.html#?calendar=${hash}`,
       '_blank'
     );
   }
@@ -121,7 +121,7 @@ class CalendarTable extends Component {
             src="images/icon_link.svg"
             data-toggle="tooltip"
             data-placement="bottom"
-            title={`<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>http://mywellnessnumbers.sftp.adurolife.com/calendar-builder/#/${hash}</h5>`} />
+            title={`<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${hash}</h5>`} />
 
           <img onClick={() => this.uploadCalendar(calendar)} className="upload-icon" src="images/icon_upload.svg" />
           <img onClick={() => this.openDeleteConfirmModal(calendar)} className="delete-icon" src="images/icon_delete.svg" />
