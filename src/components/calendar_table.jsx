@@ -21,7 +21,7 @@ class CalendarTable extends Component {
   fetchCalendars() {
     base('Calendars').select().eachPage((records, fetchNextPage) => {
 
-      this.setState({ calendars: records });
+      this.setState({ calendars: [...this.state.calendars, ...records] });
 
       // Activate tooltip
       $('.share-icon').tooltip({
