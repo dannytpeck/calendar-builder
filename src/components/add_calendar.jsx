@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import moment from 'moment';
 import crypto from 'crypto';
 import Airtable from 'airtable';
@@ -7,32 +7,16 @@ const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzb
 import Header from './header';
 import ClientName from './client_name';
 
-class AddCalendar extends Component {
-  constructor(props) {
-    super(props);
+function AddCalendar({ selectedClient, handleCancelClick, handleNextClick, setProgramYear, selectCalendar }) {
+  const [template, setTemplate] = React.useState(null);
+  const [startDate, setStartDate] = React.useState(null);
+  const [endDate, setEndDate] = React.useState(null);
+  const [oneTimePoints, setOneTimePoints] = React.useState(null);
+  const [weeklyPoints, setWeeklyPoints] = React.useState(null);
+  const [teamPoints, setTeamPoints] = React.useState(null);
+  const [calendar, setCalendar] = React.useState(null);
 
-    this.state = {
-      template: null,
-      startDate: null,
-      endDate: null,
-      oneTimePoints: null,
-      weeklyPoints: null,
-      teamPoints: null,
-      calendar: null
-    };
-
-    this.handleChangeTemplate = this.handleChangeTemplate.bind(this);
-    this.handleChangeStartDate = this.handleChangeStartDate.bind(this);
-    this.handleChangeEndDate = this.handleChangeEndDate.bind(this);
-    this.handleChangeOneTimePoints = this.handleChangeOneTimePoints.bind(this);
-    this.handleChangeWeeklyPoints = this.handleChangeWeeklyPoints.bind(this);
-    this.handleChangeTeamPoints = this.handleChangeTeamPoints.bind(this);
-
-    this.createCalendar = this.createCalendar.bind(this);
-    this.submitCalendar = this.submitCalendar.bind(this);
-  }
-
-  validateFields() {
+  function validateFields() {
     /* globals $ */
     const $startDate = $('#startDate');
     const $endDate = $('#endDate');
@@ -60,9 +44,7 @@ class AddCalendar extends Component {
     return allInputsAreValid;
   }
 
-  createCalendar(records) {
-    const { startDate, endDate, oneTimePoints, weeklyPoints, teamPoints } = this.state;
-
+  function createCalendar(records) {
     const phase1start = startDate;
     const phase1bstart = moment(phase1start).add(21, 'days').format('YYYY-MM-DD');
     const phase1end = moment(phase1start).add(90, 'days').format('YYYY-MM-DD');
@@ -76,14 +58,14 @@ class AddCalendar extends Component {
     const phase4bstart = moment(phase4start).add(21, 'days').format('YYYY-MM-DD');
     const phase4end = endDate;
 
-    const employerName = this.props.selectedClient.fields['Limeade e='];
+    const employerName = selectedClient.fields['Limeade e='];
     const programYearStart = moment(startDate).format('YYYY');
     const programYearEnd = moment(endDate).format('YYYY');
     const programYear = programYearStart === programYearEnd ?
       programYearStart :
       programYearStart + '-' + programYearEnd;
 
-    this.props.setProgramYear(programYear);
+    setProgramYear(programYear);
 
     const hash = crypto.randomBytes(14).toString('hex').slice(0, 14);
 
@@ -100,11 +82,11 @@ class AddCalendar extends Component {
         console.error(err);
         return;
       }
-      this.props.selectCalendar(record);
+
+      selectCalendar(record);
 
       // Return to Show Calendars view
-      this.props.handleNextClick();
-
+      handleNextClick();
     });
 
     // Create all the challenges in airtable
@@ -183,9 +165,8 @@ class AddCalendar extends Component {
     return { employerName, programYear };
   }
 
-  submitCalendar(e) {
-    const validated = this.validateFields();
-    const { template } = this.state;
+  function submitCalendar(e) {
+    const validated = validateFields();
 
     if (validated) {
       let table;
@@ -206,7 +187,7 @@ class AddCalendar extends Component {
         view: 'Default'
       }).eachPage((records, fetchNextPage) => {
 
-        this.createCalendar(records);
+        createCalendar(records);
 
         fetchNextPage();
       }, (err) => {
@@ -219,81 +200,79 @@ class AddCalendar extends Component {
 
   }
 
-  handleChangeTemplate(e) {
-    this.setState({ template: e.target.value });
+  function handleChangeTemplate(e) {
+    setTemplate(e.target.value);
   }
 
-  handleChangeStartDate(e) {
+  function handleChangeStartDate(e) {
     const date = moment(e.target.value).format('YYYY-MM-DD');
-    this.setState({ startDate: date });
+    setStartDate(date);
   }
 
-  handleChangeEndDate(e) {
+  function handleChangeEndDate(e) {
     const date = moment(e.target.value).format('YYYY-MM-DD');
-    this.setState({ endDate: date });
+    setEndDate(date);
   }
 
-  handleChangeOneTimePoints(e) {
-    this.setState({ oneTimePoints: e.target.value });
+  function handleChangeOneTimePoints(e) {
+    setOneTimePoints(e.target.value);
   }
 
-  handleChangeWeeklyPoints(e) {
-    this.setState({ weeklyPoints: e.target.value });
+  function handleChangeWeeklyPoints(e) {
+    setWeeklyPoints(e.target.value);
   }
 
-  handleChangeTeamPoints(e) {
-    this.setState({ teamPoints: e.target.value });
+  function handleChangeTeamPoints(e) {
+    setTeamPoints(e.target.value);
   }
 
-  render() {
-    return (
-      <div className="add-calendar">
-        <Header />
-        <h2>Create New Calendar</h2>
-        <ClientName selectedClient={this.props.selectedClient} />
+  return (
+    <div className="add-calendar">
+      <Header />
+      <h2>Create New Calendar</h2>
+      <ClientName selectedClient={selectedClient} />
 
-        <div className="select-template my-5">
-          <h5>Select Template:</h5>
-          <select id="template" className="form-control" onChange={this.handleChangeTemplate}>
-            <option>None</option>
-            <option>HP 2019 Calendar</option>
-            <option>HP 2018 Calendar</option>
-          </select>
-        </div>
-
-        <div className="program-dates my-5">
-          <h5>Program Dates:</h5>
-          <span>Start Date:</span><input id="startDate" className="form-control" type="date" onChange={this.handleChangeStartDate} />
-          <span>End Date:</span><input id="endDate" className="form-control" type="date" onChange={this.handleChangeEndDate} />
-        </div>
-
-        <div className="point-structure my-5">
-          <h5 className="my-4">Point Structure:</h5>
-          <p>
-            <span>One-Time Challenge:</span>
-            <input id="oneTimePoints" className="form-control" type="text" onChange={this.handleChangeOneTimePoints} />
-            <span>points</span>
-          </p>
-          <p>
-            <span>Weekly Challenges:</span>
-            <input id="weeklyPoints" className="form-control" type="text" onChange={this.handleChangeWeeklyPoints} />
-            <span>points</span>
-          </p>
-          <p>
-            <span>Team Challenge:</span>
-            <input id="teamPoints" className="form-control" type="text" onChange={this.handleChangeTeamPoints} />
-            <span>points</span>
-          </p>
-        </div>
-
-        <div className="buttons my-5">
-          <span className="cancel-button" onClick={this.props.handleCancelClick}>Cancel</span>
-          <button className="btn btn-primary next-button" onClick={this.submitCalendar}>Next</button>
-        </div>
-
+      <div className="select-template my-5">
+        <h5>Select Template:</h5>
+        <select id="template" className="form-control" onChange={handleChangeTemplate}>
+          <option>None</option>
+          <option>HP 2019 Calendar</option>
+          <option>HP 2018 Calendar</option>
+        </select>
       </div>
-    );
-  }
+
+      <div className="program-dates my-5">
+        <h5>Program Dates:</h5>
+        <span>Start Date:</span><input id="startDate" className="form-control" type="date" onChange={handleChangeStartDate} />
+        <span>End Date:</span><input id="endDate" className="form-control" type="date" onChange={handleChangeEndDate} />
+      </div>
+
+      <div className="point-structure my-5">
+        <h5 className="my-4">Point Structure:</h5>
+        <p>
+          <span>One-Time Challenge:</span>
+          <input id="oneTimePoints" className="form-control" type="text" onChange={handleChangeOneTimePoints} />
+          <span>points</span>
+        </p>
+        <p>
+          <span>Weekly Challenges:</span>
+          <input id="weeklyPoints" className="form-control" type="text" onChange={handleChangeWeeklyPoints} />
+          <span>points</span>
+        </p>
+        <p>
+          <span>Team Challenge:</span>
+          <input id="teamPoints" className="form-control" type="text" onChange={handleChangeTeamPoints} />
+          <span>points</span>
+        </p>
+      </div>
+
+      <div className="buttons my-5">
+        <span className="cancel-button" onClick={handleCancelClick}>Cancel</span>
+        <button className="btn btn-primary next-button" onClick={submitCalendar}>Next</button>
+      </div>
+
+    </div>
+  );
 }
 
 export default AddCalendar;

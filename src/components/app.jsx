@@ -4,8 +4,6 @@ const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzb
 
 import ShowCalendars from './show_calendars';
 import AddCalendar from './add_calendar';
-import EditCalendar from './edit_calendar';
-import EditChallenge from './edit_challenge';
 
 class App extends Component {
   constructor(props) {
@@ -25,8 +23,6 @@ class App extends Component {
     this.selectChallenge = this.selectChallenge.bind(this);
     this.viewShowCalendars = this.viewShowCalendars.bind(this);
     this.viewAddCalendar = this.viewAddCalendar.bind(this);
-    this.viewEditCalendar = this.viewEditCalendar.bind(this);
-    this.viewEditChallenge = this.viewEditChallenge.bind(this);
     this.setProgramYear = this.setProgramYear.bind(this);
   }
 
@@ -73,10 +69,7 @@ class App extends Component {
             clients={this.state.clients}
             selectedClient={this.state.selectedClient}
             selectClient={this.selectClient}
-            selectCalendar={this.selectCalendar}
-            handleEditClick={this.viewEditCalendar}
-            handleAddClick={this.viewAddCalendar}
-            setProgramYear={this.setProgramYear} />
+            handleAddClick={this.viewAddCalendar} />
         );
       case 'AddCalendar':
         return (
@@ -87,23 +80,6 @@ class App extends Component {
             setProgramYear={this.setProgramYear}
             selectCalendar={this.selectCalendar} />
         );
-      case 'EditCalendar':
-        return (
-          <EditCalendar
-            selectedClient={this.state.selectedClient}
-            selectedCalendar={this.state.selectedCalendar}
-            programYear={this.state.programYear}
-            handleDoneClick={this.viewShowCalendars}
-            handleEditChallengeClick={this.viewEditChallenge}
-            selectChallenge={this.selectChallenge}
-            selectedChallenge={this.state.selectedChallenge} />
-        );
-      case 'EditChallenge':
-        return (
-          <EditChallenge
-            selectedChallenge={this.state.selectedChallenge}
-            handleCancelClick={this.viewEditCalendar} />
-        );
     }
   }
 
@@ -113,14 +89,6 @@ class App extends Component {
 
   viewAddCalendar() {
     this.setState({ view: 'AddCalendar' });
-  }
-
-  viewEditCalendar() {
-    this.setState({ view: 'EditCalendar' });
-  }
-
-  viewEditChallenge() {
-    this.setState({ view: 'EditChallenge' });
   }
 
   render() {
