@@ -115,7 +115,7 @@ function CalendarTable({ selectedClient }) {
     );
   }
 
-  return(
+  return (
     <table className="table">
       <thead>
         <tr>
