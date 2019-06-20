@@ -7,7 +7,7 @@ const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzb
 import Header from './header';
 import ClientName from './client_name';
 
-function AddCalendar({ selectedClient, handleCancelClick, handleNextClick, setProgramYear, selectCalendar }) {
+function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
   const [template, setTemplate] = React.useState(null);
   const [startDate, setStartDate] = React.useState(null);
   const [endDate, setEndDate] = React.useState(null);
@@ -65,8 +65,6 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick, setPr
       programYearStart :
       programYearStart + '-' + programYearEnd;
 
-    setProgramYear(programYear);
-
     const hash = crypto.randomBytes(14).toString('hex').slice(0, 14);
 
     // Create the calendar in airtable
@@ -82,8 +80,6 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick, setPr
         console.error(err);
         return;
       }
-
-      selectCalendar(record);
 
       // Return to Show Calendars view
       handleNextClick();

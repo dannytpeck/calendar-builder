@@ -1,40 +1,28 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
 import ShowCalendars from './show_calendars';
 import AddCalendar from './add_calendar';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+function clientsReducer(state, action) {
+  return [...state, ...action];
+}
 
-    this.state = {
-      view: 'ShowCalendars',
-      clients: [],
-      selectedClient: null,
-      selectedCalendar: null,
-      selectedChallenge: null,
-      programYear: null
-    };
+function App() {
+  const [view, setView] = useState('ShowCalendars');
+  const [selectedClient, setSelectedClient] = useState(null);
 
-    this.selectClient = this.selectClient.bind(this);
-    this.selectCalendar = this.selectCalendar.bind(this);
-    this.selectChallenge = this.selectChallenge.bind(this);
-    this.viewShowCalendars = this.viewShowCalendars.bind(this);
-    this.viewAddCalendar = this.viewAddCalendar.bind(this);
-    this.setProgramYear = this.setProgramYear.bind(this);
-  }
+  const [clients, dispatch] = React.useReducer(
+    clientsReducer,
+    [] // initial clients
+  );
 
-  // When app starts, fetch clients and set initial view
-  componentDidMount() {
-    this.fetchClients();
-  }
+  // When app first mounts, fetch clients
+  useEffect(() => {
 
-  fetchClients() {
     base('Clients').select().eachPage((records, fetchNextPage) => {
-
-      this.setState({ clients: [...this.state.clients, ...records] });
+      dispatch(records);
 
       fetchNextPage();
     }, (err) => {
@@ -43,61 +31,46 @@ class App extends Component {
         return;
       }
     });
+
+  }, []); // Pass empty array to only run once on mount
+
+  function selectClient(client) {
+    setSelectedClient(client);
   }
 
-  selectClient(client) {
-    this.setState({ selectedClient: client });
-  }
-
-  selectCalendar(calendar) {
-    this.setState({ selectedCalendar: calendar });
-  }
-
-  selectChallenge(challenge) {
-    this.setState({ selectedChallenge: challenge });
-  }
-
-  setProgramYear(year) {
-    this.setState({ programYear: year });
-  }
-
-  renderView(view) {
+  function renderView(view) {
     switch (view) {
       case 'ShowCalendars':
         return (
           <ShowCalendars
-            clients={this.state.clients}
-            selectedClient={this.state.selectedClient}
-            selectClient={this.selectClient}
-            handleAddClick={this.viewAddCalendar} />
+            clients={clients}
+            selectedClient={selectedClient}
+            selectClient={selectClient}
+            handleAddClick={viewAddCalendar} />
         );
       case 'AddCalendar':
         return (
           <AddCalendar
-            selectedClient={this.state.selectedClient}
-            handleCancelClick={this.viewShowCalendars}
-            handleNextClick={this.viewShowCalendars}
-            setProgramYear={this.setProgramYear}
-            selectCalendar={this.selectCalendar} />
+            selectedClient={selectedClient}
+            handleCancelClick={viewShowCalendars}
+            handleNextClick={viewShowCalendars} />
         );
     }
   }
 
-  viewShowCalendars() {
-    this.setState({ view: 'ShowCalendars' });
+  function viewShowCalendars() {
+    setView('ShowCalendars');
   }
 
-  viewAddCalendar() {
-    this.setState({ view: 'AddCalendar' });
+  function viewAddCalendar() {
+    setView('AddCalendar');
   }
 
-  render() {
-    return (
-      <div className="app">
-        {this.renderView(this.state.view)}
-      </div>
-    );
-  }
+  return (
+    <div className="app">
+      {renderView(view)}
+    </div>
+  );
 }
 
 export default App;
