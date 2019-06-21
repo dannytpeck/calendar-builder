@@ -36,11 +36,85 @@ function CalendarTable({ selectedClient }) {
     );
   }
 
-  function uploadCalendar(calendar) {
-    window.open(
-      `https://calendarbuilder.dev.adurolife.com/shiny-stone/compile/index.html#?calendar=${calendar.fields['hash']}`,
-      '_blank'
-    );
+  function openConfirmUploadModal(calendar) {
+    $('#confirm-upload-modal').modal();
+
+    base('Challenges 2.0').select({
+      filterByFormula: `{Calendar Id}='${calendar.fields['hash']}'`
+    }).eachPage((records, fetchNextPage) => {
+      const filteredRecords = records.filter((record) => {
+        return record.fields['Tracking'] === 'Self-Report' || record.fields['Tracking'] === 'Points Upload';
+      });
+
+      $('#confirm-upload-modal .modal-body').html(`
+        <p>Are you sure you want to upload this calendar to Limeade?</p>
+        <p><a href="https://calendarbuilder.dev.adurolife.com/calendar-builder/#/2f7e5003375688" target="_blank">${calendar.fields['name']}</a></p>
+      `);
+
+      $('#confirm-upload-modal .modal-footer .btn-primary').off('click');
+      $('#confirm-upload-modal .modal-footer .btn-primary').click(() => {
+        uploadCalendar(filteredRecords);
+      });
+
+      fetchNextPage();
+    }, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+  }
+
+  function uploadCalendar(challenges) {
+    console.log(challenges);
+
+    challenges.map(challenge => {
+      // Upload each challenge to Limeade
+
+      /* Send one challenge to limeade, use code responsibly
+      const data = {
+        'StartDate': '2019-06-22',
+        'EndDate': '2019-06-23',
+        'Name': 'Danny Created This Via API',
+        'ChallengeType': 'AddAllNumbers',
+        'ShowWeeklyCalendar': true,
+        'Frequency': 'Daily',
+        'ShortDescription': 'YOUR CHALLENGE: Figure this shit out.',
+        'AmountUnit': 'visits to the dentist',
+        'IsSelfReportEnabled': true,
+        'ChallengeLogoURL': 'https://d2qv7eqemtyl41.cloudfront.net/PDW/010879ab-08c2-468f-9d11-4c615062c690-large.jpg',
+        'ChallengeLogoThumbURL': 'https://d2qv7eqemtyl41.cloudfront.net/PDW/010879ab-08c2-468f-9d11-4c615062c690-large.jpg',
+        'ActivityReward': {
+          'Type': 'IncentivePoints',
+          'Value': 50
+        },
+        'Dimensions': [
+          'Resilience'
+        ],
+        'DisplayPriority': 0,
+        'DisplayInProgram': true
+      };
+
+      $.ajax({
+        url: 'https://api.limeade.com/api/admin/activity',
+        type: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        headers: {
+          Authorization: 'Bearer ' + selectedClient.fields['LimeadeAccessToken']
+        },
+        contentType: 'application/json; charset=utf-8'
+      }).done((result) => {
+
+        console.log(result);
+
+      }).fail((xhr, textStatus, error) => {
+        console.error(xhr.responseText);
+      });
+
+      */
+
+    });
   }
 
   function openDeleteConfirmModal(calendarToDelete) {
@@ -108,7 +182,7 @@ function CalendarTable({ selectedClient }) {
             data-placement="bottom"
             title={`<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendar.fields['hash']}</h5>`} />
 
-          <img onClick={() => uploadCalendar(calendar)} className="upload-icon" src="images/icon_upload.svg" />
+          <img onClick={() => openConfirmUploadModal(calendar)} className="upload-icon" src="images/icon_upload.svg" />
           <img onClick={() => openDeleteConfirmModal(calendar)} className="delete-icon" src="images/icon_delete.svg" />
         </td>
       </tr>

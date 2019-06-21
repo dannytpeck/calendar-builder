@@ -2,7 +2,8 @@ import React from 'react';
 
 import ClientName from './client_name';
 import CalendarTable from './calendar_table';
-import ConfirmModal from './confirm_modal';
+import ConfirmDeleteModal from './confirm_delete_modal';
+import ConfirmUploadModal from './confirm_upload_modal';
 
 function Calendars({ selectedClient, handleAddClick }) {
   return (
@@ -13,7 +14,8 @@ function Calendars({ selectedClient, handleAddClick }) {
 
       <CalendarTable selectedClient={selectedClient} />
 
-      <ConfirmModal />
+      <ConfirmDeleteModal />
+      <ConfirmUploadModal />
 
       <div className="add-calendar-button my-4" onClick={handleAddClick}>
         <img className="add-icon" src="images/icon_add.svg" />
