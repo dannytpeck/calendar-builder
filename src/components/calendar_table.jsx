@@ -70,23 +70,31 @@ function CalendarTable({ selectedClient }) {
 
     challenges.map(challenge => {
       // Upload each challenge to Limeade
+      console.log(challenge);
 
-      /* Send one challenge to limeade, use code responsibly
+      /*
+      // TODO: determine ChallengeType based on data available i.e. AddAllNumbers, OneTimeEvent?, the third one
+      // TODO: get limeade image from Library
+      // TODO: get limeade dimensions from library
+
+      // Reward Occurrence: "Once",
+      // Team Activity: "no"
+
       const data = {
-        'StartDate': '2019-06-22',
-        'EndDate': '2019-06-23',
-        'Name': 'Danny Created This Via API',
+        'StartDate': challenge.fields['Start Date'],
+        'EndDate': challenge.fields['End Date'],
+        'Name': challenge.fields['Challenge Name'],
         'ChallengeType': 'AddAllNumbers',
         'ShowWeeklyCalendar': true,
         'Frequency': 'Daily',
-        'ShortDescription': 'YOUR CHALLENGE: Figure this shit out.',
-        'AmountUnit': 'visits to the dentist',
+        'ShortDescription': challenge.fields['Instructions'],
+        'AmountUnit': challenge.fields['Activity Goal Text'],
         'IsSelfReportEnabled': true,
         'ChallengeLogoURL': 'https://d2qv7eqemtyl41.cloudfront.net/PDW/010879ab-08c2-468f-9d11-4c615062c690-large.jpg',
         'ChallengeLogoThumbURL': 'https://d2qv7eqemtyl41.cloudfront.net/PDW/010879ab-08c2-468f-9d11-4c615062c690-large.jpg',
         'ActivityReward': {
           'Type': 'IncentivePoints',
-          'Value': 50
+          'Value': challenge.fields['Points']
         },
         'Dimensions': [
           'Resilience'
