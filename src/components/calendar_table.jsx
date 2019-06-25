@@ -171,6 +171,7 @@ function CalendarTable({ selectedClient }) {
         <td>{calendar.fields['name']}</td>
         <td>{calendar.fields['year']}</td>
         <td>{calendar.fields['updated']}</td>
+        <td>{calendar.fields['approved']}</td>
         <td>{calendar.fields['status']}</td>
         <td>
           <img onClick={() => editCalendar(calendar)} className="edit-icon" src="images/icon_edit.svg" />
@@ -196,9 +197,9 @@ function CalendarTable({ selectedClient }) {
           <th>Name</th>
           <th>Program Year</th>
           <th>Last Update</th>
+          <th>Approval Date</th>
           <th>Status</th>
-          <th>Actions</th>
-          <th></th>
+          <th id="actionsHeader">Actions</th>
         </tr>
       </thead>
       <tbody>

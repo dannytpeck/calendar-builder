@@ -267,3 +267,7 @@ h1, h2, h3, h4, h5 {
 .comment-box-tooltip-inner button {
   margin: 10px 0;
 }
+
+#actionsHeader {
+  min-width: 120px;
+}
