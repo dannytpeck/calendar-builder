@@ -46,16 +46,12 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
 
   function createCalendar(records) {
     const phase1start = startDate;
-    const phase1bstart = moment(phase1start).add(21, 'days').format('YYYY-MM-DD');
     const phase1end = moment(phase1start).add(90, 'days').format('YYYY-MM-DD');
     const phase2start = moment(phase1end).add(1, 'days').format('YYYY-MM-DD');
-    const phase2bstart = moment(phase2start).add(21, 'days').format('YYYY-MM-DD');
     const phase2end = moment(phase2start).add(83, 'days').format('YYYY-MM-DD');
     const phase3start = moment(phase2end).add(1, 'days').format('YYYY-MM-DD');
-    const phase3bstart = moment(phase3start).add(28, 'days').format('YYYY-MM-DD');
     const phase3end = moment(phase3start).add(90, 'days').format('YYYY-MM-DD');
     const phase4start = moment(phase3end).add(1, 'days').format('YYYY-MM-DD');
-    const phase4bstart = moment(phase4start).add(21, 'days').format('YYYY-MM-DD');
     const phase4end = endDate;
 
     const employerName = selectedClient.fields['Limeade e='];
@@ -87,6 +83,11 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
 
     // Create all the challenges in airtable
     records.map(record => {
+
+      // Add important fields for calendar matching
+      record.fields['EmployerName'] = employerName;
+      record.fields['Calendar'] = hash;
+
       // Update phase dates based on user input
       switch (record.fields['Phase']) {
         case 'Yearlong':
@@ -97,58 +98,32 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
           record.fields['Start date'] = phase1start;
           record.fields['End date'] = phase1end;
           break;
-        case 'Phase 1B':
-          record.fields['Start date'] = phase1bstart;
-          record.fields['End date'] = phase1end;
-          break;
         case 'Phase 2':
           record.fields['Start date'] = phase2start;
-          record.fields['End date'] = phase2end;
-          break;
-        case 'Phase 2B':
-          record.fields['Start date'] = phase2bstart;
           record.fields['End date'] = phase2end;
           break;
         case 'Phase 3':
           record.fields['Start date'] = phase3start;
           record.fields['End date'] = phase3end;
           break;
-        case 'Phase 3B':
-          record.fields['Start date'] = phase3bstart;
-          record.fields['End date'] = phase3end;
-          break;
         case 'Phase 4':
           record.fields['Start date'] = phase4start;
-          record.fields['End date'] = phase4end;
-          break;
-        case 'Phase 4B':
-          record.fields['Start date'] = phase4bstart;
           record.fields['End date'] = phase4end;
           break;
       }
 
       // Update point values based on user input
-      const teamActivity = record.fields['Team Activity'];
-      const rewardOccurrence = record.fields['Reward Occurrence'];
-      const verified = record.fields['Verified'] === 'Verified';
-
-      if (!verified) {
-        if (teamActivity === 'yes') {
+      record.fields['Points'] = oneTimePoints;
+      if (record.fields['Verified'] === 'Self-Report') {
+        if (record.fields['Team Activity'] === 'Yes') {
           record.fields['Points'] = teamPoints;
-        } else {
-          if (rewardOccurrence === 'Once') {
-            record.fields['Points'] = oneTimePoints;
-          } else if (rewardOccurrence === 'Weekly') {
-            record.fields['Points'] = weeklyPoints;
-          }
+        }
+        if (record.fields['Reward Occurrence'] === 'Weekly') {
+          record.fields['Points'] = weeklyPoints;
         }
       }
 
       // Save the record to Airtable
-      record.fields['EmployerName'] = employerName;
-      record.fields['Program Year'] = programYear;
-      record.fields['Calendar'] = hash;
-
       base('Challenges').create(record.fields, (err, record) => {
         if (err) {
           console.error(err);
