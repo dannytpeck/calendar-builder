@@ -171,7 +171,7 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
         case '2020 Calendar':
           table = 'Template 2020';
           break;
-        case 'HP 2019 Calendar':
+        case '2019 Calendar':
           table = 'Templates';
           break;
         default:
@@ -232,8 +232,8 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
         <h5>Select Template:</h5>
         <select id="template" className="form-control" onChange={handleChangeTemplate}>
           <option>None</option>
-          <option>HP 2019 Calendar</option>
-          <option>HP 2018 Calendar</option>
+          <option>2020 Calendar</option>
+          <option>2019 Calendar</option>
         </select>
       </div>
 
