@@ -31,7 +31,7 @@ function CalendarTable({ selectedClient }) {
 
   function editCalendar(calendar) {
     window.open(
-      `https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendar.fields['hash']}`,
+      `https://calendarbuilder.dev.adurolife.com/staging/calendar-builder/#/${calendar.fields['hash']}`,
       '_blank'
     );
   }

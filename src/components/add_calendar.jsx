@@ -168,14 +168,14 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
       let table;
 
       switch (template) {
+        case '2020 Calendar':
+          table = 'Template 2020';
+          break;
         case 'HP 2019 Calendar':
           table = 'Templates';
           break;
-        case 'HP 2018 Calendar':
-          table = 'Templates 2018';
-          break;
         default:
-          table = 'EmptyCalendar';
+          table = 'Empty Calendar';
           break;
       }
 
