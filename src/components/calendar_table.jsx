@@ -39,8 +39,8 @@ function CalendarTable({ selectedClient }) {
   function openConfirmUploadModal(calendar) {
     $('#confirm-upload-modal').modal();
 
-    base('Challenges 2.0').select({
-      filterByFormula: `{Calendar Id}='${calendar.fields['hash']}'`
+    base('Challenges').select({
+      filterByFormula: `{Calendar}='${calendar.fields['hash']}'`
     }).eachPage((records, fetchNextPage) => {
       const filteredRecords = records.filter((record) => {
         return record.fields['Tracking'] === 'Self-Report' || record.fields['Tracking'] === 'Points Upload';
@@ -48,7 +48,7 @@ function CalendarTable({ selectedClient }) {
 
       $('#confirm-upload-modal .modal-body').html(`
         <p>Are you sure you want to upload this calendar to Limeade?</p>
-        <p><a href="https://calendarbuilder.dev.adurolife.com/calendar-builder/#/2f7e5003375688" target="_blank">${calendar.fields['name']}</a></p>
+        <p><a href="https://calendarbuilder.dev.adurolife.com/staging/calendar-builder/#/2f7e5003375688" target="_blank">${calendar.fields['name']}</a></p>
       `);
 
       $('#confirm-upload-modal .modal-footer .btn-primary').off('click');
@@ -72,7 +72,6 @@ function CalendarTable({ selectedClient }) {
       // Upload each challenge to Limeade
       console.log(challenge);
 
-      /*
       // TODO: determine ChallengeType based on data available i.e. AddAllNumbers, OneTimeEvent?, the third one
       // TODO: get limeade image from Library
       // TODO: get limeade dimensions from library
@@ -103,6 +102,9 @@ function CalendarTable({ selectedClient }) {
         'DisplayInProgram': true
       };
 
+      console.log(data);
+
+      /*
       $.ajax({
         url: 'https://api.limeade.com/api/admin/activity',
         type: 'POST',
@@ -119,7 +121,6 @@ function CalendarTable({ selectedClient }) {
       }).fail((xhr, textStatus, error) => {
         console.error(xhr.responseText);
       });
-
       */
 
     });
