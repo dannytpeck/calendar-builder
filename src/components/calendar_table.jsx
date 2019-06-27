@@ -43,7 +43,7 @@ function CalendarTable({ selectedClient }) {
       filterByFormula: `{Calendar}='${calendar.fields['hash']}'`
     }).eachPage((records, fetchNextPage) => {
       const filteredRecords = records.filter((record) => {
-        return record.fields['Tracking'] === 'Self-Report' || record.fields['Tracking'] === 'Points Upload';
+        return record.fields['Verified'] === 'Self-Report' || record.fields['Verified'] === 'Points Upload';
       });
 
       $('#confirm-upload-modal .modal-body').html(`
@@ -66,62 +66,88 @@ function CalendarTable({ selectedClient }) {
   }
 
   function uploadCalendar(challenges) {
+    // Use the Library base in airtable
+    const theLibraryBase = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appa7mnDuYdgwx2zP');
+
     console.log(challenges);
 
     challenges.map(challenge => {
-      // Upload each challenge to Limeade
-      console.log(challenge);
 
-      // TODO: determine ChallengeType based on data available i.e. AddAllNumbers, OneTimeEvent?, the third one
-      // TODO: get limeade image from Library
-      // TODO: get limeade dimensions from library
+      // Get Library details for the challenge
+      if (challenge.fields['Challenge Id']) {
+        theLibraryBase('Challenges').find(challenge.fields['Challenge Id'], function(err, record) {
+          if (err) {
+            console.error(err);
+            return;
+          }
 
-      // Reward Occurrence: "Once",
-      // Team Activity: "no"
+          let challengeType, frequency;
+          switch(record.fields['Activity Tracking Type']) {
+            case 'Event':
+              challengeType = 'OneTimeEvent';
+              frequency = 'None';
+              break;
+            case 'Days':
+              challengeType = 'YesNoDaily';
+              frequency = record.fields['Reward Occurrence'] === 'Weekly' ? 'Weekly' : 'Daily';
+              break;
+            case 'Units':
+              challengeType = 'AddAllNumbers'
+              frequency = record.fields['Reward Occurrence'] === 'Weekly' ? 'Weekly' : 'Daily';
+              break;
+          }
 
-      const data = {
-        'StartDate': challenge.fields['Start Date'],
-        'EndDate': challenge.fields['End Date'],
-        'Name': challenge.fields['Challenge Name'],
-        'ChallengeType': 'AddAllNumbers',
-        'ShowWeeklyCalendar': true,
-        'Frequency': 'Daily',
-        'ShortDescription': challenge.fields['Instructions'],
-        'AmountUnit': challenge.fields['Activity Goal Text'],
-        'IsSelfReportEnabled': true,
-        'ChallengeLogoURL': 'https://d2qv7eqemtyl41.cloudfront.net/PDW/010879ab-08c2-468f-9d11-4c615062c690-large.jpg',
-        'ChallengeLogoThumbURL': 'https://d2qv7eqemtyl41.cloudfront.net/PDW/010879ab-08c2-468f-9d11-4c615062c690-large.jpg',
-        'ActivityReward': {
-          'Type': 'IncentivePoints',
-          'Value': challenge.fields['Points']
-        },
-        'Dimensions': [
-          'Resilience'
-        ],
-        'DisplayPriority': 0,
-        'DisplayInProgram': true
-      };
+          const isDeviceEnabled = record.fields['Device Enabled'] === 'yes';
+          const isTeamChallenge = record.fields['Team Activity'] === 'yes';
 
-      console.log(data);
+          // "record" is the Library version
+          const data = {
+            'AboutChallenge': record.fields['More Information Html'],
+            'ActivityReward': {
+              'Type': 'IncentivePoints',
+              'Value': challenge.fields['Points']
+            },
+            'ActivityType': record.fields['Activity Goal Text'],
+            'AmountUnit': isDeviceEnabled ? record.fields['Device Units'] : 'times',
+            'ChallengeLogoURL': record.fields['Limeade Image Url'],
+            'ChallengeLogoThumbURL': record.fields['Limeade Image Url'],
+            'ChallengeTarget': record.fields['Activity Goal'],
+            'ChallengeType': challengeType,
+            'Dimensions': record.fields['Limeade Dimensions'].split(','),
+            'DisplayInProgram': true,
+            'DisplayPriority': 0,
+            'EndDate': challenge.fields['End Date'],
+            'Frequency': frequency,
+            'IsDeviceEnabled': isDeviceEnabled,
+            'IsFeatured': null,
+            'IsSelfReportEnabled': true,
+            'IsTeamChallenge': isTeamChallenge,
+            'Name': record.fields['Title'],
+            'ShortDescription': record.fields['Instructions'],
+            'ShowWeeklyCalendar': false,
+            'StartDate': challenge.fields['Start Date'],
+            'TeamSize': isTeamChallenge ? { maxTeamSize: record.fields['Team Size Maximum'], minTeamSize: record.fields['Team Size Minimum'] } : null
+          };
 
-      /*
-      $.ajax({
-        url: 'https://api.limeade.com/api/admin/activity',
-        type: 'POST',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        headers: {
-          Authorization: 'Bearer ' + selectedClient.fields['LimeadeAccessToken']
-        },
-        contentType: 'application/json; charset=utf-8'
-      }).done((result) => {
+          console.log(data);
 
-        console.log(result);
+          $.ajax({
+            url: 'https://api.limeade.com/api/admin/activity',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(data),
+            headers: {
+              Authorization: 'Bearer ' + selectedClient.fields['LimeadeAccessToken']
+            },
+            contentType: 'application/json; charset=utf-8'
+          }).done((result) => {
+            console.log(result);
+          }).fail((xhr, textStatus, error) => {
+            console.error(xhr.responseText);
+          });
 
-      }).fail((xhr, textStatus, error) => {
-        console.error(xhr.responseText);
-      });
-      */
+        });
+      }
 
     });
   }
