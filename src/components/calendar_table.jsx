@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import Airtable from 'airtable';
 const base = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appN1J6yscNwlzbzq');
 
@@ -82,7 +83,7 @@ function CalendarTable({ selectedClient }) {
           }
 
           let challengeType, frequency;
-          switch(record.fields['Activity Tracking Type']) {
+          switch (record.fields['Activity Tracking Type']) {
             case 'Event':
               challengeType = 'OneTimeEvent';
               frequency = 'None';
@@ -92,7 +93,7 @@ function CalendarTable({ selectedClient }) {
               frequency = record.fields['Reward Occurrence'] === 'Weekly' ? 'Weekly' : 'Daily';
               break;
             case 'Units':
-              challengeType = 'AddAllNumbers'
+              challengeType = 'AddAllNumbers';
               frequency = record.fields['Reward Occurrence'] === 'Weekly' ? 'Weekly' : 'Daily';
               break;
           }
@@ -205,8 +206,8 @@ function CalendarTable({ selectedClient }) {
       <tr key={calendar.id}>
         <td>{calendar.fields['name']}</td>
         <td>{calendar.fields['year']}</td>
-        <td>{calendar.fields['updated']}</td>
-        <td>{calendar.fields['approved']}</td>
+        <td>{moment(calendar.fields['updated']).format('L')}</td>
+        <td>{moment(calendar.fields['approved']).format('L')}</td>
         <td>{calendar.fields['status']}</td>
         <td>
           <img onClick={() => editCalendar(calendar)} className="edit-icon" src="images/icon_edit.svg" />

@@ -239,7 +239,7 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
 
       <div className="buttons my-5">
         <span className="cancel-button" onClick={handleCancelClick}>Cancel</span>
-        <button className="btn btn-primary next-button" onClick={submitCalendar}>Next</button>
+        <button className="btn btn-primary next-button" onClick={submitCalendar}>Create Calendar</button>
       </div>
 
     </div>
