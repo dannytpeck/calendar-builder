@@ -37,6 +37,11 @@ function CalendarTable({ selectedClient }) {
     );
   }
 
+  function downloadCsv(calendarToDownload) {
+    // TODO: write .csv download code
+
+  }
+
   function openConfirmUploadModal(calendar) {
     $('#confirm-upload-modal').modal();
 
@@ -210,17 +215,18 @@ function CalendarTable({ selectedClient }) {
         <td>{moment(calendar.fields['approved']).format('L')}</td>
         <td>{calendar.fields['status']}</td>
         <td>
-          <img onClick={() => editCalendar(calendar)} className="edit-icon" src="images/icon_edit.svg" />
+          <img onClick={() => editCalendar(calendar)} className="table-icon edit-icon" src="images/icon_edit.svg" />
 
-          <img className="share-icon"
+          <img className="table-icon share-icon"
             type="image"
             src="images/icon_link.svg"
             data-toggle="tooltip"
             data-placement="bottom"
             title={`<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendar.fields['hash']}</h5>`} />
 
-          <img onClick={() => openConfirmUploadModal(calendar)} className="upload-icon" src="images/icon_upload.svg" />
-          <img onClick={() => openDeleteConfirmModal(calendar)} className="delete-icon" src="images/icon_delete.svg" />
+          <img onClick={() => downloadCsv(calendar)} className="table-icon download-icon" src="images/icon_download.svg" />
+          <img onClick={() => openConfirmUploadModal(calendar)} className="table-icon upload-icon" src="images/icon_upload.svg" />
+          <img onClick={() => openDeleteConfirmModal(calendar)} className="table-icon delete-icon" src="images/icon_delete.svg" />
         </td>
       </tr>
     );
