@@ -18,7 +18,7 @@ function Calendars({ selectedClient, handleAddClick }) {
       <ConfirmUploadModal />
 
       <div className="add-calendar-button my-4" onClick={handleAddClick}>
-        <img className="add-icon" src="images/icon_add.svg" />
+        <img className="add-icon" title="Create New Calendar" src="images/icon_add.svg" />
         <h5>Add New Calendar</h5>
       </div>
     </div>
