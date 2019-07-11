@@ -37,10 +37,198 @@ function CalendarTable({ selectedClient }) {
     );
   }
 
+  // BEGIN download .csv code
   function downloadCsv(calendarToDownload) {
-    // TODO: write .csv download code
+    // get the year for the copyright
+    const currentYear = new Date().getFullYear();
 
+    // sanitization. Still needed?
+    const sanitize = (code) => {
+    var sanitized = code
+      .replace(/\r?\n|\r/g, ' ')     // Strip out carriage returns and newlines
+      .replace(/,/g, '&comma;')       // Escape commas since we're using a csv
+      .replace(/\u2018/g, '\'')      // Left single quote
+      .replace(/\u2019/g, '\'')      // Right single quote
+      .replace(/\u201C/g, '"')       // Left double quote
+      .replace(/\u201D/g, '"')       // Right double quote
+      .replace(/\u2026/g, '...')     // Ellipsis
+      .replace(/\u2013/g, '&ndash;') // Long dash
+      .replace(/\u2014/g, '&mdash;') // Longer dash
+      .replace(/\u00A9/g, '&copy;')  // Copyright symbol
+      .replace(/#fff/gi, 'white')    // For hash issues in our URIs
+      .replace(/#cccccc/gi, 'silver')
+      .replace(/copyright\s*\d+/gi, `Copyright ${currentYear}`);
+    return sanitized;
+    };
+
+    // Convert tracking backend values to Limeade values
+    const tracking = (trackType) => {
+      switch (trackType) {
+        case 'Event':
+          return 'OneTimeEvent';
+        case 'Days':
+          return 'YesNoDaily';
+        case 'Units':
+          return 'AddAllNumbers';
+
+        default:
+          throw new Error('Tracking type is not one of the 3 valid values. (event/days/units)');
+      }
+
+    };
+
+    // make the .csv file
+    const createCSV = (employer) => {
+
+      var data = [[
+        'EmployerName',
+        'ChallengeId',
+        'ChallengeType',
+        'IsWeekly',
+        'WinStrategy',
+        'Target',
+        'Activity',
+        'ChallengeName',
+        'DisplayPriority',
+        'StartDate',
+        'EndDate',
+        'ShortDescription',
+        'MoreInformation',
+        'ImageUrl',
+        'ShowInProgram',
+        'RewardType',
+        'Reward',
+        'Dimensions',
+        'LeaderboardTag',
+        'EnableDeviceTracking',
+        'AllowSelfReporting',
+        'DeviceTrackingUnits',
+        'IsTeamChallenge',
+        'MinTeamSize',
+        'MaxTeamSize',
+        'Subgroup',
+        'Field1',
+        'Field1Value',
+        'Field2',
+        'Field2Value',
+        'Field3',
+        'Field3Value',
+        'AppearanceInProgram',
+        'IntegrationPartnerId',
+        'ButtonText',
+        'TargetUrl',
+        'EventCode',
+        'ShowExtendedDescription',
+        'ActivityTemplateId',
+        'IsFeatured',
+        'FeaturedDescription',
+        'FeaturedImageUrl'
+      ]];
+
+      // TODO: loop through the tables (from Shiny Stone), probably rewrite this for CB
+      for (var row = 0; row < $('#challenge-list tbody')[0].rows.length; row++) {
+
+        // TODO: shiiiiiit what do we do about this?
+        $('#remove-coaching').prop('checked') ? $(`#row${row} .coachinginfo`).remove() : null;
+
+        const trackingType = $(`#row${row} .tracking-type`).val();
+        const challengeType = tracking(trackingType);
+        const winStrategy = trackingType === 'Event' ? 'AccomplishOneTimeEvent' : 'MeetOrExceedTarget';
+        const target = $(`#row${row} .activity-goal`).val();
+        const isWeekly = $(`#row${row} .reward-occurrence`).val() === 'Weekly' ? 1 : 0;
+        const enableDeviceTracking = $(`#row${row} .device-enabled`).prop('checked') ? 1 : 0;
+        const activity = $(`#row${row} .activity-goal-text`).val();
+        const deviceTrackingUnits = enableDeviceTracking ? $(`#row${row} .device-units`).val() : '';
+        const isTeamChallenge = $(`#row${row} .is-team`).val() === 'Team' ? 1 : 0;
+        
+        // partner varibles
+        const isPartner =  $(`#row${row} .is-partner`).prop('checked') ? true : false;
+        const allowSelfReporting = isPartner ? 0 : 1;
+        const integrationPartnerId = isPartner ? 1 : '';
+        const buttonText = isPartner ? 'CLOSE' : '';
+        const targetUrl = isPartner ? '/Home?sametab=true' : '';
+        const showExtendedDescription = isPartner ? 1 : '';
+
+        data.push([
+          // TODO: update these to use airtable and CB values
+          $(`#eid${employer}`).val(),
+          '', // ChallengeId
+          challengeType,
+          isWeekly,
+          winStrategy,
+          target,
+          activity,
+          '"' + $(`#row${row} .challenge-title`).val() + '"',
+          '', // DisplayPriority
+          $(`#row${row} .start-date`).val().replace(/-/g, '/'),
+          $(`#row${row} .end-date`).val().replace(/-/g, '/'),
+          sanitize($(`#row${row} .short-description`).html()),
+          sanitize($(`#row${row} .more-information`).html()),
+          $(`#row${row} .image`).prop('src'),
+          '0', // ShowInProgram
+          '0', // RewardType
+          $(`#row${row} .points`).val(),
+          dimensionsARR(row) === '"undefined"' ? '' : dimensionsARR(row),
+          '', // LeaderboardTag
+          enableDeviceTracking,
+          allowSelfReporting,
+          deviceTrackingUnits,
+          isTeamChallenge,
+          isTeamChallenge ? $(`#row${row} .team-min`).val() : '',
+          isTeamChallenge ? $(`#row${row} .team-max`).val() : '',
+          $(`#row${row} .subgroup`).val(),
+          $(`#row${row} .field-one`).val(),
+          $(`#row${row} .field-one-value`).val(),
+          $(`#row${row} .field-two`).val(),
+          $(`#row${row} .field-two-value`).val(),
+          $(`#row${row} .field-three`).val(),
+          $(`#row${row} .field-three-value`).val(),
+          'Default', // AppearanceInProgram
+          integrationPartnerId,
+          buttonText,
+          targetUrl,
+          '', // EventCode
+          showExtendedDescription,
+          '', // ActivityTemplateId
+          '0', // IsFeatured
+          '', // FeaturedDescription
+          '' // FeaturedImageUrl
+        ]);
+
+      }
+
+      return data;
+
+    };
+
+    function compileTransporter() {
+      'use strict';
+
+      // TODO: Download a CSV for each program, no longer need to loop by program, just one instance for the one client
+      for (var program = 0; program < $('#loadNumber').val(); program++) {
+
+        var data = createCSV(program);
+        var csvContent = '';
+        data.forEach(function (infoArray, index) {
+          var dataString = infoArray.join(',');
+          csvContent += index < (data.length - 1) ? dataString + '\n' : dataString;
+        });
+
+        // TODO: update filename generation to be more accurate
+        var file = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
+        var filename = $(`#eid${program}`).val() + '-' + 'Calendar' + '-' + currentYear + '.csv';
+
+        // TODO: do we need this?
+        var link = document.createElement('a');
+        link.setAttribute('download', filename);
+        link.setAttribute('href', file);
+        link.click();
+
+      }
+
+    }
   }
+  // END download .csv code
 
   function openConfirmUploadModal(calendar) {
     $('#confirm-upload-modal').modal();
