@@ -46,12 +46,19 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
 
   function createCalendar(records) {
     const phase1start = startDate;
+
+    // Phase 1 is 13 weeks
     const phase1end = moment(phase1start).add(90, 'days').format('YYYY-MM-DD');
     const phase2start = moment(phase1end).add(1, 'days').format('YYYY-MM-DD');
+
+    // Phase 2 is 12 weeks
     const phase2end = moment(phase2start).add(83, 'days').format('YYYY-MM-DD');
     const phase3start = moment(phase2end).add(1, 'days').format('YYYY-MM-DD');
+
+    // Phase 3 is 13 weeks
     const phase3end = moment(phase3start).add(90, 'days').format('YYYY-MM-DD');
     const phase4start = moment(phase3end).add(1, 'days').format('YYYY-MM-DD');
+
     const phase4end = endDate;
 
     const employerName = selectedClient.fields['Limeade e='];
@@ -70,7 +77,17 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
       client: employerName,
       year: programYear,
       updated: moment().format('L'),
-      status: 'In Progress'
+      status: 'In Progress',
+      'Yearlong Start Date': startDate,
+      'Yearlong End Date': endDate,
+      'Phase 1 Start Date': phase1start,
+      'Phase 1 End Date': phase1end,
+      'Phase 2 Start Date': phase2start,
+      'Phase 2 End Date': phase2end,
+      'Phase 3 Start Date': phase3start,
+      'Phase 3 End Date': phase3end,
+      'Phase 4 Start Date': phase4start,
+      'Phase 4 End Date': endDate
     }, (err, record) => {
       if (err) {
         console.error(err);
