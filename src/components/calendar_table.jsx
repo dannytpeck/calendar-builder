@@ -404,14 +404,6 @@ function CalendarTable({ selectedClient }) {
         <td>{calendar.fields['status']}</td>
         <td>
           <img onClick={() => editCalendar(calendar)} className="table-icon edit-icon" title="Edit Calendar" src="images/icon_edit.svg" />
-
-          <img className="table-icon share-icon"
-            type="image"
-            src="images/icon_link.svg"
-            data-toggle="tooltip"
-            data-placement="bottom"
-            title={`<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendar.fields['hash']}</h5>`} />
-
           <img onClick={() => downloadCsv(calendar)} className="table-icon download-icon" title="Download Calendar as .CSV" src="images/icon_download.svg" />
           <img onClick={() => openConfirmUploadModal(calendar)} className="table-icon upload-icon" title="Upload Calendar to Limeade" src="images/icon_upload.svg" />
           <img onClick={() => openDeleteConfirmModal(calendar)} className="table-icon delete-icon" title="Delete Calendar" src="images/icon_delete.svg" />
