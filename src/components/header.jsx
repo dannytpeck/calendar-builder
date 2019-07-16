@@ -8,7 +8,7 @@ function Header() {
   return (
     <div className="header">
       <a onClick={reloadPage}>
-        <img className="home-button" src="images/icon_home.svg" />
+        <img className="home-button" src="images/icon_home.svg" title="Home"/>
       </a>
       <img className="logo" src="images/ADURO-Logo-Horizontal.png" />
       <h3 className="my-4">Calendar Builder</h3>
