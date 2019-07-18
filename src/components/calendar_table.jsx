@@ -148,38 +148,38 @@ function CalendarTable({ selectedClient }) {
 
         data.push([
           // TODO: update these to use airtable and CB values
-          $(`#eid${employer}`).val(), // client
+          challenge.fields['EmployerName'], // client
           '', // ChallengeId
           challengeType,
           isWeekly,
           winStrategy,
           target,
           activity,
-          '"' + $(`#row${row} .challenge-title`).val() + '"', // title
+          '"' + challenge.fields['Title'] + '"', // title
           '', // DisplayPriority
-          $(`#row${row} .start-date`).val().replace(/-/g, '/'), // start date
-          $(`#row${row} .end-date`).val().replace(/-/g, '/'), // end date
-          sanitize($(`#row${row} .short-description`).html()), // instructions
-          sanitize($(`#row${row} .more-information`).html()), // More Information Html
-          $(`#row${row} .image`).prop('src'), // Limeade image URL
+          challenge.fields['Start date'].val().replace(/-/g, '/'), // start date
+          challenge.fields['End date'].val().replace(/-/g, '/'), // end date
+          sanitize(challenge.fields['Instructions'].html()), // instructions
+          sanitize(challenge.fields['More Information Html'].html()), // More Information Html
+          'FIX ME: Get the image from the Library base', // Limeade image URL
           '0', // ShowInProgram
           '0', // RewardType
-          $(`#row${row} .points`).val(), // points
-          dimensionsARR(row) === '"undefined"' ? '' : dimensionsARR(row), // dimensions
+          challenge.fields['Points'], // points
+          '', // dimensions
           '', // LeaderboardTag
           enableDeviceTracking,
           allowSelfReporting,
           deviceTrackingUnits,
           isTeamChallenge,
-          isTeamChallenge ? $(`#row${row} .team-min`).val() : '', // team min
-          isTeamChallenge ? $(`#row${row} .team-max`).val() : '', // team max
-          $(`#row${row} .subgroup`).val(), // targeting: subgroup
-          $(`#row${row} .field-one`).val(), // targeting: field1name
-          $(`#row${row} .field-one-value`).val(), // targeting: field1value
-          $(`#row${row} .field-two`).val(), // targeting: field2name
-          $(`#row${row} .field-two-value`).val(), // targeting: field2value
-          $(`#row${row} .field-three`).val(), // targeting: field3name
-          $(`#row${row} .field-three-value`).val(), // targeting: field3value
+          isTeamChallenge ? challenge.fields['Team Size Minimum'] : '', // team min
+          isTeamChallenge ? challenge.fields['Team Size Maximum'] : '', // team max
+          '', // targeting: subgroup
+          '', // targeting: field1name
+          '', // targeting: field1value
+          '', // targeting: field2name
+          '', // targeting: field2value
+          '', // targeting: field3name
+          '', // targeting: field3value
           'Default', // AppearanceInProgram
           integrationPartnerId,
           buttonText,
