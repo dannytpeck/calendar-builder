@@ -2,8 +2,13 @@ h1, h2, h3, h4, h5 {
   font-weight: normal;
 }
 
+.table tr {
+  border-top: 1px solid #dee2e6;
+}
+
 .table td, .table th {
-  padding: .75rem .5rem
+  padding: .75rem .5rem;
+  border-top: none;
 }
 
 .container {
