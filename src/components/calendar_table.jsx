@@ -125,13 +125,6 @@ function CalendarTable({ selectedClient }) {
 
     challenges.map(challenge => {
       console.log('.map began');
-      const trackingType = challenge.fields['Activity Tracking Type'];
-      const challengeType = tracking(trackingType);
-      const winStrategy = trackingType === 'Event' ? 'AccomplishOneTimeEvent' : 'MeetOrExceedTarget';
-      const target = challenge.fields['Activity Goal'];
-      const isWeekly = challenge.fields['Reward Occurrence'] === 'Weekly' ? 1 : 0;
-      const enableDeviceTracking = challenge.fields['Activity Tracking Type'] === 'yes' ? 1 : 0;
-      const activity = challenge.fields['Activity Goal Text'];
       
       // TODO: Get image working rather than getting the data after the file has been downloaded
       // Get the image URL from the Library
@@ -145,21 +138,31 @@ function CalendarTable({ selectedClient }) {
         imageUrl = record.fields['Limeade Image Url'];
         console.log(imageUrl);
         return imageUrl;
-          });
-        }
+        });
+      }
 
-        const deviceTrackingUnits = enableDeviceTracking ? challenge.fields['Device Units'] : '';
-        const isTeamChallenge = challenge.fields['Team Activity'] === 'yes' ? 1 : 0;
-        
-        // partner variables
-        const isPartner =  challenge.fields['Verified'] === 'System Awarded' ? true : false;
-        const allowSelfReporting = isPartner ? 0 : 1;
-        const integrationPartnerId = isPartner ? 1 : '';
-        const buttonText = isPartner ? 'CLOSE' : '';
-        const targetUrl = isPartner ? '/Home?sametab=true' : '';
-        const showExtendedDescription = isPartner ? 1 : '';
+      const trackingType = challenge.fields['Activity Tracking Type'];
+      const challengeType = tracking(trackingType);
+      const winStrategy = trackingType === 'Event' ? 'AccomplishOneTimeEvent' : 'MeetOrExceedTarget';
+      const target = challenge.fields['Activity Goal'];
+      const isWeekly = challenge.fields['Reward Occurrence'] === 'Weekly' ? 1 : 0;
+      const enableDeviceTracking = challenge.fields['Activity Tracking Type'] === 'yes' ? 1 : 0;
+      const activity = challenge.fields['Activity Goal Text'];
+      const deviceTrackingUnits = enableDeviceTracking ? challenge.fields['Device Units'] : '';
+      const isTeamChallenge = challenge.fields['Team Activity'] === 'yes' ? 1 : 0;
+      
+      // partner variables
+      const isPartner =  challenge.fields['Verified'] === 'System Awarded' ? true : false;
+      const allowSelfReporting = isPartner ? 0 : 1;
+      const integrationPartnerId = isPartner ? 1 : '';
+      const buttonText = isPartner ? 'CLOSE' : '';
+      const targetUrl = isPartner ? '/Home?sametab=true' : '';
+      const showExtendedDescription = isPartner ? 1 : '';
 
-
+      // featured variables
+      const isFeatured = challenge.fields['Featured Activity'] === 'yes' ? 1 : 0;
+      const featuredDescription = isFeatured === 1 ? sanitize(challenge.fields['Instructions']) : '';
+      const featuredImageUrl = isFeatured === 1 ? imageUrl : '';
 
         data.push([
           // "record" is the Library version
@@ -202,13 +205,12 @@ function CalendarTable({ selectedClient }) {
           '', // EventCode
           showExtendedDescription,
           '', // ActivityTemplateId
-          '0', // IsFeatured TODO: Add featured toggle functionality
-          '', // FeaturedDescription
-          '' // FeaturedImageUrl
+          isFeatured, // IsFeatured
+          featuredDescription, // FeaturedDescription
+          featuredImageUrl // FeaturedImageUrl
         ]);
 
-
-    })
+    });
     return data;
 
   }
