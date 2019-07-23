@@ -38,7 +38,7 @@ function CalendarTable({ selectedClient }) {
 
     // sanitization. Still needed?
     const sanitize = (code) => {
-    var sanitized = code
+    let sanitized = code
       .replace(/\r?\n|\r/g, ' ')     // Strip out carriage returns and newlines
       .replace(/,/g, '&comma;')      // Escape commas since we're using a csv
       .replace(/\u2018/g, '\'')      // Left single quote
@@ -71,7 +71,7 @@ function CalendarTable({ selectedClient }) {
 
     };
 
-    var data = [[
+    let data = [[
       'EmployerName',
       'ChallengeId',
       'ChallengeType',
@@ -196,10 +196,10 @@ function CalendarTable({ selectedClient }) {
     // get the year for the copyright
     const currentYear = new Date().getFullYear();
 
-    var data = createCsv(challenges);
-    var csvContent = '';
+    let data = createCsv(challenges);
+    let csvContent = '';
     data.forEach(function (infoArray, index) {
-      var dataString = infoArray.join(',');
+      let dataString = infoArray.join(',');
       csvContent += index < (data.length - 1) ? dataString + '\n' : dataString;
     });
 
@@ -210,11 +210,11 @@ function CalendarTable({ selectedClient }) {
       })[0].fields['name'];
     }
 
-    var file = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
-    var filename = `${selectedClient.fields['Limeade e=']}-${calendarName}.csv`;
+    let file = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
+    let filename = `${selectedClient.fields['Limeade e=']}-${calendarName}.csv`;
 
     // create the download link
-    var link = document.createElement('a');
+    let link = document.createElement('a');
     link.setAttribute('download', filename);
     link.setAttribute('href', file);
     link.click();
