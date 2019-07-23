@@ -14,12 +14,6 @@ function CalendarTable({ selectedClient }) {
     }).eachPage((records, fetchNextPage) => {
       setCalendars([...calendars, ...records]);
 
-      // Activate tooltip
-      $('.share-icon').tooltip({
-        html: true,
-        trigger: 'click'
-      });
-
       fetchNextPage();
     }, (err) => {
       if (err) {
@@ -126,10 +120,11 @@ function CalendarTable({ selectedClient }) {
 
     console.log('pineapple', challenges);
 
-    // loop through the tables (from Shiny Stone), TODO: rewrite this for CB
-    for (var row = 0; row < challenges.length; row++) {
-      console.log('for loop began');
-      const challenge = challenges[row];
+    // Use the Library base in airtable
+    const theLibraryBase = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appa7mnDuYdgwx2zP');
+
+    challenges.map(challenge => {
+      console.log('.map began');
       const trackingType = challenge.fields['Activity Tracking Type'];
       const challengeType = tracking(trackingType);
       const winStrategy = trackingType === 'Event' ? 'AccomplishOneTimeEvent' : 'MeetOrExceedTarget';
@@ -137,65 +132,83 @@ function CalendarTable({ selectedClient }) {
       const isWeekly = challenge.fields['Reward Occurrence'] === 'Weekly' ? 1 : 0;
       const enableDeviceTracking = challenge.fields['Activity Tracking Type'] === 'yes' ? 1 : 0;
       const activity = challenge.fields['Activity Goal Text'];
-      const deviceTrackingUnits = enableDeviceTracking ? challenge.fields['Device Units'] : '';
-      const isTeamChallenge = challenge.fields['Team Activity'] === 'yes' ? 1 : 0;
       
-      // partner variables
-      const isPartner =  challenge.fields['Verified'] === 'System Awarded' ? true : false;
-      const allowSelfReporting = isPartner ? 0 : 1;
-      const integrationPartnerId = isPartner ? 1 : '';
-      const buttonText = isPartner ? 'CLOSE' : '';
-      const targetUrl = isPartner ? '/Home?sametab=true' : '';
-      const showExtendedDescription = isPartner ? 1 : '';
+      // TODO: Get image working rather than getting the data after the file has been downloaded
+      // Get the image URL from the Library
+      let imageUrl = '';
+      if (challenge.fields['Challenge Id']) {
+        theLibraryBase('Challenges').find(challenge.fields['Challenge Id'], function(err, record) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        imageUrl = record.fields['Limeade Image Url'];
+        console.log(imageUrl);
+        return imageUrl;
+          });
+        }
 
-      data.push([
-        // TODO: update these to use airtable and CB values
-        challenge.fields['EmployerName'], // client
-        '', // ChallengeId
-        challengeType,
-        isWeekly,
-        winStrategy,
-        target,
-        activity,
-        '"' + challenge.fields['Title'] + '"', // title
-        '', // DisplayPriority
-        challenge.fields['Start date'], // start date
-        challenge.fields['End date'], // end date
-        sanitize(challenge.fields['Instructions']), // instructions
-        sanitize(challenge.fields['More Information Html']), // More Information Html
-        'FIX ME: Get the image from the Library base', // Limeade image URL
-        '0', // ShowInProgram
-        '0', // RewardType
-        challenge.fields['Points'], // points
-        '', // dimensions
-        '', // LeaderboardTag
-        enableDeviceTracking,
-        allowSelfReporting,
-        deviceTrackingUnits,
-        isTeamChallenge,
-        isTeamChallenge ? challenge.fields['Team Size Minimum'] : '', // team min
-        isTeamChallenge ? challenge.fields['Team Size Maximum'] : '', // team max
-        '', // targeting: subgroup
-        '', // targeting: field1name
-        '', // targeting: field1value
-        '', // targeting: field2name
-        '', // targeting: field2value
-        '', // targeting: field3name
-        '', // targeting: field3value
-        'Default', // AppearanceInProgram
-        integrationPartnerId,
-        buttonText,
-        targetUrl,
-        '', // EventCode
-        showExtendedDescription,
-        '', // ActivityTemplateId
-        '0', // IsFeatured
-        '', // FeaturedDescription
-        '' // FeaturedImageUrl
-      ]);
-      
-    }
+        const deviceTrackingUnits = enableDeviceTracking ? challenge.fields['Device Units'] : '';
+        const isTeamChallenge = challenge.fields['Team Activity'] === 'yes' ? 1 : 0;
+        
+        // partner variables
+        const isPartner =  challenge.fields['Verified'] === 'System Awarded' ? true : false;
+        const allowSelfReporting = isPartner ? 0 : 1;
+        const integrationPartnerId = isPartner ? 1 : '';
+        const buttonText = isPartner ? 'CLOSE' : '';
+        const targetUrl = isPartner ? '/Home?sametab=true' : '';
+        const showExtendedDescription = isPartner ? 1 : '';
 
+
+
+        data.push([
+          // "record" is the Library version
+          challenge.fields['EmployerName'], // client
+          '', // ChallengeId
+          challengeType,
+          isWeekly,
+          winStrategy,
+          target,
+          activity,
+          '"' + challenge.fields['Title'] + '"', // title
+          '', // DisplayPriority
+          challenge.fields['Start date'], // start date
+          challenge.fields['End date'], // end date
+          sanitize(challenge.fields['Instructions']), // instructions
+          sanitize(challenge.fields['More Information Html']), // More Information Html
+          imageUrl, // Limeade image URL
+          '0', // ShowInProgram
+          '0', // RewardType
+          challenge.fields['Points'], // points
+          '', // dimensions
+          '', // LeaderboardTag
+          enableDeviceTracking,
+          allowSelfReporting,
+          deviceTrackingUnits,
+          isTeamChallenge,
+          isTeamChallenge ? challenge.fields['Team Size Minimum'] : '', // team min
+          isTeamChallenge ? challenge.fields['Team Size Maximum'] : '', // team max
+          '', // targeting: subgroup
+          '', // targeting: field1name
+          '', // targeting: field1value
+          '', // targeting: field2name
+          '', // targeting: field2value
+          '', // targeting: field3name
+          '', // targeting: field3value
+          'Default', // AppearanceInProgram
+          integrationPartnerId,
+          buttonText,
+          targetUrl,
+          '', // EventCode
+          showExtendedDescription,
+          '', // ActivityTemplateId
+          '0', // IsFeatured TODO: Add featured toggle functionality
+          '', // FeaturedDescription
+          '' // FeaturedImageUrl
+        ]);
+
+
+    })
     return data;
 
   }
@@ -216,9 +229,8 @@ function CalendarTable({ selectedClient }) {
 
     // TODO: update filename generation to be more accurate
     var file = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
-    var filename = `${selectedClient.fields['Limeade e=']} - ${selectedClient.fields['Account Name']}.csv`;
+    var filename = `${selectedClient.fields['Limeade e=']}-${selectedClient.fields['Account Name']}.csv`;
 
-    // TODO: do we need this?
     var link = document.createElement('a');
     link.setAttribute('download', filename);
     link.setAttribute('href', file);
