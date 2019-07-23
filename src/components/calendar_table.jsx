@@ -14,12 +14,6 @@ function CalendarTable({ selectedClient }) {
     }).eachPage((records, fetchNextPage) => {
       setCalendars([...calendars, ...records]);
 
-      // Activate tooltip
-      $('.share-icon').tooltip({
-        html: true,
-        trigger: 'click'
-      });
-
       fetchNextPage();
     }, (err) => {
       if (err) {
@@ -35,6 +29,215 @@ function CalendarTable({ selectedClient }) {
       `https://calendarbuilder.dev.adurolife.com/staging/calendar-builder/#/${calendar.fields['hash']}`,
       '_blank'
     );
+  }
+
+  // make the .csv file
+  function createCsv(challenges) {
+    // get the year for the copyright
+    const currentYear = new Date().getFullYear();
+
+    // sanitization. Still needed?
+    const sanitize = (code) => {
+    let sanitized = code
+      .replace(/\r?\n|\r/g, ' ')     // Strip out carriage returns and newlines
+      .replace(/,/g, '&comma;')      // Escape commas since we're using a csv
+      .replace(/\u2018/g, '\'')      // Left single quote
+      .replace(/\u2019/g, '\'')      // Right single quote
+      .replace(/\u201C/g, '"')       // Left double quote
+      .replace(/\u201D/g, '"')       // Right double quote
+      .replace(/\u2026/g, '...')     // Ellipsis
+      .replace(/\u2013/g, '&ndash;') // Long dash
+      .replace(/\u2014/g, '&mdash;') // Longer dash
+      .replace(/\u00A9/g, '&copy;')  // Copyright symbol
+      .replace(/#fff/gi, 'white')    // For hash issues in our URIs
+      .replace(/#cccccc/gi, 'silver')
+      .replace(/copyright\s*\d+/gi, `Copyright ${currentYear}`);
+    return sanitized;
+    };
+
+    // Convert tracking backend values to Limeade values
+    const tracking = (trackType) => {
+      switch (trackType) {
+        case 'Event':
+          return 'OneTimeEvent';
+        case 'Days':
+          return 'YesNoDaily';
+        case 'Units':
+          return 'AddAllNumbers';
+
+        default:
+          throw new Error('Tracking type is not one of the 3 valid values. (event/days/units)');
+      }
+
+    };
+
+    let data = [[
+      'EmployerName',
+      'ChallengeId',
+      'ChallengeType',
+      'IsWeekly',
+      'WinStrategy',
+      'Target',
+      'Activity',
+      'ChallengeName',
+      'DisplayPriority',
+      'StartDate',
+      'EndDate',
+      'ShortDescription',
+      'MoreInformation',
+      'ImageUrl',
+      'ShowInProgram',
+      'RewardType',
+      'Reward',
+      'Dimensions',
+      'LeaderboardTag',
+      'EnableDeviceTracking',
+      'AllowSelfReporting',
+      'DeviceTrackingUnits',
+      'IsTeamChallenge',
+      'MinTeamSize',
+      'MaxTeamSize',
+      'Subgroup',
+      'Field1',
+      'Field1Value',
+      'Field2',
+      'Field2Value',
+      'Field3',
+      'Field3Value',
+      'AppearanceInProgram',
+      'IntegrationPartnerId',
+      'ButtonText',
+      'TargetUrl',
+      'EventCode',
+      'ShowExtendedDescription',
+      'ActivityTemplateId',
+      'IsFeatured',
+      'FeaturedDescription',
+      'FeaturedImageUrl'
+    ]];
+
+    challenges.map(challenge => {
+      const trackingType = challenge.fields['Activity Tracking Type'];
+      const challengeType = tracking(trackingType);
+      const winStrategy = trackingType === 'Event' ? 'AccomplishOneTimeEvent' : 'MeetOrExceedTarget';
+      const target = challenge.fields['Activity Goal'];
+      const isWeekly = challenge.fields['Reward Occurrence'] === 'Weekly' ? 1 : 0;
+      const enableDeviceTracking = challenge.fields['Activity Tracking Type'] === 'yes' ? 1 : 0;
+      const activity = challenge.fields['Activity Goal Text'];
+      const imageUrl = challenge.fields['Limeade Image Url'] ? challenge.fields['Limeade Image Url'] : '';
+      const deviceTrackingUnits = enableDeviceTracking ? challenge.fields['Device Units'] : '';
+      const isTeamChallenge = challenge.fields['Team Activity'] === 'yes' ? 1 : 0;
+      
+      // partner variables
+      const isPartner =  challenge.fields['Verified'] === 'System Awarded' ? true : false;
+      const allowSelfReporting = isPartner ? 0 : 1;
+      const integrationPartnerId = isPartner ? 1 : '';
+      const buttonText = isPartner ? 'CLOSE' : '';
+      const targetUrl = isPartner ? '/Home?sametab=true' : '';
+      const showExtendedDescription = isPartner ? 1 : '';
+
+      // featured variables
+      const isFeatured = challenge.fields['Featured Activity'] === 'yes' ? 1 : 0;
+      const featuredDescription = isFeatured === 1 ? sanitize(challenge.fields['Instructions']) : '';
+      const featuredImageUrl = isFeatured === 1 ? imageUrl : '';
+
+      data.push([
+        // "record" is the Library version
+        challenge.fields['EmployerName'], // client
+        '', // ChallengeId
+        challengeType,
+        isWeekly,
+        winStrategy,
+        target,
+        activity,
+        '"' + challenge.fields['Title'] + '"', // title
+        '', // DisplayPriority
+        challenge.fields['Start date'], // start date
+        challenge.fields['End date'], // end date
+        sanitize(challenge.fields['Instructions']), // instructions
+        sanitize(challenge.fields['More Information Html']), // More Information Html
+        imageUrl, // Limeade image URL
+        '0', // ShowInProgram
+        '0', // RewardType
+        challenge.fields['Points'], // points
+        '', // dimensions
+        '', // LeaderboardTag
+        enableDeviceTracking,
+        allowSelfReporting,
+        deviceTrackingUnits,
+        isTeamChallenge,
+        isTeamChallenge ? challenge.fields['Team Size Minimum'] : '', // team min
+        isTeamChallenge ? challenge.fields['Team Size Maximum'] : '', // team max
+        '', // targeting: subgroup
+        '', // targeting: field1name
+        '', // targeting: field1value
+        '', // targeting: field2name
+        '', // targeting: field2value
+        '', // targeting: field3name
+        '', // targeting: field3value
+        'Default', // AppearanceInProgram
+        integrationPartnerId,
+        buttonText,
+        targetUrl,
+        '', // EventCode
+        showExtendedDescription,
+        '', // ActivityTemplateId
+        isFeatured, // IsFeatured
+        featuredDescription, // FeaturedDescription
+        featuredImageUrl // FeaturedImageUrl
+      ]);
+
+    });
+    return data;
+
+  }
+
+  function compileTransporter(challenges) {
+    // get the year for the copyright
+    const currentYear = new Date().getFullYear();
+
+    let data = createCsv(challenges);
+    let csvContent = '';
+    data.forEach(function (infoArray, index) {
+      let dataString = infoArray.join(',');
+      csvContent += index < (data.length - 1) ? dataString + '\n' : dataString;
+    });
+
+    let calendarName = currentYear;
+    if (challenges[0].fields['Calendar']) {
+      calendarName = calendars.filter(calendar => {
+        return calendar.fields['hash'] === challenges[0].fields['Calendar'];
+      })[0].fields['name'];
+    }
+
+    let file = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
+    let filename = `${selectedClient.fields['Limeade e=']}-${calendarName}.csv`;
+
+    // create the download link
+    let link = document.createElement('a');
+    link.setAttribute('download', filename);
+    link.setAttribute('href', file);
+    link.click();
+
+  }
+
+  function downloadCsv(calendar) {
+    // pull in the Challenges base
+    base('Challenges').select({
+      filterByFormula: `{Calendar}='${calendar.fields['hash']}'`
+    }).eachPage((records, fetchNextPage) => {
+      const filteredRecords = records.filter((record) => {
+        // keeping the filtering code so this only returns Transporter-uploadable challenges
+        return record.fields['Verified'] === 'Self-Report' || record.fields['Verified'] === 'Points Upload';
+      });
+      compileTransporter(filteredRecords);
+      fetchNextPage();
+    }, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
   }
 
   function openConfirmUploadModal(calendar) {
@@ -69,8 +272,6 @@ function CalendarTable({ selectedClient }) {
   function uploadCalendar(challenges) {
     // Use the Library base in airtable
     const theLibraryBase = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appa7mnDuYdgwx2zP');
-
-    console.log(challenges);
 
     challenges.map(challenge => {
 
@@ -129,8 +330,6 @@ function CalendarTable({ selectedClient }) {
             'StartDate': challenge.fields['Start Date'],
             'TeamSize': isTeamChallenge ? { maxTeamSize: record.fields['Team Size Maximum'], minTeamSize: record.fields['Team Size Minimum'] } : null
           };
-
-          console.log(data);
 
           $.ajax({
             url: 'https://api.limeade.com/api/admin/activity',
@@ -204,23 +403,16 @@ function CalendarTable({ selectedClient }) {
   function renderRow(calendar) {
     return (
       <tr key={calendar.id}>
-        <td>{calendar.fields['name']}</td>
+        <td className="calendar-name">{calendar.fields['name']}</td>
         <td>{calendar.fields['year']}</td>
         <td>{moment(calendar.fields['updated']).format('L')}</td>
         <td>{moment(calendar.fields['approved']).format('L')}</td>
         <td>{calendar.fields['status']}</td>
         <td>
-          <img onClick={() => editCalendar(calendar)} className="edit-icon" src="images/icon_edit.svg" />
-
-          <img className="share-icon"
-            type="image"
-            src="images/icon_link.svg"
-            data-toggle="tooltip"
-            data-placement="bottom"
-            title={`<h5 class='my-3'>Link to this Calendar</h5><h5 class='my-3'>https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendar.fields['hash']}</h5>`} />
-
-          <img onClick={() => openConfirmUploadModal(calendar)} className="upload-icon" src="images/icon_upload.svg" />
-          <img onClick={() => openDeleteConfirmModal(calendar)} className="delete-icon" src="images/icon_delete.svg" />
+          <img onClick={() => editCalendar(calendar)} className="table-icon edit-icon" title="Edit Calendar" src="images/icon_edit.svg" />
+          <img onClick={() => downloadCsv(calendar)} className="table-icon download-icon" title="Download Calendar as .CSV" src="images/icon_download.svg" />
+          <img onClick={() => openConfirmUploadModal(calendar)} className="table-icon upload-icon" title="Upload Calendar to Limeade" src="images/icon_upload.svg" />
+          <img onClick={() => openDeleteConfirmModal(calendar)} className="table-icon delete-icon" title="Delete Calendar" src="images/icon_delete.svg" />
         </td>
       </tr>
     );

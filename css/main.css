@@ -2,8 +2,13 @@ h1, h2, h3, h4, h5 {
   font-weight: normal;
 }
 
+.table tr {
+  border-top: 1px solid #dee2e6;
+}
+
 .table td, .table th {
-  padding: .75rem .5rem
+  padding: .75rem .5rem;
+  border-top: none;
 }
 
 .container {
@@ -63,6 +68,7 @@ h1, h2, h3, h4, h5 {
 .cancel-button {
   text-decoration: underline;
   color: #0069d9;
+  cursor: pointer;
 }
 
 .next-button, .done-button {
@@ -142,6 +148,7 @@ h1, h2, h3, h4, h5 {
 .home-button {
   float: left;
   width: 24px;
+  cursor: pointer;
 }
 
 .logo {
@@ -168,12 +175,14 @@ h1, h2, h3, h4, h5 {
   width: 32px;
   border-radius: 50%;
   background-color: #d92c27;
+  cursor: pointer;
 }
 
 .table-icon {
   width: 24px;
   height: 24px;
   margin-right: 12px;
+  cursor: pointer;
 }
 
 .add-targeting-button, .add-resource-button {
