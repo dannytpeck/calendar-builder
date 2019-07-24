@@ -26,7 +26,7 @@ function CalendarTable({ selectedClient }) {
 
   function editCalendar(calendar) {
     window.open(
-      `https://calendarbuilder.dev.adurolife.com/staging/calendar-builder/#/${calendar.fields['hash']}`,
+      `https://calendarbuilder.dev.adurolife.com/calendar-builder/#/${calendar.fields['hash']}`,
       '_blank'
     );
   }
@@ -252,7 +252,7 @@ function CalendarTable({ selectedClient }) {
 
       $('#confirm-upload-modal .modal-body').html(`
         <p>Are you sure you want to upload this calendar to Limeade?</p>
-        <p><a href="https://calendarbuilder.dev.adurolife.com/staging/calendar-builder/#/2f7e5003375688" target="_blank">${calendar.fields['name']}</a></p>
+        <p><a href="https://calendarbuilder.dev.adurolife.com/calendar-builder/#/2f7e5003375688" target="_blank">${calendar.fields['name']}</a></p>
       `);
 
       $('#confirm-upload-modal .modal-footer .btn-primary').off('click');
