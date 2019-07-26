@@ -193,16 +193,18 @@ function CalendarTable({ selectedClient }) {
   }
 
   function compileTransporter(challenges) {
-    // get the year for the copyright
-    const currentYear = new Date().getFullYear();
 
-    let data = createCsv(challenges);
+    const data = createCsv(challenges);
     let csvContent = '';
-    data.forEach(function (infoArray, index) {
-      let dataString = infoArray.join(',');
+    data.forEach((infoArray, index) => {
+      const dataString = infoArray.join();
       csvContent += index < (data.length - 1) ? dataString + '\n' : dataString;
     });
 
+    // get the year for the filename
+    const currentYear = new Date().getFullYear();
+
+    // Create calendar name for the filename
     let calendarName = currentYear;
     if (challenges[0].fields['Calendar']) {
       calendarName = calendars.filter(calendar => {
@@ -210,13 +212,14 @@ function CalendarTable({ selectedClient }) {
       })[0].fields['name'];
     }
 
-    let file = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
-    let filename = `${selectedClient.fields['Limeade e=']}-${calendarName}.csv`;
+    const filename = `${selectedClient.fields['Limeade e=']}-${calendarName}.csv`;
+    const csvData = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(csvData);
 
     // create the download link
     let link = document.createElement('a');
     link.setAttribute('download', filename);
-    link.setAttribute('href', file);
+    link.setAttribute('href', url);
     link.click();
 
   }
