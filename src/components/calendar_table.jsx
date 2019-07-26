@@ -51,6 +51,7 @@ function CalendarTable({ selectedClient }) {
       .replace(/\u00A9/g, '&copy;')  // Copyright symbol
       .replace(/#fff/gi, 'white')    // For hash issues in our URIs
       .replace(/#cccccc/gi, 'silver')
+      .replace(/#0080a5/gi, 'steelblue')
       .replace(/copyright\s*\d+/gi, `Copyright ${currentYear}`);
     return sanitized;
     };
