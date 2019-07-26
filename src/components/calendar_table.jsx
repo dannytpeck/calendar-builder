@@ -127,7 +127,7 @@ function CalendarTable({ selectedClient }) {
       const imageUrl = challenge.fields['Limeade Image Url'] ? challenge.fields['Limeade Image Url'] : '';
       const deviceTrackingUnits = enableDeviceTracking ? challenge.fields['Device Units'] : '';
       const isTeamChallenge = challenge.fields['Team Activity'] === 'yes' ? 1 : 0;
-      
+
       // partner variables
       const isPartner =  challenge.fields['Verified'] === 'System Awarded' ? true : false;
       const allowSelfReporting = isPartner ? 0 : 1;
@@ -406,7 +406,7 @@ function CalendarTable({ selectedClient }) {
         <td className="calendar-name">{calendar.fields['name']}</td>
         <td>{calendar.fields['year']}</td>
         <td>{moment(calendar.fields['updated']).format('L')}</td>
-        <td>{moment(calendar.fields['approved']).format('L')}</td>
+        <td>{calendar.fields['approved'] ? moment(calendar.fields['approved']).format('L') : ''}</td>
         <td>{calendar.fields['status']}</td>
         <td>
           <img onClick={() => editCalendar(calendar)} className="table-icon edit-icon" title="Edit Calendar" src="images/icon_edit.svg" />
