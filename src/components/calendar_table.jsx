@@ -274,85 +274,72 @@ function CalendarTable({ selectedClient }) {
   }
 
   function uploadCalendar(challenges) {
-    // Use the Library base in airtable
-    const theLibraryBase = new Airtable({ apiKey: 'keyCxnlep0bgotSrX' }).base('appa7mnDuYdgwx2zP');
 
     challenges.map(challenge => {
+      if (challenge.fields['Verified'] !== 'System Awarded') {
+        let challengeType, frequency;
+        switch (challenge.fields['Activity Tracking Type']) {
+          case 'Event':
+            challengeType = 'OneTimeEvent';
+            frequency = 'None';
+            break;
+          case 'Days':
+            challengeType = 'YesNoDaily';
+            frequency = challenge.fields['Reward Occurrence'] === 'Weekly' ? 'Weekly' : 'Daily';
+            break;
+          case 'Units':
+            challengeType = 'AddAllNumbers';
+            frequency = challenge.fields['Reward Occurrence'] === 'Weekly' ? 'Weekly' : 'Daily';
+            break;
+        }
 
-      // Get Library details for the challenge
-      if (challenge.fields['Challenge Id']) {
-        theLibraryBase('Challenges').find(challenge.fields['Challenge Id'], function(err, record) {
-          if (err) {
-            console.error(err);
-            return;
-          }
+        const isDeviceEnabled = challenge.fields['Device Enabled'] === 'yes';
+        const isTeamChallenge = challenge.fields['Team Activity'] === 'yes';
 
-          let challengeType, frequency;
-          switch (record.fields['Activity Tracking Type']) {
-            case 'Event':
-              challengeType = 'OneTimeEvent';
-              frequency = 'None';
-              break;
-            case 'Days':
-              challengeType = 'YesNoDaily';
-              frequency = record.fields['Reward Occurrence'] === 'Weekly' ? 'Weekly' : 'Daily';
-              break;
-            case 'Units':
-              challengeType = 'AddAllNumbers';
-              frequency = record.fields['Reward Occurrence'] === 'Weekly' ? 'Weekly' : 'Daily';
-              break;
-          }
+        // "record" is the Library version
+        const data = {
+          'AboutChallenge': challenge.fields['More Information Html'],
+          'ActivityReward': {
+            'Type': 'IncentivePoints',
+            'Value': challenge.fields['Points']
+          },
+          'ActivityType': challenge.fields['Activity Goal Text'],
+          'AmountUnit': isDeviceEnabled ? challenge.fields['Device Units'] : 'times',
+          'ChallengeLogoURL': challenge.fields['Limeade Image Url'],
+          'ChallengeLogoThumbURL': challenge.fields['Limeade Image Url'],
+          'ChallengeTarget': challenge.fields['Activity Goal'],
+          'ChallengeType': challengeType,
+          'Dimensions': challenge.fields['Limeade Dimensions'][0] !== 'NA' ? challenge.fields['Limeade Dimensions'].toString().split(',') : '',
+          'DisplayInProgram': true,
+          'DisplayPriority': 0,
+          'EndDate': challenge.fields['End date'],
+          'Frequency': frequency,
+          'IsDeviceEnabled': isDeviceEnabled,
+          'IsFeatured': null,
+          'IsSelfReportEnabled': true,
+          'IsTeamChallenge': isTeamChallenge,
+          'Name': challenge.fields['Title'],
+          'ShortDescription': challenge.fields['Instructions'],
+          'ShowWeeklyCalendar': false,
+          'StartDate': challenge.fields['Start date'],
+          'TeamSize': isTeamChallenge ? { maxTeamSize: challenge.fields['Team Size Maximum'], minTeamSize: challenge.fields['Team Size Minimum'] } : null
+        };
 
-          const isDeviceEnabled = record.fields['Device Enabled'] === 'yes';
-          const isTeamChallenge = record.fields['Team Activity'] === 'yes';
-
-          // "record" is the Library version
-          const data = {
-            'AboutChallenge': record.fields['More Information Html'],
-            'ActivityReward': {
-              'Type': 'IncentivePoints',
-              'Value': challenge.fields['Points']
-            },
-            'ActivityType': record.fields['Activity Goal Text'],
-            'AmountUnit': isDeviceEnabled ? record.fields['Device Units'] : 'times',
-            'ChallengeLogoURL': record.fields['Limeade Image Url'],
-            'ChallengeLogoThumbURL': record.fields['Limeade Image Url'],
-            'ChallengeTarget': record.fields['Activity Goal'],
-            'ChallengeType': challengeType,
-            'Dimensions': record.fields['Limeade Dimensions'].split(','),
-            'DisplayInProgram': true,
-            'DisplayPriority': 0,
-            'EndDate': challenge.fields['End Date'],
-            'Frequency': frequency,
-            'IsDeviceEnabled': isDeviceEnabled,
-            'IsFeatured': null,
-            'IsSelfReportEnabled': true,
-            'IsTeamChallenge': isTeamChallenge,
-            'Name': record.fields['Title'],
-            'ShortDescription': record.fields['Instructions'],
-            'ShowWeeklyCalendar': false,
-            'StartDate': challenge.fields['Start Date'],
-            'TeamSize': isTeamChallenge ? { maxTeamSize: record.fields['Team Size Maximum'], minTeamSize: record.fields['Team Size Minimum'] } : null
-          };
-
-          $.ajax({
-            url: 'https://api.limeade.com/api/admin/activity',
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify(data),
-            headers: {
-              Authorization: 'Bearer ' + selectedClient.fields['LimeadeAccessToken']
-            },
-            contentType: 'application/json; charset=utf-8'
-          }).done((result) => {
-            console.log(result);
-          }).fail((xhr, textStatus, error) => {
-            console.error(xhr.responseText);
-          });
-
+        $.ajax({
+          url: 'https://api.limeade.com/api/admin/activity',
+          type: 'POST',
+          dataType: 'json',
+          data: JSON.stringify(data),
+          headers: {
+            Authorization: 'Bearer ' + selectedClient.fields['LimeadeAccessToken']
+          },
+          contentType: 'application/json; charset=utf-8'
+        }).done((result) => {
+          console.log(result);
+        }).fail((xhr, textStatus, error) => {
+          console.error(xhr.responseText);
         });
       }
-
     });
   }
 
