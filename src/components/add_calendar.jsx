@@ -44,7 +44,11 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
     return allInputsAreValid;
   }
 
-  function createCalendar(records) {
+  function createChallenges(records, hash) {
+    const programYearStart = moment(startDate).format('YYYY');
+    const programYearEnd = moment(endDate).format('YYYY');
+    const programYear = programYearStart === programYearEnd ? programYearStart : programYearStart + '-' + programYearEnd;
+    const employerName = selectedClient.fields['Limeade e='];
     const phase1start = startDate;
 
     // Phase 1 is 13 weeks
@@ -59,44 +63,7 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
     const phase3end = moment(phase3start).add(90, 'days').format('YYYY-MM-DD');
     const phase4start = moment(phase3end).add(1, 'days').format('YYYY-MM-DD');
 
-    const phase4end = endDate;
-
-    const employerName = selectedClient.fields['Limeade e='];
-    const programYearStart = moment(startDate).format('YYYY');
-    const programYearEnd = moment(endDate).format('YYYY');
-    const programYear = programYearStart === programYearEnd ?
-      programYearStart :
-      programYearStart + '-' + programYearEnd;
-
-    const hash = crypto.randomBytes(14).toString('hex').slice(0, 14);
-
-    // Create the calendar in airtable
-    base('Calendars').create({
-      hash: hash,
-      name: 'Calendar_' + programYear,
-      client: employerName,
-      year: programYear,
-      updated: moment().format('L'),
-      status: 'In Progress',
-      'Yearlong Start Date': startDate,
-      'Yearlong End Date': endDate,
-      'Phase 1 Start Date': phase1start,
-      'Phase 1 End Date': phase1end,
-      'Phase 2 Start Date': phase2start,
-      'Phase 2 End Date': phase2end,
-      'Phase 3 Start Date': phase3start,
-      'Phase 3 End Date': phase3end,
-      'Phase 4 Start Date': phase4start,
-      'Phase 4 End Date': endDate
-    }, (err, record) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      // Return to Show Calendars view
-      handleNextClick();
-    });
+    const phase4end = endDate;    
 
     // Create all the challenges in airtable
     records.map(record => {
@@ -157,6 +124,56 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
     const validated = validateFields();
 
     if (validated) {
+
+      const hash = crypto.randomBytes(14).toString('hex').slice(0, 14);
+      const programYearStart = moment(startDate).format('YYYY');
+      const programYearEnd = moment(endDate).format('YYYY');
+      const programYear = programYearStart === programYearEnd ? programYearStart : programYearStart + '-' + programYearEnd;
+      const employerName = selectedClient.fields['Limeade e='];
+      const phase1start = startDate;
+
+      // Phase 1 is 13 weeks
+      const phase1end = moment(phase1start).add(90, 'days').format('YYYY-MM-DD');
+      const phase2start = moment(phase1end).add(1, 'days').format('YYYY-MM-DD');
+
+      // Phase 2 is 12 weeks
+      const phase2end = moment(phase2start).add(83, 'days').format('YYYY-MM-DD');
+      const phase3start = moment(phase2end).add(1, 'days').format('YYYY-MM-DD');
+
+      // Phase 3 is 13 weeks
+      const phase3end = moment(phase3start).add(90, 'days').format('YYYY-MM-DD');
+      const phase4start = moment(phase3end).add(1, 'days').format('YYYY-MM-DD');
+
+      const phase4end = endDate;
+
+      // Create the calendar in airtable
+      base('Calendars').create({
+        hash: hash,
+        name: 'Calendar_' + programYear,
+        client: employerName,
+        year: programYear,
+        updated: moment().format('L'),
+        status: 'In Progress',
+        'Yearlong Start Date': startDate,
+        'Yearlong End Date': endDate,
+        'Phase 1 Start Date': phase1start,
+        'Phase 1 End Date': phase1end,
+        'Phase 2 Start Date': phase2start,
+        'Phase 2 End Date': phase2end,
+        'Phase 3 Start Date': phase3start,
+        'Phase 3 End Date': phase3end,
+        'Phase 4 Start Date': phase4start,
+        'Phase 4 End Date': endDate
+      }, (err, record) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+
+        // Return to Show Calendars view
+        handleNextClick();
+      });
+
       let table;
 
       switch (template) {
@@ -175,7 +192,7 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
         view: 'Default'
       }).eachPage((records, fetchNextPage) => {
 
-        createCalendar(records);
+        createChallenges(records, hash);
 
         fetchNextPage();
       }, (err) => {
