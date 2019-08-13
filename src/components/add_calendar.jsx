@@ -99,7 +99,7 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
       // Update point values based on user input
       record.fields['Points'] = oneTimePoints;
       if (record.fields['Verified'] === 'Self-Report') {
-        if (record.fields['Team Activity'] === 'Yes') {
+        if (record.fields['Team Activity'] === 'yes') {
           record.fields['Points'] = teamPoints;
         }
         if (record.fields['Reward Occurrence'] === 'Weekly') {
