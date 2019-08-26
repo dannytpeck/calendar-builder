@@ -167,15 +167,15 @@ function CalendarTable({ selectedClient }) {
         allowSelfReporting,
         deviceTrackingUnits,
         isTeamChallenge,
-        isTeamChallenge ? challenge.fields['Team Size Minimum'] : '', // team min
-        isTeamChallenge ? challenge.fields['Team Size Maximum'] : '', // team max
-        '', // targeting: subgroup
-        '', // targeting: field1name
-        '', // targeting: field1value
-        '', // targeting: field2name
-        '', // targeting: field2value
-        '', // targeting: field3name
-        '', // targeting: field3value
+        isTeamChallenge ? challenge.fields['Team Size Minimum'] : '',
+        isTeamChallenge ? challenge.fields['Team Size Maximum'] : '',
+        challenge.fields['Subgroup'],
+        challenge.fields['Targeting Column 1'],
+        challenge.fields['Targeting Value 1'],
+        challenge.fields['Targeting Column 2'],
+        challenge.fields['Targeting Value 2'],
+        challenge.fields['Targeting Column 3'],
+        challenge.fields['Targeting Value 3'],
         'Default', // AppearanceInProgram
         integrationPartnerId,
         buttonText,
