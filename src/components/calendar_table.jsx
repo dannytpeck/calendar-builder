@@ -296,7 +296,7 @@ function CalendarTable({ selectedClient }) {
         const isDeviceEnabled = challenge.fields['Device Enabled'] === 'yes';
         const isTeamChallenge = challenge.fields['Team Activity'] === 'yes';
 
-        // "record" is the Library version
+        // TODO: Update upload for Targeting information, featured, verified/partner challenges
         const data = {
           'AboutChallenge': challenge.fields['More Information Html'],
           'ActivityReward': {
@@ -402,7 +402,9 @@ function CalendarTable({ selectedClient }) {
         <td>
           <img onClick={() => editCalendar(calendar)} className="table-icon edit-icon" title="Edit Calendar" src="images/icon_edit.svg" />
           <img onClick={() => downloadCsv(calendar)} className="table-icon download-icon" title="Download Calendar as .CSV" src="images/icon_download.svg" />
+          {/* Hiding the upload icon until we have the upload code
           <img onClick={() => openConfirmUploadModal(calendar)} className="table-icon upload-icon" title="Upload Calendar to Limeade" src="images/icon_upload.svg" />
+          */}
           <img onClick={() => openDeleteConfirmModal(calendar)} className="table-icon delete-icon" title="Delete Calendar" src="images/icon_delete.svg" />
         </td>
       </tr>
