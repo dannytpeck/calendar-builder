@@ -167,15 +167,15 @@ function CalendarTable({ selectedClient }) {
         allowSelfReporting,
         deviceTrackingUnits,
         isTeamChallenge,
-        isTeamChallenge ? challenge.fields['Team Size Minimum'] : '', // team min
-        isTeamChallenge ? challenge.fields['Team Size Maximum'] : '', // team max
-        '', // targeting: subgroup
-        '', // targeting: field1name
-        '', // targeting: field1value
-        '', // targeting: field2name
-        '', // targeting: field2value
-        '', // targeting: field3name
-        '', // targeting: field3value
+        isTeamChallenge ? challenge.fields['Team Size Minimum'] : '',
+        isTeamChallenge ? challenge.fields['Team Size Maximum'] : '',
+        challenge.fields['Subgroup'],
+        challenge.fields['Targeting Column 1'],
+        challenge.fields['Targeting Value 1'],
+        challenge.fields['Targeting Column 2'],
+        challenge.fields['Targeting Value 2'],
+        challenge.fields['Targeting Column 3'],
+        challenge.fields['Targeting Value 3'],
         'Default', // AppearanceInProgram
         integrationPartnerId,
         buttonText,
@@ -296,7 +296,7 @@ function CalendarTable({ selectedClient }) {
         const isDeviceEnabled = challenge.fields['Device Enabled'] === 'yes';
         const isTeamChallenge = challenge.fields['Team Activity'] === 'yes';
 
-        // "record" is the Library version
+        // TODO: Update upload for Targeting information, featured, verified/partner challenges
         const data = {
           'AboutChallenge': challenge.fields['More Information Html'],
           'ActivityReward': {
@@ -402,7 +402,9 @@ function CalendarTable({ selectedClient }) {
         <td>
           <img onClick={() => editCalendar(calendar)} className="table-icon edit-icon" title="Edit Calendar" src="images/icon_edit.svg" />
           <img onClick={() => downloadCsv(calendar)} className="table-icon download-icon" title="Download Calendar as .CSV" src="images/icon_download.svg" />
+          {/* Hiding the upload icon until we have the upload code
           <img onClick={() => openConfirmUploadModal(calendar)} className="table-icon upload-icon" title="Upload Calendar to Limeade" src="images/icon_upload.svg" />
+          */}
           <img onClick={() => openDeleteConfirmModal(calendar)} className="table-icon delete-icon" title="Delete Calendar" src="images/icon_delete.svg" />
         </td>
       </tr>
