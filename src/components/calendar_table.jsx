@@ -123,7 +123,7 @@ function CalendarTable({ selectedClient }) {
       const winStrategy = trackingType === 'Event' ? 'AccomplishOneTimeEvent' : 'MeetOrExceedTarget';
       const target = challenge.fields['Activity Goal'];
       const isWeekly = challenge.fields['Reward Occurrence'] === 'Weekly' ? 1 : 0;
-      const enableDeviceTracking = challenge.fields['Activity Tracking Type'] === 'yes' ? 1 : 0;
+      const enableDeviceTracking = (challenge.fields['Device Enabled'] === 'yes' || challenge.fields['Device Enabled'] === 'Yes') ? 1 : 0;
       const activity = challenge.fields['Activity Goal Text'];
       const imageUrl = challenge.fields['Limeade Image Url'] ? challenge.fields['Limeade Image Url'] : '';
       const deviceTrackingUnits = enableDeviceTracking ? challenge.fields['Device Units'] : '';
@@ -155,8 +155,8 @@ function CalendarTable({ selectedClient }) {
         '', // DisplayPriority
         challenge.fields['Start date'], // start date
         challenge.fields['End date'], // end date
-        sanitize(challenge.fields['Instructions']), // instructions
-        sanitize(challenge.fields['More Information Html']), // More Information Html
+        challenge.fields['Instructions'] ? sanitize(challenge.fields['Instructions']) : '', // instructions
+        challenge.fields['More Information Html'] ? sanitize(challenge.fields['More Information Html']) : '', // More Information Html
         imageUrl, // Limeade image URL
         '0', // ShowInProgram
         '0', // RewardType
