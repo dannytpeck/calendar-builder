@@ -125,6 +125,7 @@ function CalendarTable({ selectedClient }) {
       const isWeekly = challenge.fields['Reward Occurrence'] === 'Weekly' ? 1 : 0;
       const enableDeviceTracking = (challenge.fields['Device Enabled'] === 'yes' || challenge.fields['Device Enabled'] === 'Yes') ? 1 : 0;
       const activity = challenge.fields['Activity Goal Text'];
+      console.log(typeof activity);
       const imageUrl = challenge.fields['Limeade Image Url'] ? challenge.fields['Limeade Image Url'] : '';
       const deviceTrackingUnits = enableDeviceTracking ? challenge.fields['Device Units'] : '';
       const isTeamChallenge = challenge.fields['Team Activity'] === 'yes' ? 1 : 0;
@@ -150,7 +151,7 @@ function CalendarTable({ selectedClient }) {
         isWeekly,
         winStrategy,
         target,
-        activity,
+        '"' + activity + '"',
         '"' + challenge.fields['Title'] + '"', // title
         '', // DisplayPriority
         challenge.fields['Start date'], // start date
