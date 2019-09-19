@@ -130,7 +130,7 @@ function CalendarTable({ selectedClient }) {
       const isTeamChallenge = challenge.fields['Team Activity'] === 'yes' ? 1 : 0;
 
       // partner variables
-      const isPartner =  challenge.fields['Verified'] === 'System Awarded' ? true : false;
+      const isPartner =  challenge.fields['Verified'] === 'Points Upload' ? true : false;
       const allowSelfReporting = isPartner ? 0 : 1;
       const integrationPartnerId = isPartner ? 1 : '';
       const buttonText = isPartner ? 'CLOSE' : '';
