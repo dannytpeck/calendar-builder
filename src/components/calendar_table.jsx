@@ -194,7 +194,6 @@ function CalendarTable({ selectedClient }) {
   }
 
   function compileTransporter(challenges) {
-    console.log(challenges);
     const data = createCsv(challenges);
     let csvContent = '';
     data.forEach((infoArray, index) => {
