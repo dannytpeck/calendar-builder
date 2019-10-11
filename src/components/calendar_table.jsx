@@ -125,7 +125,6 @@ function CalendarTable({ selectedClient }) {
       const isWeekly = challenge.fields['Reward Occurrence'] === 'Weekly' ? 1 : 0;
       const enableDeviceTracking = (challenge.fields['Device Enabled'] === 'yes' || challenge.fields['Device Enabled'] === 'Yes') ? 1 : 0;
       const activity = challenge.fields['Activity Goal Text'];
-      console.log(typeof activity);
       const imageUrl = challenge.fields['Limeade Image Url'] ? challenge.fields['Limeade Image Url'] : '';
       const deviceTrackingUnits = enableDeviceTracking ? challenge.fields['Device Units'] : '';
       const isTeamChallenge = challenge.fields['Team Activity'] === 'yes' ? 1 : 0;
@@ -195,7 +194,7 @@ function CalendarTable({ selectedClient }) {
   }
 
   function compileTransporter(challenges) {
-
+    console.log(challenges);
     const data = createCsv(challenges);
     let csvContent = '';
     data.forEach((infoArray, index) => {
@@ -227,21 +226,20 @@ function CalendarTable({ selectedClient }) {
   }
 
   function downloadCsv(calendar) {
-    // pull in the Challenges base
-    base('Challenges').select({
-      filterByFormula: `{Calendar}='${calendar.fields['hash']}'`
-    }).eachPage((records, fetchNextPage) => {
-      const filteredRecords = records.filter((record) => {
-        // keeping the filtering code so this only returns Transporter-uploadable challenges
-        return record.fields['Verified'] === 'Self-Report' || record.fields['Verified'] === 'Points Upload';
-      });
-      compileTransporter(filteredRecords);
-      fetchNextPage();
-    }, (err) => {
-      if (err) {
-        console.error(err);
-        return;
+    let filteredRecords = [];
+    let url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Challenges?api_key=keylwZtbvFbcT3sgw';
+    $.getJSON(`${url}&filterByFormula={Calendar}='${calendar.fields['hash']}'`).done(data => {
+      filteredRecords = [...filteredRecords, ...data.records];
+
+      if (data.offset) {
+        $.getJSON(`${url}&filterByFormula={Calendar}='${calendar.fields['hash']}'&offset=${data.offset}`).done(data => {
+          filteredRecords = [...filteredRecords, ...data.records];
+          compileTransporter(filteredRecords);
+        });
+      } else {
+        compileTransporter(filteredRecords);
       }
+
     });
   }
 
