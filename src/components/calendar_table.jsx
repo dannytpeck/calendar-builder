@@ -65,6 +65,9 @@ function CalendarTable({ selectedClient }) {
           return 'YesNoDaily';
         case 'Units':
           return 'AddAllNumbers';
+        // adding an undefined case to handle placeholders that are missing a tracking type
+        case undefined:
+          return 'Event';
 
         default:
           throw new Error('Tracking type is not one of the 3 valid values. (event/days/units)');
@@ -139,7 +142,7 @@ function CalendarTable({ selectedClient }) {
 
       // featured variables
       const isFeatured = challenge.fields['Featured Activity'] === 'yes' ? 1 : 0;
-      const featuredDescription = isFeatured === 1 ? sanitize(challenge.fields['Instructions']) : '';
+      const featuredDescription = isFeatured === 1 ? challenge.fields['Instructions'] : '';
       const featuredImageUrl = isFeatured === 1 ? imageUrl : '';
 
       data.push([
@@ -184,7 +187,7 @@ function CalendarTable({ selectedClient }) {
         showExtendedDescription,
         '', // ActivityTemplateId
         isFeatured, // IsFeatured
-        featuredDescription, // FeaturedDescription
+        '"' + featuredDescription + '"', // FeaturedDescription
         featuredImageUrl // FeaturedImageUrl
       ]);
 
