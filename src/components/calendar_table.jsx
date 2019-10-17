@@ -233,6 +233,10 @@ function CalendarTable({ selectedClient }) {
     $.getJSON(`${url}&filterByFormula={Calendar}='${calendar.fields['hash']}'`).done(data => {
       filteredRecords = [...filteredRecords, ...data.records];
 
+      filteredRecords = filteredRecords.filter(record => {
+        return record.fields['Verified'] === 'Self-Report' || record.fields['Verified'] === 'Points Upload';
+      });
+
       if (data.offset) {
         $.getJSON(`${url}&filterByFormula={Calendar}='${calendar.fields['hash']}'&offset=${data.offset}`).done(data => {
           filteredRecords = [...filteredRecords, ...data.records];
