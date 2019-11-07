@@ -227,7 +227,8 @@ function CalendarTable({ selectedClient }) {
 
   }
 
-  function downloadCsv(calendar) {
+  // downloads all Self-Report and Points Upload from the calendar, including template at custom
+  function downloadAllCsv(calendar) {
     let filteredRecords = [];
     let url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Challenges?api_key=keylwZtbvFbcT3sgw';
     $.getJSON(`${url}&filterByFormula={Calendar}='${calendar.fields['hash']}'`).done(data => {
@@ -244,6 +245,72 @@ function CalendarTable({ selectedClient }) {
       } else {
         filteredRecords = filteredRecords.filter(record => {
           return record.fields['Verified'] === 'Self-Report' || record.fields['Verified'] === 'Points Upload';
+        });
+        compileTransporter(filteredRecords);
+      }
+
+    });
+  }
+
+  // downloads template Self-Report and Points Upload from the calendar
+  function downloadTemplateCsv(calendar) {
+    let filteredRecords = [];
+    let url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Challenges?api_key=keylwZtbvFbcT3sgw';
+    $.getJSON(`${url}&filterByFormula={Calendar}='${calendar.fields['hash']}'`).done(data => {
+      filteredRecords = [...filteredRecords, ...data.records];
+
+      if (data.offset) {
+        $.getJSON(`${url}&filterByFormula={Calendar}='${calendar.fields['hash']}'&offset=${data.offset}`).done(data => {
+          filteredRecords = [...filteredRecords, ...data.records];
+          filteredRecords = filteredRecords.filter(record => {
+            return record.fields['Verified'] === 'Self-Report' || record.fields['Verified'] === 'Points Upload';
+          });
+          // filter out the custom challenges
+          filteredRecords = filteredRecords.filter(record => {
+            return record.fields['Custom Tile Type'] === '' || record.fields['Custom Tile Type'] === null || record.fields['Custom Tile Type'] === undefined;
+          });
+          compileTransporter(filteredRecords);
+        });
+      } else {
+        filteredRecords = filteredRecords.filter(record => {
+          return record.fields['Verified'] === 'Self-Report' || record.fields['Verified'] === 'Points Upload';
+        });
+        // filter out the custom challenges
+        filteredRecords = filteredRecords.filter(record => {
+          return record.fields['Custom Tile Type'] === '' || record.fields['Custom Tile Type'] === null || record.fields['Custom Tile Type'] === undefined;
+        });
+        compileTransporter(filteredRecords);
+      }
+
+    });
+  }
+
+  // downloads custom Self-Report and Points Upload from the calendar
+  function downloadCustomCsv(calendar) {
+    let filteredRecords = [];
+    let url = 'https://api.airtable.com/v0/appN1J6yscNwlzbzq/Challenges?api_key=keylwZtbvFbcT3sgw';
+    $.getJSON(`${url}&filterByFormula={Calendar}='${calendar.fields['hash']}'`).done(data => {
+      filteredRecords = [...filteredRecords, ...data.records];
+
+      if (data.offset) {
+        $.getJSON(`${url}&filterByFormula={Calendar}='${calendar.fields['hash']}'&offset=${data.offset}`).done(data => {
+          filteredRecords = [...filteredRecords, ...data.records];
+          filteredRecords = filteredRecords.filter(record => {
+            return record.fields['Verified'] === 'Self-Report' || record.fields['Verified'] === 'Points Upload';
+          });
+          // filter out the template challenges
+          filteredRecords = filteredRecords.filter(record => {
+            return record.fields['Custom Tile Type'] === 'Net New' || record.fields['Custom Tile Type'] === 'Rerun' || record.fields['Custom Tile Type'] === 'Revised';
+          });
+          compileTransporter(filteredRecords);
+        });
+      } else {
+        filteredRecords = filteredRecords.filter(record => {
+          return record.fields['Verified'] === 'Self-Report' || record.fields['Verified'] === 'Points Upload';
+        });
+        // filter out the template challenges
+        filteredRecords = filteredRecords.filter(record => {
+          return record.fields['Custom Tile Type'] === 'Net New' || record.fields['Custom Tile Type'] === 'Rerun' || record.fields['Custom Tile Type'] === 'Revised';
         });
         compileTransporter(filteredRecords);
       }
@@ -408,7 +475,9 @@ function CalendarTable({ selectedClient }) {
         <td>{calendar.fields['status']}</td>
         <td>
           <img onClick={() => editCalendar(calendar)} className="table-icon edit-icon" title="Edit Calendar" src="images/icon_edit.svg" />
-          <img onClick={() => downloadCsv(calendar)} className="table-icon download-icon" title="Download Calendar as .CSV" src="images/icon_download.svg" />
+          <img onClick={() => downloadAllCsv(calendar)} className="table-icon download-icon" title="Download All Challenges from Calendar as .CSV" src="images/icon_download_all.svg" />
+          <img onClick={() => downloadTemplateCsv(calendar)} className="table-icon download-icon" title="Download Template Challenges from Calendar as .CSV" src="images/icon_download_template.svg" />
+          <img onClick={() => downloadCustomCsv(calendar)} className="table-icon download-icon" title="Download Custom Challenges from Calendar as .CSV" src="images/icon_download_custom.svg" />
           {/* Hiding the upload icon until we have the upload code
           <img onClick={() => openConfirmUploadModal(calendar)} className="table-icon upload-icon" title="Upload Calendar to Limeade" src="images/icon_upload.svg" />
           */}
