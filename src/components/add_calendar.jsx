@@ -183,10 +183,14 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
         case '2019 Calendar':
           table = 'Templates';
           break;
+        case '2020 EA Medical Mutual Calendar':
+          table = 'EA MM Template 2020';
+          break;
         default:
           table = 'Empty Calendar';
           break;
       }
+      console.log(table);
 
       base(table).select({
         view: 'Default'
@@ -243,6 +247,7 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
           <option>None</option>
           <option>2020 Calendar</option>
           <option>2019 Calendar</option>
+          <option>2020 EA Medical Mutual Calendar</option>
         </select>
       </div>
 
