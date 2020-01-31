@@ -54,6 +54,14 @@ h1, h2, h3, h4, h5 {
   margin-right: 4%;
 }
 
+.phase-dates input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 2%;
+  margin-right: 4%;
+  color: #6c757d;
+}
+
 .point-structure span {
  display: inline-block;
  width: 180px;
