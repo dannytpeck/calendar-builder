@@ -118,6 +118,11 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
         }
       }
 
+      // Override points to 0 for Hot Topics on the Go! challenge
+      if (record.fields['Title'] === 'Hot Topics On the Go!') {
+        record.fields['Points'] = '0';
+      }
+
       // Save the record to Airtable
       base('Challenges').create(record.fields, (err, record) => {
         if (err) {
