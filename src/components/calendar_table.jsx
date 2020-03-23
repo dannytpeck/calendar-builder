@@ -10,7 +10,8 @@ function CalendarTable({ selectedClient }) {
   useEffect(() => {
 
     base('Calendars').select({
-      filterByFormula: `{client}='${selectedClient.fields['Limeade e=']}'`
+      view: 'Default',
+      filterByFormula: `{client}='${selectedClient.fields['Limeade e=']}'`,
     }).eachPage((records, fetchNextPage) => {
       setCalendars([...calendars, ...records]);
 
@@ -486,7 +487,7 @@ function CalendarTable({ selectedClient }) {
       </tr>
     );
   }
-
+  
   return (
     <table className="table">
       <thead>
