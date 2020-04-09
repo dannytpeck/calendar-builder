@@ -9,6 +9,7 @@ import ClientName from './client_name';
 
 function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
   const [template, setTemplate] = React.useState(null);
+  const [calendarName, setCalendarName] = React.useState('Challenge Calendar ' + moment().format('YYYY'));
   const [startDate, setStartDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
   const [phase1StartDate, setPhase1StartDate] = React.useState('');
@@ -150,7 +151,7 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
       // Create the calendar in airtable
       base('Calendars').create({
         hash: hash,
-        name: 'Calendar_' + programYear,
+        name: calendarName,
         client: employerName,
         year: programYear,
         updated: moment().format('L'),
@@ -215,6 +216,10 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
 
   function handleChangeTemplate(e) {
     setTemplate(e.target.value);
+  }
+
+  function handleChangeCalendarName(e) {
+    setCalendarName(e.target.value);
   }
 
   function handleChangeStartDate(e) {
@@ -328,6 +333,11 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
           <option>2020 EA Medical Mutual Calendar</option>
           <option>2020 HHP Full Outcomes Calendar</option>
         </select>
+      </div>
+
+      <div className="calendar-name">
+        <h5>Calendar Name:</h5>
+        <input id="calendarName" className="form-control" type="text" value={calendarName} onChange={handleChangeCalendarName} />
       </div>
 
       <div className="program-dates my-5">
