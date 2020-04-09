@@ -9,7 +9,7 @@ import ClientName from './client_name';
 
 function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
   const [template, setTemplate] = React.useState(null);
-  const [calendarName, setCalendarName] = React.useState('Challenge Calendar ' + moment().format('YYYY'));
+  const [calendarName, setCalendarName] = React.useState('Challenge Calendar');
   const [startDate, setStartDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
   const [phase1StartDate, setPhase1StartDate] = React.useState('');
