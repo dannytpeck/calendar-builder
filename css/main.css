@@ -47,6 +47,10 @@ h1, h2, h3, h4, h5 {
   max-width: 240px;
 }
 
+.calendar-name input {
+  width: 240px;
+}
+
 .program-dates input {
   display: inline-block;
   max-width: 200px;
