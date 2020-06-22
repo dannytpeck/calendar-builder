@@ -118,7 +118,9 @@ function CalendarTable({ selectedClient }) {
       'ActivityTemplateId',
       'IsFeatured',
       'FeaturedDescription',
-      'FeaturedImageUrl'
+      'FeaturedImageUrl',
+      'DailySelfReportLimit',
+      'DefaultPrivacy'
     ]];
 
     challenges.map(challenge => {
@@ -189,7 +191,9 @@ function CalendarTable({ selectedClient }) {
         '', // ActivityTemplateId
         isFeatured, // IsFeatured
         '"' + featuredDescription + '"', // FeaturedDescription
-        featuredImageUrl // FeaturedImageUrl
+        featuredImageUrl, // FeaturedImageUrl
+        '', // DailySelfReportLimit
+        '0' // DefaultPrivacy
       ]);
 
     });
