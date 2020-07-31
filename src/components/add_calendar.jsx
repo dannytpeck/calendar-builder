@@ -179,11 +179,11 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
       let table;
 
       switch (template) {
+        case '2021 Calendar':
+          table = 'Template 2021';
+          break;
         case '2020 Calendar':
           table = 'Template 2020';
-          break;
-        case '2019 Calendar':
-          table = 'Templates';
           break;
         case '2020 EA Medical Mutual Calendar':
           table = 'EA MM Template 2020';
@@ -328,8 +328,8 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
         <h5>Select Template:</h5>
         <select id="template" className="form-control" onChange={handleChangeTemplate}>
           <option>None</option>
+          <option>2021 Calendar</option>
           <option>2020 Calendar</option>
-          <option>2019 Calendar</option>
           <option>2020 EA Medical Mutual Calendar</option>
           <option>2020 HHP Full Outcomes Calendar</option>
         </select>
