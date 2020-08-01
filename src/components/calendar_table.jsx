@@ -142,6 +142,7 @@ function CalendarTable({ selectedClient }) {
       const buttonText = isPartner ? 'CLOSE' : '';
       const targetUrl = isPartner ? '/Home?sametab=true' : '';
       const showExtendedDescription = isPartner ? 1 : '';
+      const defaultPrivacy = isPartner ? 1 : 0;
 
       // featured variables
       const isFeatured = challenge.fields['Featured Activity'] === 'yes' ? 1 : 0;
@@ -193,7 +194,7 @@ function CalendarTable({ selectedClient }) {
         '"' + featuredDescription + '"', // FeaturedDescription
         featuredImageUrl, // FeaturedImageUrl
         '', // DailySelfReportLimit
-        '0' // DefaultPrivacy
+        defaultPrivacy
       ]);
 
     });
@@ -491,7 +492,7 @@ function CalendarTable({ selectedClient }) {
       </tr>
     );
   }
-  
+
   return (
     <table className="table">
       <thead>
