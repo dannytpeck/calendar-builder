@@ -185,6 +185,9 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
         case '2020 Calendar':
           table = 'Template 2020';
           break;
+        case '2021 EA Medical Mutual Calendar':
+          table = 'EA MM Template 2021';
+          break;
         case '2020 EA Medical Mutual Calendar':
           table = 'EA MM Template 2020';
           break;
@@ -330,6 +333,7 @@ function AddCalendar({ selectedClient, handleCancelClick, handleNextClick }) {
           <option>None</option>
           <option>2021 Calendar</option>
           <option>2020 Calendar</option>
+          <option>2021 EA Medical Mutual Calendar</option>
           <option>2020 EA Medical Mutual Calendar</option>
           <option>2020 HHP Full Outcomes Calendar</option>
         </select>
